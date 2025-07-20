@@ -1,18 +1,17 @@
 import ASSETS from '../assets.js';
-import ANIMATION from '../animation.js';
 
 export default class Enemy extends Phaser.Physics.Arcade.Sprite
 {
-    moveSpeed = 300; // time in milliseconds to move from one tile to another
+    moveSpeed = 500; // time in milliseconds to move from one tile to another
     frameDuration = 0;
     accumulator = 0;
     direction = { x: 0, y: 0 };
     target = { x: 0, y: 0 };
     targetPrev = { x: 0, y: 0 };
 
-    constructor(scene, x, y)
+    constructor(scene, x, y, spriteKey)
     {
-        super(scene, x, y, ASSETS.spritesheet.characters.key, 49);
+        super(scene, x, y, ASSETS.spritesheet.characters.key, spriteKey);
 
         scene.add.existing(this);
         scene.physics.add.existing(this);
@@ -130,22 +129,18 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite
         if (this.x < this.target.x)
         {
             this.x++;
-            this.anims.play(ANIMATION.enemy.right.key, true);
         }
         else if (this.x > this.target.x)
         {
             this.x--;
-            this.anims.play(ANIMATION.enemy.left.key, true);
         }
         if (this.y < this.target.y)
         {
             this.y++;
-            this.anims.play(ANIMATION.enemy.down.key, true);
         }
         else if (this.y > this.target.y)
         {
             this.y--;
-            this.anims.play(ANIMATION.enemy.up.key, true);
         }
 
         if (this.x < this.mapLeft)

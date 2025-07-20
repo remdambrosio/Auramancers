@@ -2,8 +2,6 @@
 * Asset from: https://kenney.nl/assets/pixel-platformer
 */
 import ASSETS from '../assets.js';
-import ANIMATION from '../animation.js';
-import Player from '../gameObjects/Player.js';
 import Enemy from '../gameObjects/Enemy.js';
 
 export class Game extends Phaser.Scene
@@ -17,7 +15,7 @@ export class Game extends Phaser.Scene
     {
         this.initVariables();
         this.initGameUi();
-        this.initAnimations();
+        // this.initAnimations();
         this.initInput();
         this.initGroups();
         this.initMap();
@@ -93,34 +91,34 @@ export class Game extends Phaser.Scene
             .setVisible(false);
     }
 
-    initAnimations ()
-    {
-        const playerAnimations = ANIMATION.player;
-        for (const key in playerAnimations)
-        {
-            const animation = playerAnimations[ key ];
+    // initAnimations ()
+    // {
+    //     const playerAnimations = ANIMATION.player;
+    //     for (const key in playerAnimations)
+    //     {
+    //         const animation = playerAnimations[ key ];
 
-            this.anims.create({
-                key: animation.key,
-                frames: this.anims.generateFrameNumbers(animation.texture, animation.config),
-                frameRate: animation.frameRate,
-                repeat: animation.repeat
-            });
-        };
+    //         this.anims.create({
+    //             key: animation.key,
+    //             frames: this.anims.generateFrameNumbers(animation.texture, animation.config),
+    //             frameRate: animation.frameRate,
+    //             repeat: animation.repeat
+    //         });
+    //     };
 
-        const enemyAnimations = ANIMATION.enemy;
-        for (const key in enemyAnimations)
-        {
-            const animation = enemyAnimations[ key ];
+    //     const enemyAnimations = ANIMATION.enemy;
+    //     for (const key in enemyAnimations)
+    //     {
+    //         const animation = enemyAnimations[ key ];
 
-            this.anims.create({
-                key: animation.key,
-                frames: this.anims.generateFrameNumbers(animation.texture, animation.config),
-                frameRate: animation.frameRate,
-                repeat: animation.repeat
-            });
-        };
-    }
+    //         this.anims.create({
+    //             key: animation.key,
+    //             frames: this.anims.generateFrameNumbers(animation.texture, animation.config),
+    //             frameRate: animation.frameRate,
+    //             repeat: animation.repeat
+    //         });
+    //     };
+    // }
 
     initGroups ()
     {
@@ -169,22 +167,10 @@ export class Game extends Phaser.Scene
         this.map.setCollision(this.tileIds.walls);
         const tileset = this.map.addTilesetImage(ASSETS.spritesheet.tiles.key);
 
-        // create background layer
-        this.groundLayer = this.map.createBlankLayer('ground', tileset, this.mapX, this.mapY);
-        this.groundLayer.fill(0, 0, 0, this.mapWidth, this.mapHeight);
-        // loop through map from bottom to top row
-        for (let y = 0; y < this.mapHeight; y++)
-        {
-            // loop through map from left to right column
-            for (let x = 0; x < this.mapWidth; x++)
-            {
-                const tile = this.groundLayer.getTileAt(x, y);
-                tile.index = Phaser.Math.RND.weightedPick(this.tiles);
-            }
-        }
+        this.groundLayer = this.map.createLayer('ground', tileset, this.mapX, this.mapY);
 
-        // create level layer to show game level elements
         this.levelLayer = this.map.createLayer('level', tileset, this.mapX, this.mapY);
+        
         // loop through map from bottom to top row
         for (let y = 0; y < this.mapHeight; y++)
         {
@@ -218,13 +204,13 @@ export class Game extends Phaser.Scene
 
     initEnemy1 ()
     {
-        const enemy = new Enemy(this, this.playerStart.x, this.playerStart.y);
+        const enemy = new Enemy(this, this.playerStart.x, this.playerStart.y, 1);
         this.enemyGroup.add(enemy);
     }
 
     initEnemy2 ()
     {
-        const enemy = new Enemy(this, this.enemyStart.x, this.enemyStart.y);
+        const enemy = new Enemy(this, this.enemyStart.x, this.enemyStart.y, 49);
         this.enemyGroup.add(enemy);
     }
 

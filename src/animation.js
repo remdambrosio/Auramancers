@@ -1,7 +1,7 @@
 import ASSETS from './assets.js';
 
 export default {
-    player:
+    enemy1:
     {
         left: {
             key: 'player-left',
@@ -35,7 +35,7 @@ export default {
             repeat: 0
         },
     },
-    enemy: {
+    enemy2: {
         left:
         {
             key: 'enemy-left',
