@@ -7,10 +7,17 @@
     "start": "http-server -p 8080 -c-1",
     "dev": "http-server -p 8080 -c-1 -o"
   },
-  "keywords": ["phaser", "game", "javascript"],
+  "keywords": [
+    "phaser",
+    "game",
+    "javascript"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "http-server": "^14.1.1"
+  },
+  "dependencies": {
+    "eslint": "^9.31.0"
   }
 }

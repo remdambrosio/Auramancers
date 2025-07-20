@@ -5,8 +5,6 @@ import ASSETS from '../assets.js';
 import ANIMATION from '../animation.js';
 import Player from '../gameObjects/Player.js';
 import Enemy from '../gameObjects/Enemy.js';
-import Coin from '../gameObjects/Coin.js';
-import Bomb from '../gameObjects/Bomb.js';
 
 export class Game extends Phaser.Scene
 {
@@ -23,17 +21,17 @@ export class Game extends Phaser.Scene
         this.initInput();
         this.initGroups();
         this.initMap();
-        this.initPlayer();
-        this.initPhysics();
+        // this.initPhysics();
+        this.initEnemy1();
+        this.initEnemy2();
     }
 
-    update (time, delta)
-    {
-        if (!this.gameStarted) return;
+    // update (time, delta)
+    // {
+    //     if (!this.gameStarted) return;
 
-        this.player.update(delta);
-        this.addEnemy();
-    }
+    //     this.player.update(delta);
+    // }
 
     initVariables ()
     {
@@ -42,15 +40,10 @@ export class Game extends Phaser.Scene
         this.centreX = this.scale.width * 0.5;
         this.centreY = this.scale.height * 0.5;
 
-        this.spawnCounterEnemy = 0;
-        this.spawnRateEnemy = 3 * 60;
-
         this.tileIds = {
             player: 96,
             enemy: 95,
-            coin: 94,
-            bomb: 106,
-            walls: [ 45, 46, 47, 48, 53, 54, 55, 56, 57, 58, 59, 60, 65, 66, 67, 68, 69, 70, 71, 72, 77, 78, 79, 80, 81, 82, 83, 84 ]
+            walls: [ 45, 46, 47, 48, 53, 54, 55, 56, 57, 58, 59, 60, 65, 66, 67, 68, 69, 70, 71, 72, 77, 78, 79, 80, 81, 82, 83, 84, 96, 97, 98, 99, 100, 101, 102, 108, 109, 110, 111, 112, 113, 114, 120, 121, 122, 123, 124, 125, ],
         }
 
         this.playerStart = { x: 0, y: 0 };
@@ -135,16 +128,11 @@ export class Game extends Phaser.Scene
         this.itemGroup = this.add.group();
     }
 
-    initPhysics ()
-    {
-        this.physics.add.overlap(this.player, this.enemyGroup, this.hitPlayer, null, this);
-        this.physics.add.overlap(this.player, this.itemGroup, this.collectItem, null, this);
-    }
-
-    initPlayer ()
-    {
-        this.player = new Player(this, this.playerStart.x, this.playerStart.y);
-    }
+    // initPhysics ()
+    // {
+    //     this.physics.add.overlap(this.player, this.enemyGroup, this.hitPlayer, null, this);
+    //     this.physics.add.overlap(this.player, this.itemGroup, this.collectItem, null, this);
+    // }
 
     initInput ()
     {
@@ -218,16 +206,6 @@ export class Game extends Phaser.Scene
                     this.enemyStart.x = x;
                     this.enemyStart.y = y;
                 }
-                else if (tile.index === this.tileIds.coin)
-                {
-                    tile.index = -1;
-                    this.addCoin(x, y);
-                }
-                else if (tile.index === this.tileIds.bomb)
-                {
-                    tile.index = -1;
-                    this.addBomb(x, y);
-                }
             }
         }
     }
@@ -238,19 +216,16 @@ export class Game extends Phaser.Scene
         this.tutorialText.setVisible(false);
     }
 
-    addEnemy ()
+    initEnemy1 ()
     {
-        // spawn enemy every 3 seconds
-        if (this.spawnCounterEnemy-- > 0) return;
-        this.spawnCounterEnemy = this.spawnRateEnemy;
-
-        const enemy = new Enemy(this, this.enemyStart.x, this.enemyStart.y);
+        const enemy = new Enemy(this, this.playerStart.x, this.playerStart.y);
         this.enemyGroup.add(enemy);
     }
 
-    addCoin (x, y)
+    initEnemy2 ()
     {
-        this.itemGroup.add(new Coin(this, x, y));
+        const enemy = new Enemy(this, this.enemyStart.x, this.enemyStart.y);
+        this.enemyGroup.add(enemy);
     }
 
     removeItem (item)
@@ -262,17 +237,6 @@ export class Game extends Phaser.Scene
         {
             this.GameOver();
         }
-    }
-
-    addBomb (x, y)
-    {
-        this.itemGroup.add(new Bomb(this, x, y));
-    }
-
-    destroyEnemies ()
-    {
-        this.updateScore(100 * this.enemyGroup.getChildren().length);
-        this.enemyGroup.clear(true, true);
     }
 
     hitPlayer (player, obstacle)

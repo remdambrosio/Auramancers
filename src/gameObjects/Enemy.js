@@ -22,7 +22,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite
         this.target.y = this.mapOffset.y + (y * this.mapOffset.tileSize);
         this.targetPrev.x = this.target.x;
         this.targetPrev.y = this.target.y;
-        this.setPosition(this.target.x, this.target.y - this.mapOffset.tileSize);
+        this.setPosition(this.target.x, this.target.y);
         this.setCollideWorldBounds(true);
         this.setDepth(100);
         this.scene = scene;
@@ -36,6 +36,8 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite
     preUpdate (time, delta)
     {
         super.preUpdate(time, delta);
+
+        if (!this.scene.gameStarted) return;
 
         this.accumulator += delta;
 
