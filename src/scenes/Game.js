@@ -24,11 +24,9 @@ export class Game extends Phaser.Scene
         this.initEnemy2();
     }
 
-    // update (time, delta)
+    // update ()
     // {
     //     if (!this.gameStarted) return;
-
-    //     this.player.update(delta);
     // }
 
     initVariables ()
@@ -71,14 +69,14 @@ export class Game extends Phaser.Scene
             align: 'center'
         })
             .setOrigin(0.5)
-            .setDepth(100);
+            .setDepth(1000);
 
         // Create score text
         this.scoreText = this.add.text(20, 20, 'Score: 0', {
             fontFamily: 'Arial Black', fontSize: 28, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
         })
-            .setDepth(100);
+            .setDepth(1000);
 
         // Create game over text
         this.gameOverText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED', {
@@ -87,7 +85,7 @@ export class Game extends Phaser.Scene
             align: 'center'
         })
             .setOrigin(0.5)
-            .setDepth(100)
+            .setDepth(1000)
             .setVisible(false);
     }
 
@@ -123,23 +121,21 @@ export class Game extends Phaser.Scene
     initGroups ()
     {
         this.enemyGroup = this.add.group();
-        this.itemGroup = this.add.group();
     }
-
-    // initPhysics ()
-    // {
-    //     this.physics.add.overlap(this.player, this.enemyGroup, this.hitPlayer, null, this);
-    //     this.physics.add.overlap(this.player, this.itemGroup, this.collectItem, null, this);
-    // }
 
     initInput ()
     {
         this.cursors = this.input.keyboard.createCursorKeys();
 
-        // check for spacebar press only once
-        this.cursors.space.once('down', (key, event) =>
+        // check for spacebar press only once, to start game
+        this.cursors.space.once('down', () =>
         {
             this.startGame();
+        });
+
+        // x key triggers game over for testing
+        this.input.keyboard.once('keydown-X', () => {
+            this.GameOver();
         });
     }
 
@@ -200,6 +196,7 @@ export class Game extends Phaser.Scene
     {
         this.gameStarted = true;
         this.tutorialText.setVisible(false);
+        this.sound.play('auraBlazing');
     }
 
     initEnemy1 ()
@@ -214,27 +211,11 @@ export class Game extends Phaser.Scene
         this.enemyGroup.add(enemy);
     }
 
-    removeItem (item)
-    {
-        this.itemGroup.remove(item, true, true);
-
-        // check if all items have been collected
-        if (this.itemGroup.getChildren().length === 0)
-        {
-            this.GameOver();
-        }
-    }
-
     hitPlayer (player, obstacle)
     {
         player.hit();
 
         this.GameOver();
-    }
-
-    collectItem (player, item)
-    {
-        item.collect();
     }
 
     updateScore (points)
@@ -264,5 +245,6 @@ export class Game extends Phaser.Scene
     {
         this.gameStarted = false;
         this.gameOverText.setVisible(true);
+        this.sound.play('auraFaded');
     }
 }

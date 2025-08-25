@@ -1,10 +1,14 @@
 export default {
-    // 'audio': {
-    //     score: {
-    //         key: 'sound',
-    //         args: ['assets/sound.mp3', 'assets/sound.m4a', 'assets/sound.ogg']
-    //     },
-    // },
+    'audio': {
+        auraBlazing: {
+            key: 'auraBlazing',
+            args: ['assets/audio/auraBlazing.mp3']
+        },
+        auraFaded: {
+            key: 'auraFaded',
+            args: ['assets/audio/auraFaded.mp3']
+        },
+    },
     // 'image': {
     //     spikes: {
     //         key: 'spikes',
@@ -14,14 +18,14 @@ export default {
     'spritesheet': {
         tiles: {
             key: 'tiles',
-            args: ['assets/tiles.png', {
+            args: ['assets/spritesheet/tiles.png', {
                 frameWidth: 32,
                 frameHeight: 32
             }]
         },
         characters: {
             key: 'characters',
-            args: ['assets/characters.png', {
+            args: ['assets/spritesheet/characters.png', {
                 frameWidth: 32,
                 frameHeight: 32
             }]
