@@ -2,34 +2,23 @@ import ASSETS from '../assets.js';
 
 export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {
-    moveSpeed = 500; // time in milliseconds to move from one tile to another
-    frameDuration = 0;
-    accumulator = 0;
-    direction = { x: 0, y: 0 };
-    target = { x: 0, y: 0 };
-    targetPrev = { x: 0, y: 0 };
+    turnTimer = 0;
+    turnLength = 1000;
+    targetTile = null;
 
     constructor(scene, x, y, spriteKey)
     {
         super(scene, x, y, ASSETS.spritesheet.characters.key, spriteKey);
-
         scene.add.existing(this);
         scene.physics.add.existing(this);
-
         this.mapOffset = scene.getMapOffset();
-        this.target.x = this.mapOffset.x + (x * this.mapOffset.tileSize);
-        this.target.y = this.mapOffset.y + (y * this.mapOffset.tileSize);
-        this.targetPrev.x = this.target.x;
-        this.targetPrev.y = this.target.y;
-        this.setPosition(this.target.x, this.target.y);
+        this.setPosition(
+            this.mapOffset.x + (x * this.mapOffset.tileSize),
+            this.mapOffset.y + (y * this.mapOffset.tileSize)
+        );
         this.setCollideWorldBounds(true);
         this.setDepth(100);
         this.scene = scene;
-        this.direction.x = Math.round(Math.random()) === 0 ? -1 : 1;
-        this.frameDuration = this.moveSpeed / this.mapOffset.tileSize;
-
-        this.mapLeft = this.mapOffset.x - (this.mapOffset.tileSize * 0.5);
-        this.mapRight = this.mapOffset.x + (this.mapOffset.width * this.mapOffset.tileSize) - (this.mapOffset.tileSize * 0.5);
     }
 
     preUpdate (time, delta)
@@ -38,120 +27,71 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
 
         if (this.scene.gameState != 'live') return;
 
-        this.accumulator += delta;
-
-        while (this.accumulator > this.frameDuration)
+        this.turnTimer += delta;
+        if (this.turnTimer > this.turnLength)
         {
-            this.accumulator -= this.frameDuration;
-            this.checkPosition();
+            this.turnTimer = 0;
             this.move();
         }
     }
 
-    checkPosition ()
-    {
-        // check if wizard is at target position
-        if (this.target.x === this.x && this.target.y === this.y)
-        {
-            const left = this.x - this.mapOffset.tileSize;
-            const right = this.x + this.mapOffset.tileSize;
-            const top = this.y - this.mapOffset.tileSize;
-            const bottom = this.y + this.mapOffset.tileSize;
-
-            // check left
-            const leftPosition = { x: left, y: this.y };
-            const tileLeft = this.scene.getTileAt(leftPosition.x, leftPosition.y);
-
-            // check right
-            const rightPosition = { x: right, y: this.y };
-            const tileRight = this.scene.getTileAt(rightPosition.x, rightPosition.y);
-
-            // check top
-            const topPosition = { x: this.x, y: top };
-            const tileTop = this.scene.getTileAt(topPosition.x, topPosition.y);
-
-            // check bottom
-            const bottomPosition = { x: this.x, y: bottom };
-            const tileBottom = this.scene.getTileAt(bottomPosition.x, bottomPosition.y);
-
-            const nextTargets = []; // list of possible next targets
-
-            // moving left
-            if (this.direction.x === -1)
-            {
-                if (tileLeft === -1) nextTargets.push(leftPosition, leftPosition, leftPosition, leftPosition);
-                if (tileTop === -1) nextTargets.push(topPosition);
-                if (tileBottom === -1) nextTargets.push(bottomPosition);
-            }
-            // moving right
-            else if (this.direction.x === 1)
-            {
-                if (tileRight === -1) nextTargets.push(rightPosition, rightPosition, rightPosition, rightPosition);
-                if (tileTop === -1) nextTargets.push(topPosition);
-                if (tileBottom === -1) nextTargets.push(bottomPosition);
-            }
-            // moving up
-            else if (this.direction.y === -1)
-            {
-                if (tileTop === -1) nextTargets.push(topPosition, topPosition, topPosition, topPosition);
-                if (tileLeft === -1) nextTargets.push(leftPosition);
-                if (tileRight === -1) nextTargets.push(rightPosition);
-            }
-            // moving down
-            else if (this.direction.y === 1)
-            {
-                if (tileBottom === -1) nextTargets.push(bottomPosition, bottomPosition, bottomPosition, bottomPosition);
-                if (tileLeft === -1) nextTargets.push(leftPosition);
-                if (tileRight === -1) nextTargets.push(rightPosition);
-            }
-
-            this.changeDirection(nextTargets);
-        }
-    }
-
-    changeDirection (nextTargets)
-    {
-        const randomDirection = Phaser.Math.RND.weightedPick(nextTargets); // prioritize moving in the same direction
-        this.target.x = randomDirection.x;
-        this.target.y = randomDirection.y;
-
-        if (this.x < this.target.x) this.direction.x = 1;
-        else if (this.x > this.target.x) this.direction.x = -1;
-        else this.direction.x = 0;
-        if (this.y < this.target.y) this.direction.y = 1;
-        else if (this.y > this.target.y) this.direction.y = -1;
-        else this.direction.y = 0;
-    }
-
-    // move wizard towards target position
     move ()
     {
-        if (this.x < this.target.x)
-        {
-            this.x++;
-        }
-        else if (this.x > this.target.x)
-        {
-            this.x--;
-        }
-        if (this.y < this.target.y)
-        {
-            this.y++;
-        }
-        else if (this.y > this.target.y)
-        {
-            this.y--;
+        const validDirections = this.validDirections();
+
+        if (validDirections.length === 0) {
+            targetTile = null;
+            return;
         }
 
-        if (this.x < this.mapLeft)
-        {
-            this.x = this.mapRight;
-            this.target.x = this.mapRight - (this.mapOffset.tileSize * 0.5);
-        }
-        else if (this.x > this.mapRight)
-        {
-            this.x = this.mapLeft;
-            this.target.x = this.mapLeft + (this.mapOffset.tileSize * 0.5);
-        }
+        const chosen = Phaser.Math.RND.pick(validDirections);
+        const tileSize = this.mapOffset.tileSize;
+        const targetX = this.x + chosen.x;
+        const targetY = this.y + chosen.y;
+        const targetTileX = Math.round((targetX - this.mapOffset.x) / tileSize);
+        const targetTileY = Math.round((targetY - this.mapOffset.y) / tileSize);
+        this.targetTile = { x: targetTileX, y: targetTileY };
+
+        this.scene.tweens.add({
+            targets: this,
+            x: targetX,
+            y: targetY,
+            duration: 200,
+            ease: 'Power2'
+        });
+    }
+
+    validDirections() {
+        const tileSize = this.mapOffset.tileSize;
+        const directions = [
+            { x: -tileSize, y: 0 },
+            { x: tileSize, y: 0 },
+            { x: 0, y: -tileSize },
+            { x: 0, y: tileSize }
+        ];
+
+        return directions.filter(dir => {
+            const newX = this.x + dir.x;
+            const newY = this.y + dir.y;
+            const tileX = Math.round((newX - this.mapOffset.x) / tileSize);
+            const tileY = Math.round((newY - this.mapOffset.y) / tileSize);
+
+            return this.scene.getTileAt(newX, newY) === -1 && !this.isTileOccupied(tileX, tileY);
+        });
+    }
+
+    isTileOccupied(tileX, tileY) {
+        return this.scene.wizardGroup.getChildren().some(wizard => {
+            // don't check self
+            if (wizard === this) return false;
+            // check if wizard at target
+            const wx = Math.round((wizard.x - this.mapOffset.x) / this.mapOffset.tileSize);
+            const wy = Math.round((wizard.y - this.mapOffset.y) / this.mapOffset.tileSize);
+            // check if wizard intends to move to target
+            if (wizard.targetTile) {
+                if (wizard.targetTile.x === tileX && wizard.targetTile.y === tileY) return true;
+            }
+            return wx === tileX && wy === tileY;
+        });
     }
 }

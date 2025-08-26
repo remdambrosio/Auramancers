@@ -21,12 +21,12 @@ export class Game extends Phaser.Scene
 
     // update ()
     // {
-    //     if (!this.gameLive) return;
+    //     if (!this.gameState === 'live') return;
     // }
 
     initVariables ()
     {
-        this.gameState = 'start';
+        this.gameState = 'start';                   // 'start', 'live', 'end'
         this.centreX = this.scale.width * 0.5;
         this.centreY = this.scale.height * 0.5;
 
@@ -56,7 +56,6 @@ export class Game extends Phaser.Scene
 
     initGameUi ()
     {
-        // create start text
         this.startGameText = this.add.text(this.centreX, this.centreY, 'AURA BLAZING!\nPress Spacebar', {
             fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
@@ -66,7 +65,6 @@ export class Game extends Phaser.Scene
             .setDepth(1000)
             .setVisible(true);
 
-        // create end text
         this.endGameText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED!\nPress Spacebar', {
             fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
@@ -85,15 +83,15 @@ export class Game extends Phaser.Scene
     initInput ()
     {
         this.input.keyboard.on('keydown-SPACE', () => {
-            if (this.gameState == 'start') {
+            if (this.gameState === 'start') {
                 this.startGame();
-            } else if (this.gameState == 'end') {
+            } else if (this.gameState === 'end') {
                 this.scene.restart();
             }
         });
 
         this.input.keyboard.on('keydown-X', () => {
-            if (this.gameState == 'live') {
+            if (this.gameState === 'live') {
                 this.endGame();
             }
         });
