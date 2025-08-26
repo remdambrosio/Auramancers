@@ -2,8 +2,10 @@ import ASSETS from '../assets.js';
 
 export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {
-    turnTimer = 0;
-    turnLength = 1000;
+    moveTimer = 0;
+    moveLength = 1000;
+    attackTimer = 500;
+    attackLength = 1000;
     targetTile = null;
 
     constructor(scene, x, y, spriteKey)
@@ -27,11 +29,18 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
 
         if (this.scene.gameState != 'live') return;
 
-        this.turnTimer += delta;
-        if (this.turnTimer > this.turnLength)
+        this.moveTimer += delta;
+        if (this.moveTimer > this.moveLength)
         {
-            this.turnTimer = 0;
+            this.moveTimer = 0;
             this.move();
+        }
+
+        this.attackTimer += delta;
+        if (this.attackTimer > this.attackLength)
+        {
+            this.attackTimer = 0;
+            this.attack();
         }
     }
 
@@ -93,5 +102,10 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             }
             return wx === tileX && wy === tileY;
         });
+    }
+
+    attack () {
+        this.setTint(0xFF0000);
+        setTimeout(() => {this.clearTint();}, 100); 
     }
 }
