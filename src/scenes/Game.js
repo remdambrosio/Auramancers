@@ -1,8 +1,5 @@
-/*
-* Asset from: https://kenney.nl/assets/pixel-platformer
-*/
 import ASSETS from '../assets.js';
-import Enemy from '../gameObjects/Enemy.js';
+import Wizard from '../gameObjects/Wizard.js';
 
 export class Game extends Phaser.Scene
 {
@@ -19,9 +16,8 @@ export class Game extends Phaser.Scene
         this.initInput();
         this.initGroups();
         this.initMap();
-        // this.initPhysics();
-        this.initEnemy1();
-        this.initEnemy2();
+        this.initWizard1();
+        this.initWizard2();
     }
 
     // update ()
@@ -32,37 +28,36 @@ export class Game extends Phaser.Scene
     initVariables ()
     {
         this.gameStarted = false;
-        this.score = 0;
         this.centreX = this.scale.width * 0.5;
         this.centreY = this.scale.height * 0.5;
 
         this.tileIds = {
-            player: 96,
-            enemy: 95,
+            wizard1: 96,
+            wizard2: 95,
             walls: [ 45, 46, 47, 48, 53, 54, 55, 56, 57, 58, 59, 60, 65, 66, 67, 68, 69, 70, 71, 72, 77, 78, 79, 80, 81, 82, 83, 84, 96, 97, 98, 99, 100, 101, 102, 108, 109, 110, 111, 112, 113, 114, 120, 121, 122, 123, 124, 125, ],
         }
 
-        this.playerStart = { x: 0, y: 0 };
-        this.enemyStart = { x: 0, y: 0 };
+        this.wizard1Start = { x: 0, y: 0 };
+        this.wizard2Start = { x: 0, y: 0 };
 
         // used to generate random background image
         this.tiles = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 44 ];
-        this.tileSize = 32; // width and height of a tile in pixels
+        this.tileSize = 32;     // width and height of a tile in pixels
         this.halfTileSize = this.tileSize * 0.5; // width and height of a tile in pixels
 
-        this.mapHeight = 15; // height of the tile map (in tiles)
-        this.mapWidth = 21; // width of the tile map (in tiles)
+        this.mapHeight = 15;    // height of the tile map (in tiles)
+        this.mapWidth = 21;     // width of the tile map (in tiles)
         this.mapX = this.centreX - (this.mapWidth * this.tileSize * 0.5); // x position of the top-left corner of the tile map
         this.mapY = this.centreY - (this.mapHeight * this.tileSize * 0.5); // y position of the top-left corner of the tile map
 
-        this.map; // reference to tile map
-        this.groundLayer; // used to create background layer of tile map
-        this.levelLayer; // reference to level layer of tile map
+        this.map;               // reference to tile map
+        this.groundLayer;       // used to create background layer of tile map
+        this.levelLayer;        // reference to level layer of tile map
     }
 
     initGameUi ()
     {
-        // Create tutorial text
+        // create tutorial text
         this.tutorialText = this.add.text(this.centreX, this.centreY, 'AURA BLAZING!\nPress Spacebar', {
             fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
@@ -71,14 +66,7 @@ export class Game extends Phaser.Scene
             .setOrigin(0.5)
             .setDepth(1000);
 
-        // Create score text
-        this.scoreText = this.add.text(20, 20, 'Score: 0', {
-            fontFamily: 'Arial Black', fontSize: 28, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-        })
-            .setDepth(1000);
-
-        // Create game over text
+        // create game over text
         this.gameOverText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED', {
             fontFamily: 'Arial Black', fontSize: 64, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
@@ -89,38 +77,9 @@ export class Game extends Phaser.Scene
             .setVisible(false);
     }
 
-    // initAnimations ()
-    // {
-    //     const playerAnimations = ANIMATION.player;
-    //     for (const key in playerAnimations)
-    //     {
-    //         const animation = playerAnimations[ key ];
-
-    //         this.anims.create({
-    //             key: animation.key,
-    //             frames: this.anims.generateFrameNumbers(animation.texture, animation.config),
-    //             frameRate: animation.frameRate,
-    //             repeat: animation.repeat
-    //         });
-    //     };
-
-    //     const enemyAnimations = ANIMATION.enemy;
-    //     for (const key in enemyAnimations)
-    //     {
-    //         const animation = enemyAnimations[ key ];
-
-    //         this.anims.create({
-    //             key: animation.key,
-    //             frames: this.anims.generateFrameNumbers(animation.texture, animation.config),
-    //             frameRate: animation.frameRate,
-    //             repeat: animation.repeat
-    //         });
-    //     };
-    // }
-
     initGroups ()
     {
-        this.enemyGroup = this.add.group();
+        this.wizardGroup = this.add.group();
     }
 
     initInput ()
@@ -176,17 +135,17 @@ export class Game extends Phaser.Scene
                 const tile = this.levelLayer.getTileAt(x, y);
                 if (!tile) continue
 
-                if (tile.index === this.tileIds.player)
+                if (tile.index === this.tileIds.wizard1)
                 {
                     tile.index = -1;
-                    this.playerStart.x = x;
-                    this.playerStart.y = y;
+                    this.wizard1Start.x = x;
+                    this.wizard1Start.y = y;
                 }
-                else if (tile.index === this.tileIds.enemy)
+                else if (tile.index === this.tileIds.wizard2)
                 {
                     tile.index = -1;
-                    this.enemyStart.x = x;
-                    this.enemyStart.y = y;
+                    this.wizard2Start.x = x;
+                    this.wizard2Start.y = y;
                 }
             }
         }
@@ -199,29 +158,16 @@ export class Game extends Phaser.Scene
         this.sound.play('auraBlazing');
     }
 
-    initEnemy1 ()
+    initWizard1 ()
     {
-        const enemy = new Enemy(this, this.playerStart.x, this.playerStart.y, 1);
-        this.enemyGroup.add(enemy);
+        const wizard = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 1);
+        this.wizardGroup.add(wizard);
     }
 
-    initEnemy2 ()
+    initWizard2 ()
     {
-        const enemy = new Enemy(this, this.enemyStart.x, this.enemyStart.y, 49);
-        this.enemyGroup.add(enemy);
-    }
-
-    hitPlayer (player, obstacle)
-    {
-        player.hit();
-
-        this.GameOver();
-    }
-
-    updateScore (points)
-    {
-        this.score += points;
-        this.scoreText.setText(`Score: ${this.score}`);
+        const wizard = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 49);
+        this.wizardGroup.add(wizard);
     }
 
     getMapOffset ()

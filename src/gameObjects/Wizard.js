@@ -1,6 +1,6 @@
 import ASSETS from '../assets.js';
 
-export default class Enemy extends Phaser.Physics.Arcade.Sprite
+export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {
     moveSpeed = 500; // time in milliseconds to move from one tile to another
     frameDuration = 0;
@@ -50,7 +50,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite
 
     checkPosition ()
     {
-        // check if enemy is at target position
+        // check if wizard is at target position
         if (this.target.x === this.x && this.target.y === this.y)
         {
             const left = this.x - this.mapOffset.tileSize;
@@ -123,7 +123,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite
         else this.direction.y = 0;
     }
 
-    // move enemy towards target position
+    // move wizard towards target position
     move ()
     {
         if (this.x < this.target.x)
