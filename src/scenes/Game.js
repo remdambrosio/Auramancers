@@ -12,7 +12,6 @@ export class Game extends Phaser.Scene
     {
         this.initVariables();
         this.initGameUi();
-        // this.initAnimations();
         this.initInput();
         this.initGroups();
         this.initMap();
@@ -22,12 +21,12 @@ export class Game extends Phaser.Scene
 
     // update ()
     // {
-    //     if (!this.gameStarted) return;
+    //     if (!this.gameLive) return;
     // }
 
     initVariables ()
     {
-        this.gameStarted = false;
+        this.gameState = 'start';
         this.centreX = this.scale.width * 0.5;
         this.centreY = this.scale.height * 0.5;
 
@@ -57,18 +56,19 @@ export class Game extends Phaser.Scene
 
     initGameUi ()
     {
-        // create tutorial text
-        this.tutorialText = this.add.text(this.centreX, this.centreY, 'AURA BLAZING!\nPress Spacebar', {
+        // create start text
+        this.startGameText = this.add.text(this.centreX, this.centreY, 'AURA BLAZING!\nPress Spacebar', {
             fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         })
             .setOrigin(0.5)
-            .setDepth(1000);
+            .setDepth(1000)
+            .setVisible(true);
 
-        // create game over text
-        this.gameOverText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED', {
-            fontFamily: 'Arial Black', fontSize: 64, color: '#ffffff',
+        // create end text
+        this.endGameText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED!\nPress Spacebar', {
+            fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
             align: 'center'
         })
@@ -84,17 +84,18 @@ export class Game extends Phaser.Scene
 
     initInput ()
     {
-        this.cursors = this.input.keyboard.createCursorKeys();
-
-        // check for spacebar press only once, to start game
-        this.cursors.space.once('down', () =>
-        {
-            this.startGame();
+        this.input.keyboard.on('keydown-SPACE', () => {
+            if (this.gameState == 'start') {
+                this.startGame();
+            } else if (this.gameState == 'end') {
+                this.scene.restart();
+            }
         });
 
-        // x key triggers game over for testing
-        this.input.keyboard.once('keydown-X', () => {
-            this.GameOver();
+        this.input.keyboard.on('keydown-X', () => {
+            if (this.gameState == 'live') {
+                this.endGame();
+            }
         });
     }
 
@@ -153,9 +154,17 @@ export class Game extends Phaser.Scene
 
     startGame ()
     {
-        this.gameStarted = true;
-        this.tutorialText.setVisible(false);
+        this.gameState = 'live';
+        this.startGameText.setVisible(false);
+        this.endGameText.setVisible(false);
         this.sound.play('auraBlazing');
+    }
+
+    endGame ()
+    {
+        this.gameState = 'end';
+        this.endGameText.setVisible(true);
+        this.sound.play('auraFaded');
     }
 
     initWizard1 ()
@@ -185,12 +194,5 @@ export class Game extends Phaser.Scene
     {
         const tile = this.levelLayer.getTileAtWorldXY(x, y, true);
         return tile ? this.tileIds.walls.indexOf(tile.index) : -1;
-    }
-
-    GameOver ()
-    {
-        this.gameStarted = false;
-        this.gameOverText.setVisible(true);
-        this.sound.play('auraFaded');
     }
 }

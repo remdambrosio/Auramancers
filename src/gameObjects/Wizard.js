@@ -36,7 +36,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
     {
         super.preUpdate(time, delta);
 
-        if (!this.scene.gameStarted) return;
+        if (this.scene.gameState != 'live') return;
 
         this.accumulator += delta;
 
