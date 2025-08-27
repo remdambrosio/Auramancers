@@ -13,13 +13,21 @@ export class Preloader extends Phaser.Scene {
         const barHeight = 32;
         const barMargin = 4;
 
-        this.add.rectangle(centreX, centreY, barWidth, barHeight).setStrokeStyle(1, 0xffffff);
-
-        const bar = this.add.rectangle(centreX - (barWidth * 0.5) + barMargin, centreY, barMargin, barHeight - barMargin, 0xffffff);
+        this.outline = this.add.rectangle(centreX, centreY, barWidth, barHeight).setStrokeStyle(1, 0xffffff);
+        this.bar = this.add.rectangle(centreX - (barWidth * 0.5) + barMargin, centreY, barMargin, barHeight - barMargin, 0xffffff);
 
         this.load.on('progress', (progress) => {
-            bar.width = barMargin + ((barWidth - (barMargin * 2)) * progress);
+            this.bar.width = barMargin + ((barWidth - (barMargin * 2)) * progress);
         });
+
+        this.startGameText = this.add.text(centreX, centreY, 'AURAMANCERS\nClick to Start', {
+            fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 8,
+            align: 'center'
+        })
+            .setOrigin(0.5)
+            .setDepth(1000)
+            .setVisible(false);
     }
 
     preload() {
@@ -37,7 +45,16 @@ export class Preloader extends Phaser.Scene {
         //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
         //  For example, you can define global animations here, so we can use them in other scenes.
 
-        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('Game');
+        this.outline.setVisible(false);
+        this.bar.setVisible(false);
+
+        if (this.sound.locked) {
+            this.startGameText.setVisible(true);
+            this.input.once('pointerdown', () => {
+                this.scene.start('Game');
+            });
+        } else {
+            this.scene.start('Game');
+        }
     }
 }

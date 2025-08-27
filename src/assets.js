@@ -8,9 +8,9 @@ export default {
             key: 'auraFaded',
             args: ['assets/audio/auraFaded.mp3']
         },
-        theme: {
-            key: 'theme',
-            args: ['assets/audio/theme.mp3']
+        riseOfTheManimals: {
+            key: 'riseOfTheManimals',
+            args: ['assets/audio/riseOfTheManimals.mp3']
         }
     },
     'image': {
