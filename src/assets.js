@@ -9,12 +9,12 @@ export default {
             args: ['assets/audio/auraFaded.mp3']
         },
     },
-    // 'image': {
-    //     spikes: {
-    //         key: 'spikes',
-    //         args: ['assets/spikes.png']
-    //     },
-    // },
+    'image': {
+        attackEffects: {
+            key: 'spark',
+            args: ['assets/image/spark.png']
+        },
+    },
     'spritesheet': {
         tiles: {
             key: 'tiles',
