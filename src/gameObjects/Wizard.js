@@ -10,7 +10,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
     attackLength = 1000;
     targetAttackTile = null;
 
-    constructor(scene, x, y, spriteKey)
+    constructor(scene, x, y, spriteKey, attackTint)
     {
         super(scene, x, y, ASSETS.spritesheet.characters.key, spriteKey);
         scene.add.existing(this);
@@ -35,11 +35,11 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.scene = scene;
 
         this.emitter = scene.add.particles(0, 0, 'spark', {
-            // tint: 0x9D00FF,
+            tint: attackTint,
             lifespan: 200,
-            speed: { min: 100, max: 200 },
-            scale: { start: 1, end: 0 },
-            blendMode: 'ADD',
+            speed: { min: 25, max: 125 },
+            scale: { start: 0.8, end: 0 },
+            blendMode: 'NORMAL',
             emitting: false
         });
     }
@@ -111,15 +111,12 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
     }
 
     attack () {
-        // this.setTint(0x008000);
-        // setTimeout(() => {this.clearTint();}, 100);
-
         this.targetAttackTile = this.targetFromDirections(this.directions);
 
         const pixelX = this.mapOffset.x + (this.targetAttackTile.x * this.tileSize);
         const pixelY = this.mapOffset.y + (this.targetAttackTile.y * this.tileSize);
         this.emitter.setPosition(pixelX, pixelY);
-        this.emitter.explode(20);
+        this.emitter.explode(10);
     }
 
     targetFromDirections(directions) {

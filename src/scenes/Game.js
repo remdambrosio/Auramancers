@@ -17,6 +17,7 @@ export class Game extends Phaser.Scene
         this.initMap();
         this.initWizard1();
         this.initWizard2();
+        this.sound.play('auraBlazing');
     }
 
     // update ()
@@ -155,25 +156,28 @@ export class Game extends Phaser.Scene
         this.gameState = 'live';
         this.startGameText.setVisible(false);
         this.endGameText.setVisible(false);
-        this.sound.play('auraBlazing');
+
+        this.sound.play('theme', { volume: 0.1, loop: true });
     }
 
     endGame ()
     {
         this.gameState = 'end';
         this.endGameText.setVisible(true);
+
+        this.sound.stopAll();
         this.sound.play('auraFaded');
     }
 
     initWizard1 ()
     {
-        const wizard = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 1);
+        const wizard = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 1, 0x0000FF);
         this.wizardGroup.add(wizard);
     }
 
     initWizard2 ()
     {
-        const wizard = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 49);
+        const wizard = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 49, 0xFF0000);
         this.wizardGroup.add(wizard);
     }
 

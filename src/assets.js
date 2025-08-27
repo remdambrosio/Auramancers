@@ -8,9 +8,13 @@ export default {
             key: 'auraFaded',
             args: ['assets/audio/auraFaded.mp3']
         },
+        theme: {
+            key: 'theme',
+            args: ['assets/audio/theme.mp3']
+        }
     },
     'image': {
-        attackEffects: {
+        spark: {
             key: 'spark',
             args: ['assets/image/spark.png']
         },
