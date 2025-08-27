@@ -35,10 +35,10 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.scene = scene;
 
         this.emitter = scene.add.particles(0, 0, 'spark', {
-            tint: 0x9D00FF,
-            lifespan: 400,
-            speed: { min: 50, max: 100 },
-            scale: { start: 0.05, end: 0 },
+            // tint: 0x9D00FF,
+            lifespan: 200,
+            speed: { min: 100, max: 200 },
+            scale: { start: 1, end: 0 },
             blendMode: 'ADD',
             emitting: false
         });
@@ -119,7 +119,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         const pixelX = this.mapOffset.x + (this.targetAttackTile.x * this.tileSize);
         const pixelY = this.mapOffset.y + (this.targetAttackTile.y * this.tileSize);
         this.emitter.setPosition(pixelX, pixelY);
-        this.emitter.explode(10);
+        this.emitter.explode(20);
     }
 
     targetFromDirections(directions) {
