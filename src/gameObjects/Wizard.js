@@ -8,13 +8,15 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
 
     attackTimer = 500;
     attackLength = 1000;
-    targetAttackTile = null;
+    targetAttackTiles = null;
 
     constructor(scene, x, y, spriteKey, attackTint)
     {
         super(scene, x, y, ASSETS.spritesheet.characters.key, spriteKey);
         scene.add.existing(this);
         scene.physics.add.existing(this);
+
+        this.tile = { x: x, y: y };
 
         this.mapOffset = scene.getMapOffset();
         this.tileSize = this.mapOffset.tileSize;
@@ -24,10 +26,10 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         );
 
         this.directions = [
-            { x: -this.tileSize, y: 0 },
-            { x: this.tileSize, y: 0 },
-            { x: 0, y: -this.tileSize },
-            { x: 0, y: this.tileSize }
+            { x: -1, y: 0 },
+            { x: 1, y: 0 },
+            { x: 0, y: -1 },
+            { x: 0, y: 1 }
         ];
 
         this.setCollideWorldBounds(true);
@@ -36,8 +38,8 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
 
         this.emitter = scene.add.particles(0, 0, 'spark', {
             tint: attackTint,
-            lifespan: 200,
-            speed: { min: 25, max: 125 },
+            lifespan: 250,
+            speed: { min: 25, max: 75 },
             scale: { start: 0.8, end: 0 },
             blendMode: 'NORMAL',
             emitting: false
@@ -67,64 +69,69 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
 
     move ()
     {
-        const validDirections = this.validDirections();
+        const validMoveDirections = this.validMoveDirections();
 
-        if (validDirections.length === 0) {
+        if (validMoveDirections.length === 0) {
             targetMoveTile = null;
             return;
         }
 
-        this.targetMoveTile = this.targetFromDirections(validDirections);
+        const chosenDir = Phaser.Math.RND.pick(validMoveDirections);
+        this.targetMoveTile = {
+            x: this.tile.x + chosenDir.x,
+            y: this.tile.y + chosenDir.y
+        };
 
         this.scene.tweens.add({
             targets: this,
             x: this.mapOffset.x + (this.targetMoveTile.x * this.tileSize),
             y: this.mapOffset.y + (this.targetMoveTile.y * this.tileSize),
             duration: 200,
-            ease: 'Power2'
+            ease: 'Power2',
+            onComplete: () => {
+                this.tile.x = this.targetMoveTile.x;
+                this.tile.y = this.targetMoveTile.y;
+            }
         });
     }
 
-    validDirections() {
+    validMoveDirections() {
         return this.directions.filter(dir => {
-            const newX = this.x + dir.x;
-            const newY = this.y + dir.y;
-            const tileX = Math.round((newX - this.mapOffset.x) / this.tileSize);
-            const tileY = Math.round((newY - this.mapOffset.y) / this.tileSize);
-            return this.scene.getTileAt(newX, newY) === -1 && !this.isTileOccupied(tileX, tileY);
+            const tileX = this.tile.x + dir.x;
+            const tileY = this.tile.y + dir.y;
+            const pixelX = this.mapOffset.x + (tileX * this.tileSize);
+            const pixelY = this.mapOffset.y + (tileY * this.tileSize);
+            return this.scene.getTileAt(pixelX, pixelY) === -1 && !this.isTileOccupied(tileX, tileY);
         });
     }
 
     isTileOccupied(tileX, tileY) {
         return this.scene.wizardGroup.getChildren().some(wizard => {
-            // don't check self
             if (wizard === this) return false;
-            // check if wizard at target
-            const wx = Math.round((wizard.x - this.mapOffset.x) / this.tileSize);
-            const wy = Math.round((wizard.y - this.mapOffset.y) / this.tileSize);
-            // check if wizard intends to move to target
             if (wizard.targetMoveTile) {
                 if (wizard.targetMoveTile.x === tileX && wizard.targetMoveTile.y === tileY) return true;
             }
-            return wx === tileX && wy === tileY;
+            return wizard.tile.x === tileX && wizard.tile.y === tileY;
         });
     }
 
     attack () {
-        this.targetAttackTile = this.targetFromDirections(this.directions);
+        const chosenDir = Phaser.Math.RND.pick(this.directions);
+        this.targetAttackTiles = [];
 
-        const pixelX = this.mapOffset.x + (this.targetAttackTile.x * this.tileSize);
-        const pixelY = this.mapOffset.y + (this.targetAttackTile.y * this.tileSize);
-        this.emitter.setPosition(pixelX, pixelY);
-        this.emitter.explode(10);
-    }
+        let curTile = this.tile;
+        for (let i = 0; i < 3; i++) {
+            curTile = {
+                x: curTile.x + chosenDir.x,
+                y: curTile.y + chosenDir.y
+            };
+            this.targetAttackTiles.push({ ...curTile });
+        }
 
-    targetFromDirections(directions) {
-        const chosen = Phaser.Math.RND.pick(directions);
-        const targetX = this.x + chosen.x;
-        const targetY = this.y + chosen.y;
-        const targetTileX = Math.round((targetX - this.mapOffset.x) / this.tileSize);
-        const targetTileY = Math.round((targetY - this.mapOffset.y) / this.tileSize);
-        return { x: targetTileX, y: targetTileY };
+        this.targetAttackTiles.forEach((tile, i) => {
+            const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
+            const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
+            setTimeout(() => { this.emitter.emitParticleAt(pixelX, pixelY, 5); }, 25 * i);
+        });
     }
 }
