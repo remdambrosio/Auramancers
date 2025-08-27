@@ -10,13 +10,11 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
     attackLength = 1000;
     targetAttackTiles = null;
 
-    constructor(scene, x, y, spriteKey, attackTint)
+    constructor(scene, x, y, spriteKey, energyTint)
     {
         super(scene, x, y, ASSETS.spritesheet.characters.key, spriteKey);
         scene.add.existing(this);
         scene.physics.add.existing(this);
-
-        this.tile = { x: x, y: y };
 
         this.mapOffset = scene.getMapOffset();
         this.tileSize = this.mapOffset.tileSize;
@@ -25,6 +23,14 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             this.mapOffset.y + (y * this.tileSize)
         );
 
+        this.setCollideWorldBounds(true);
+        this.setDepth(100);
+        this.scene = scene;
+
+        this.health = 5;
+        this.tile = { x: x, y: y };
+        this.energyTint = energyTint;
+
         this.directions = [
             { x: -1, y: 0 },
             { x: 1, y: 0 },
@@ -32,18 +38,15 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             { x: 0, y: 1 }
         ];
 
-        this.setCollideWorldBounds(true);
-        this.setDepth(100);
-        this.scene = scene;
-
         this.emitter = scene.add.particles(0, 0, 'spark', {
-            tint: attackTint,
+            tint: this.energyTint,
             lifespan: 250,
             speed: { min: 25, max: 75 },
             scale: { start: 0.8, end: 0 },
             blendMode: 'NORMAL',
             emitting: false
         });
+        this.emitter.setDepth(200);
     }
 
     preUpdate (time, delta)
@@ -95,7 +98,8 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         });
     }
 
-    validMoveDirections() {
+    validMoveDirections()
+    {
         return this.directions.filter(dir => {
             const tileX = this.tile.x + dir.x;
             const tileY = this.tile.y + dir.y;
@@ -105,7 +109,8 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         });
     }
 
-    isTileOccupied(tileX, tileY) {
+    isTileOccupied(tileX, tileY)
+    {
         return this.scene.wizardGroup.getChildren().some(wizard => {
             if (wizard === this) return false;
             if (wizard.targetMoveTile) {
@@ -115,7 +120,8 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         });
     }
 
-    attack () {
+    attack ()
+    {
         const chosenDir = Phaser.Math.RND.pick(this.directions);
         this.targetAttackTiles = [];
 
@@ -129,9 +135,21 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         }
 
         this.targetAttackTiles.forEach((tile, i) => {
+            let wizardHit = this.wizardHit(tile.x, tile.y);
+            if (wizardHit) console.log('wizard had health ' + wizardHit.health);
+            if (wizardHit) wizardHit.health--;
+            if (wizardHit) console.log('wizard now has health ' + wizardHit.health);
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             setTimeout(() => { this.emitter.emitParticleAt(pixelX, pixelY, 5); }, 25 * i);
+        });
+    }
+
+    wizardHit(tileX, tileY)
+    {
+        return this.scene.wizardGroup.getChildren().find(wizard => {
+            if (wizard === this) return false;      // friendly fire will not be tolerated
+            return wizard.tile.x === tileX && wizard.tile.y === tileY;
         });
     }
 }

@@ -1,5 +1,6 @@
 import ASSETS from '../assets.js';
 import Wizard from '../gameObjects/Wizard.js';
+import HealthBar from '../gameObjects/HealthBar.js';
 
 export class Game extends Phaser.Scene
 {
@@ -20,10 +21,10 @@ export class Game extends Phaser.Scene
         this.sound.play('auraBlazing');
     }
 
-    // update ()
-    // {
-    //     if (!this.gameState === 'live') return;
-    // }
+    update ()
+    {
+        this.wizardBarGroup.getChildren().forEach(bar => bar.update());
+    }
 
     initVariables ()
     {
@@ -79,6 +80,7 @@ export class Game extends Phaser.Scene
     initGroups ()
     {
         this.wizardGroup = this.add.group();
+        this.wizardBarGroup = this.add.group();
     }
 
     initInput ()
@@ -171,14 +173,18 @@ export class Game extends Phaser.Scene
 
     initWizard1 ()
     {
-        const wizard = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 1, 0x0000FF);
-        this.wizardGroup.add(wizard);
+        const wizard1 = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 1, 0x0000FF);
+        this.wizardGroup.add(wizard1);
+        const wizard1bar = new HealthBar(this, this.centreX - 105, this.centreY + 120, wizard1);
+        this.wizardBarGroup.add(wizard1bar);
     }
 
     initWizard2 ()
     {
-        const wizard = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 49, 0xFF0000);
-        this.wizardGroup.add(wizard);
+        const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 49, 0xFF0000);
+        this.wizardGroup.add(wizard2);
+        const wizard2bar = new HealthBar(this, this.centreX + 5, this.centreY + 120, wizard2);
+        this.wizardBarGroup.add(wizard2bar);
     }
 
     getMapOffset ()
