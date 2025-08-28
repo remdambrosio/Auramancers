@@ -24,6 +24,8 @@ export class Game extends Phaser.Scene
     update ()
     {
         this.wizardBarGroup.getChildren().forEach(bar => bar.update());
+        let deadWizards = this.wizardGroup.getChildren().filter(wizard => wizard.health <= 0);
+        if (deadWizards.length > 0) this.endGame(deadWizards);
     }
 
     initVariables ()
@@ -95,7 +97,9 @@ export class Game extends Phaser.Scene
 
         this.input.keyboard.on('keydown-X', () => {
             if (this.gameState === 'live') {
-                this.endGame();
+                // end game early, with no dead wizards
+                let deadWizards = [];
+                this.endGame(deadWizards);
             }
         });
     }
@@ -162,7 +166,7 @@ export class Game extends Phaser.Scene
         this.sound.play('riseOfTheManimals', { volume: 0.1, loop: true });
     }
 
-    endGame ()
+    endGame (deadWizards)
     {
         this.gameState = 'end';
         this.endGameText.setVisible(true);

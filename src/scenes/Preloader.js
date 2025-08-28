@@ -31,7 +31,6 @@ export class Preloader extends Phaser.Scene {
     }
 
     preload() {
-        //  Load the assets for the game - see ./src/assets.js
         for (let type in ASSETS) {
             for (let key in ASSETS[type]) {
                 let args = ASSETS[type][key].args.slice();
@@ -42,19 +41,12 @@ export class Preloader extends Phaser.Scene {
     }
 
     create() {
-        //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-        //  For example, you can define global animations here, so we can use them in other scenes.
-
         this.outline.setVisible(false);
         this.bar.setVisible(false);
-
-        if (this.sound.locked) {
-            this.startGameText.setVisible(true);
-            this.input.once('pointerdown', () => {
-                this.scene.start('Game');
-            });
-        } else {
+        this.startGameText.setVisible(true);
+        this.startGameText.setVisible(true);
+        this.input.once('pointerdown', () => {
             this.scene.start('Game');
-        }
+        });
     }
 }
