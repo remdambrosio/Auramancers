@@ -189,7 +189,7 @@ export class Game extends Phaser.Scene
 
     initWizard1 ()
     {
-        const wizard1 = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 'Blue Wizard', 0x0000FF, 1);
+        const wizard1 = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 'Blue Wizard', 0x0000FF, 0);
         this.wizardGroup.add(wizard1);
         const wizard1bar = new HealthBar(this, this.centreX - 105, this.centreY + 120, wizard1);
         this.wizardBarGroup.add(wizard1bar);
@@ -197,7 +197,7 @@ export class Game extends Phaser.Scene
 
     initWizard2 ()
     {
-        const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 'Red Wizard', 0xFF0000, 49);
+        const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 'Red Wizard', 0xFF0000, 48);
         this.wizardGroup.add(wizard2);
         const wizard2bar = new HealthBar(this, this.centreX + 5, this.centreY + 120, wizard2);
         this.wizardBarGroup.add(wizard2bar);

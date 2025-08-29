@@ -2,14 +2,6 @@ import ASSETS from '../assets.js';
 
 export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {
-    moveTimer = 0;
-    moveInterval = 500;
-    targetMoveTile = null;
-
-    attackTimer = 250;
-    attackInterval = 500;
-    targetAttackTiles = null;
-
     constructor(scene, x, y, name, energyTint, spriteKey)
     {
         super(scene, x, y, ASSETS.spritesheet.characters.key, spriteKey);
@@ -32,6 +24,15 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.health = 3;
         this.tile = { x: x, y: y };
 
+        this.turbo = 1;
+        this.turnInterval = 500 * this.turbo;
+
+        this.moveTimer = 0;
+        this.targetMoveTile = null;
+
+        this.attackTimer = this.turnInterval / 2;
+        this.targetAttackTiles = null;
+
         this.directions = [
             { x: -1, y: 0 },
             { x: 1, y: 0 },
@@ -42,7 +43,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.emitter = scene.add.particles(0, 0, 'spark', {
             tint: this.energyTint,
             lifespan: 250,
-            speed: { min: 25, max: 75 },
+            speed: { min: 5, max: 50 },
             scale: { start: 0.8, end: 0 },
             blendMode: 'NORMAL',
             emitting: false
@@ -57,14 +58,14 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         if (this.scene.gameState != 'live') return;
 
         this.moveTimer += delta;
-        if (this.moveTimer > this.moveInterval)
+        if (this.moveTimer > this.turnInterval)
         {
             this.moveTimer = 0;
             this.move();
         }
 
         this.attackTimer += delta;
-        if (this.attackTimer > this.attackInterval)
+        if (this.attackTimer > this.turnInterval)
         {
             this.attackTimer = 0;
             this.attack();
@@ -135,12 +136,17 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             this.targetAttackTiles.push({ ...curTile });
         }
 
+        this.setFrame(this.frame.name + 1);
+        this.scene.time.delayedCall(250, () => { this.setFrame(this.frame.name - 1); });
+
         this.targetAttackTiles.forEach((tile, i) => {
-            let wizardHit = this.wasWizardHit(tile.x, tile.y);
-            if (wizardHit) wizardHit.takeDamage(1, this.energyTint);
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
-            this.scene.time.delayedCall(25 * i, () => { this.emitter.emitParticleAt(pixelX, pixelY, 5); });
+            this.scene.time.delayedCall(50 * i, () => {
+                let wizardHit = this.wasWizardHit(tile.x, tile.y);
+                if (wizardHit) wizardHit.takeDamage(1, this.energyTint);
+                this.emitter.emitParticleAt(pixelX, pixelY, 5);
+            });
         });
     }
 
