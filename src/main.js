@@ -7,7 +7,7 @@ import { GameOver } from './scenes/GameOver.js';
 //  https://newdocs.phaser.io/docs/3.70.0/Phaser.Types.Core.GameConfig
 const config = {
     type: Phaser.AUTO,
-    width: 672,
+    width: 480,
     height: 480,
     parent: 'game-container',
     backgroundColor: '#2d3436',

@@ -60,7 +60,7 @@ export class Game extends Phaser.Scene
 
     initGameUi ()
     {
-        this.startGameText = this.add.text(this.centreX, this.centreY, 'AURA BLAZING!\nPress Spacebar', {
+        this.startGameText = this.add.text(this.centreX, this.centreY, 'AURA BLAZING!', {
             fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
             stroke: '#000000', strokeThickness: 6,
             align: 'center'
@@ -69,7 +69,7 @@ export class Game extends Phaser.Scene
             .setDepth(1000)
             .setVisible(true);
 
-        this.endGameText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED!\nPress Spacebar', {
+        this.endGameText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED!', {
             fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
             stroke: '#000000', strokeThickness: 6,
             align: 'center'
@@ -87,7 +87,7 @@ export class Game extends Phaser.Scene
 
     initInput ()
     {
-        this.input.keyboard.on('keydown-SPACE', () => {
+        this.input.on('pointerdown', () => {
             if (this.gameState === 'start') {
                 this.startGame();
             } else if (this.gameState === 'end') {
@@ -180,7 +180,7 @@ export class Game extends Phaser.Scene
 
         this.time.delayedCall(2000, () => {
             this.endGameText.setText(
-                `AURA FADED!\n${deadWizardNames} ${verb} Auraless\nPress Spacebar`
+                `AURA FADED!\n${deadWizardNames} ${verb} Auraless\n`
             );
             this.endGameText.setVisible(true);
             this.sound.play('auraFaded');
