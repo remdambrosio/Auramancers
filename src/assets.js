@@ -16,6 +16,10 @@ export default {
             key: 'ahMyAura',
             args: ['assets/audio/ahMyAura.mp3']
         },
+        whatATie: {
+            key: 'whatATie',
+            args: ['assets/audio/whatATie.mp3']
+        },
         riseOfTheManimals: {
             key: 'riseOfTheManimals',
             args: ['assets/audio/riseOfTheManimals.mp3']

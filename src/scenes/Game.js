@@ -29,6 +29,8 @@ export class Game extends Phaser.Scene
     initVariables ()
     {
         this.gameState = 'start';                   // 'start', 'live', 'end'
+        this.deadWizards = [];
+
         this.centreX = this.scale.width * 0.5;
         this.centreY = this.scale.height * 0.5;
 
@@ -161,13 +163,24 @@ export class Game extends Phaser.Scene
         this.sound.play('riseOfTheManimals', { volume: 0.1, loop: true });
     }
 
-    endGame (deadWizard)
-    {
+    endGame() {
         this.gameState = 'end';
         this.sound.stopByKey('riseOfTheManimals');
+
+        let deadWizardNames = 'No Wizards';
+        let verb = 'are';
+        if (this.deadWizards.length === 0) {
+            this.sound.play('whatATie');
+        } else {
+            deadWizardNames = this.deadWizards.join(' and ');
+            if (this.deadWizards.length === 1) {
+                verb = 'is';
+            }
+        }
+
         this.time.delayedCall(2000, () => {
             this.endGameText.setText(
-                `AURA FADED!\n${deadWizard} is Auraless\nPress Spacebar`
+                `AURA FADED!\n${deadWizardNames} ${verb} Auraless\nPress Spacebar`
             );
             this.endGameText.setVisible(true);
             this.sound.play('auraFaded');

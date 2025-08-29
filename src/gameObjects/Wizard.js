@@ -163,10 +163,11 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         let i = 0;
         let flashInterval = 150;
         let flashes = 5;
-        
+
         if (this.health <= 0) {
             this.scene.sound.play('ahMyAura');
-            this.scene.endGame(this.name);
+            this.scene.deadWizards.push(this.name);
+            this.scene.endGame();
             flashes = 10;
         } else {
             this.scene.sound.play('ah');
