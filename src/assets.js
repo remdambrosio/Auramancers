@@ -26,6 +26,10 @@ export default {
         }
     },
     'image': {
+        icon: {
+            key: 'icon',
+            args: ['assets/image/icon.png']
+        },
         spark: {
             key: 'spark',
             args: ['assets/image/spark.png']
