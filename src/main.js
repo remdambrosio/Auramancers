@@ -1,4 +1,3 @@
-import BBCodeTextPlugin from 'phaser3-rex-plugins/plugins/bbcodetext-plugin.js';
 import { Boot } from './scenes/Boot.js';
 import { Preloader } from './scenes/Preloader.js';
 import { Game } from './scenes/Game.js';
@@ -12,15 +11,6 @@ const config = {
     height: 480,
     parent: 'game-container',
     backgroundColor: '#2d3436',
-    plugins: {
-        global: [
-            {
-            key: 'rexBBCodeTextPlugin',
-            plugin: BBCodeTextPlugin,
-            start: true
-            },
-        ],
-    },
     scale: {
         mode: Phaser.Scale.FIT,
         autoCenter: Phaser.Scale.CENTER_BOTH
