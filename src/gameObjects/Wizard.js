@@ -3,14 +3,14 @@ import ASSETS from '../assets.js';
 export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {
     moveTimer = 0;
-    moveLength = 1000;
+    moveInterval = 1000;
     targetMoveTile = null;
 
     attackTimer = 500;
-    attackLength = 1000;
+    attackInterval = 1000;
     targetAttackTiles = null;
 
-    constructor(scene, x, y, spriteKey, energyTint)
+    constructor(scene, x, y, name, energyTint, spriteKey)
     {
         super(scene, x, y, ASSETS.spritesheet.characters.key, spriteKey);
         scene.add.existing(this);
@@ -27,9 +27,10 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.setDepth(100);
         this.scene = scene;
 
-        this.health = 5;
-        this.tile = { x: x, y: y };
+        this.name = name
         this.energyTint = energyTint;
+        this.health = 3;
+        this.tile = { x: x, y: y };
 
         this.directions = [
             { x: -1, y: 0 },
@@ -56,14 +57,14 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         if (this.scene.gameState != 'live') return;
 
         this.moveTimer += delta;
-        if (this.moveTimer > this.moveLength)
+        if (this.moveTimer > this.moveInterval)
         {
             this.moveTimer = 0;
             this.move();
         }
 
         this.attackTimer += delta;
-        if (this.attackTimer > this.attackLength)
+        if (this.attackTimer > this.attackInterval)
         {
             this.attackTimer = 0;
             this.attack();
@@ -135,21 +136,49 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         }
 
         this.targetAttackTiles.forEach((tile, i) => {
-            let wizardHit = this.wizardHit(tile.x, tile.y);
-            if (wizardHit) console.log('wizard had health ' + wizardHit.health);
-            if (wizardHit) wizardHit.health--;
-            if (wizardHit) console.log('wizard now has health ' + wizardHit.health);
+            let wizardHit = this.wasWizardHit(tile.x, tile.y);
+            if (wizardHit) wizardHit.takeDamage(1, this.energyTint);
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
-            setTimeout(() => { this.emitter.emitParticleAt(pixelX, pixelY, 5); }, 25 * i);
+            this.scene.time.delayedCall(25 * i, () => { this.emitter.emitParticleAt(pixelX, pixelY, 5); });
         });
     }
 
-    wizardHit(tileX, tileY)
+    wasWizardHit(tileX, tileY)
     {
         return this.scene.wizardGroup.getChildren().find(wizard => {
-            if (wizard === this) return false;      // friendly fire will not be tolerated
+            if (wizard === this) {
+                return false;      // friendly fire will not be tolerated
+            }
             return wizard.tile.x === tileX && wizard.tile.y === tileY;
         });
+    }
+
+    takeDamage(amount, attackTint)
+    {
+        this.health -= amount;
+        this.setTint(attackTint);
+        this.scene.time.delayedCall(500, () => { this.clearTint(); });
+
+        if (this.health <= 0) {
+            this.scene.endGame(this.name);
+        }
+        let i = 0;
+        let flashes = 5;
+        let flashInterval = 200;
+        this.flash(i, flashes, flashInterval, attackTint);
+    }
+
+    flash(i, flashes, flashInterval, attackTint) {
+        if (i >= flashes) {
+            this.clearTint();
+            return;
+        }
+        if (i % 2 === 0) {
+            this.setTint(attackTint);
+        } else {
+            this.clearTint();
+        }
+        this.scene.time.delayedCall(flashInterval, () => { this.flash(i + 1, flashes, flashInterval, attackTint); }, [], this);
     }
 }

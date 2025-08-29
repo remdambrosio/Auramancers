@@ -22,7 +22,6 @@ export default class HealthBar extends Phaser.GameObjects.Graphics {
     {
         if (this.curHealth !== this.wizard.health) {
             this.curHealth = this.wizard.health;
-            if (this.curHealth < 0) this.curHealth = 0;
             this.draw();
         }
     }

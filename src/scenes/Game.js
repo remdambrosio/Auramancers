@@ -24,8 +24,6 @@ export class Game extends Phaser.Scene
     update ()
     {
         this.wizardBarGroup.getChildren().forEach(bar => bar.update());
-        let deadWizards = this.wizardGroup.getChildren().filter(wizard => wizard.health <= 0);
-        if (deadWizards.length > 0) this.endGame(deadWizards);
     }
 
     initVariables ()
@@ -61,8 +59,8 @@ export class Game extends Phaser.Scene
     initGameUi ()
     {
         this.startGameText = this.add.text(this.centreX, this.centreY, 'AURA BLAZING!\nPress Spacebar', {
-            fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
+            fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 6,
             align: 'center'
         })
             .setOrigin(0.5)
@@ -70,8 +68,8 @@ export class Game extends Phaser.Scene
             .setVisible(true);
 
         this.endGameText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED!\nPress Spacebar', {
-            fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
+            fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 6,
             align: 'center'
         })
             .setOrigin(0.5)
@@ -97,9 +95,7 @@ export class Game extends Phaser.Scene
 
         this.input.keyboard.on('keydown-X', () => {
             if (this.gameState === 'live') {
-                // end game early, with no dead wizards
-                let deadWizards = [];
-                this.endGame(deadWizards);
+                this.endGame('Nobody');
             }
         });
     }
@@ -162,22 +158,25 @@ export class Game extends Phaser.Scene
         this.gameState = 'live';
         this.startGameText.setVisible(false);
         this.endGameText.setVisible(false);
-
         this.sound.play('riseOfTheManimals', { volume: 0.1, loop: true });
     }
 
-    endGame (deadWizards)
+    endGame (deadWizard)
     {
         this.gameState = 'end';
-        this.endGameText.setVisible(true);
-
         this.sound.stopAll();
-        this.sound.play('auraFaded');
+        this.time.delayedCall(1000, () => {
+            this.endGameText.setText(
+                `AURA FADED!\n${deadWizard} is Auraless\nPress Spacebar`
+            );
+            this.endGameText.setVisible(true);
+            this.sound.play('auraFaded');
+        });
     }
 
     initWizard1 ()
     {
-        const wizard1 = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 1, 0x0000FF);
+        const wizard1 = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 'Red Wizard', 0x0000FF, 1);
         this.wizardGroup.add(wizard1);
         const wizard1bar = new HealthBar(this, this.centreX - 105, this.centreY + 120, wizard1);
         this.wizardBarGroup.add(wizard1bar);
@@ -185,7 +184,7 @@ export class Game extends Phaser.Scene
 
     initWizard2 ()
     {
-        const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 49, 0xFF0000);
+        const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 'Red Wizard', 0xFF0000, 49);
         this.wizardGroup.add(wizard2);
         const wizard2bar = new HealthBar(this, this.centreX + 5, this.centreY + 120, wizard2);
         this.wizardBarGroup.add(wizard2bar);
