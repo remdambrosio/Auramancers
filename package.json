@@ -15,9 +15,13 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "http-server": "^14.1.1"
+    "http-server": "^14.1.1",
+    "webpack": "^5.101.3",
+    "webpack-cli": "^6.0.1",
+    "webpack-dev-server": "^5.2.2"
   },
   "dependencies": {
-    "eslint": "^9.31.0"
+    "eslint": "^9.31.0",
+    "phaser3-rex-plugins": "^1.80.16"
   }
 }

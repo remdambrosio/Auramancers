@@ -31,6 +31,7 @@ export class Game extends Phaser.Scene
     initVariables ()
     {
         this.gameState = 'start';                   // 'start', 'live', 'end'
+        this.turnInterval = 500;
         this.deadWizards = [];
 
         this.centreX = this.scale.width * 0.5;
@@ -65,7 +66,8 @@ export class Game extends Phaser.Scene
         this.startGameText = this.add.text(this.centreX, this.centreY, 'AURA BLAZING!', {
             fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
             stroke: '#000000', strokeThickness: 6,
-            align: 'center'
+            align: 'center',
+            richText: true
         })
             .setOrigin(0.5)
             .setDepth(1000)
@@ -74,7 +76,8 @@ export class Game extends Phaser.Scene
         this.endGameText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED!', {
             fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
             stroke: '#000000', strokeThickness: 6,
-            align: 'center'
+            align: 'center',
+            richText: true
         })
             .setOrigin(0.5)
             .setDepth(1000)
@@ -163,6 +166,12 @@ export class Game extends Phaser.Scene
         this.startGameText.setVisible(false);
         this.endGameText.setVisible(false);
         this.sound.play('riseOfTheManimals', { volume: 0.1, loop: true });
+
+        // // tie testing
+        // this.wizardGroup.getChildren().forEach(wizard => wizard.health = 1);
+        // this.time.delayedCall(500, () => {
+        //     this.wizardGroup.getChildren().forEach(wizard => wizard.takeDamage(1, 0xff00ff));
+        // });
     }
 
     endGame() {
@@ -170,19 +179,25 @@ export class Game extends Phaser.Scene
         this.sound.stopByKey('riseOfTheManimals');
 
         let deadWizardNames = 'No Wizards';
-        let verb = 'are';
-        if (this.deadWizards.length === 0) {
-            this.sound.play('whatATie');
-        } else {
-            deadWizardNames = this.deadWizards.join(' and ');
-            if (this.deadWizards.length === 1) {
-                verb = 'is';
+        let deadWizardVerb = 'are';
+        this.time.delayedCall(500, () => {
+            if (this.deadWizards.length === 0) {
+                this.sound.play('whatATie');
+            } else if (this.deadWizards.length === 1) {
+                deadWizardNames = `[color=#${this.deadWizards[0].energyTint.toString(16).padStart(6, '0').toUpperCase()}]${this.deadWizards[0].name}[/color]`
+                deadWizardVerb = 'is';
+                this.sound.play('ahMyAura');
+            } else {
+                deadWizardNames =
+                    this.deadWizards
+                    .map(wiz => `[color=#${wiz.energyTint.toString(16).padStart(6, '0').toUpperCase()}]${wiz.name}[/color]`)
+                    .join(' & ');
+                this.sound.play('whatATie');
             }
-        }
-
+        });
         this.time.delayedCall(2000, () => {
             this.endGameText.setText(
-                `AURA FADED!\n${deadWizardNames} ${verb} Auraless\n`
+                `AURA FADED!\n${deadWizardNames}\n${deadWizardVerb} Auraless\n`
             );
             this.endGameText.setVisible(true);
             this.sound.play('auraFaded');

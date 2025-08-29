@@ -19,7 +19,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         this.emitter = scene.add.particles(0, 0, 'spark', {
             tint: 0x000000,
             lifespan: 1000,
-            speed: { min: 5, max: 50 },
+            speed: { min: 10, max: 50 },
             scale: { start: 0.5, end: 0 },
             blendMode: 'NORMAL',
             emitting: false

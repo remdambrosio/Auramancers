@@ -24,8 +24,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.health = 3;
         this.tile = { x: x, y: y };
 
-        this.turbo = 1;
-        this.turnInterval = 500 * this.turbo;
+        this.turnInterval = this.scene.turnInterval;
 
         this.moveTimer = 0;
         this.targetMoveTile = null;
@@ -186,14 +185,12 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         let flashes = 5;
 
         if (this.health <= 0) {
-            this.scene.sound.play('ahMyAura');
-            this.scene.deadWizards.push(this.name);
+            this.scene.deadWizards.push(this);
             this.scene.endGame();
             flashes = 10;
-        } else {
-            this.scene.sound.play('ah');
         }
 
+        this.scene.sound.play('ah');
         this.flash(i, flashes, flashInterval, attackTint);
     }
 
