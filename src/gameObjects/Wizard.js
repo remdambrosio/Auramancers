@@ -3,11 +3,11 @@ import ASSETS from '../assets.js';
 export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {
     moveTimer = 0;
-    moveInterval = 1000;
+    moveInterval = 500;
     targetMoveTile = null;
 
-    attackTimer = 500;
-    attackInterval = 1000;
+    attackTimer = 250;
+    attackInterval = 500;
     targetAttackTiles = null;
 
     constructor(scene, x, y, name, energyTint, spriteKey)
@@ -160,12 +160,18 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.setTint(attackTint);
         this.scene.time.delayedCall(500, () => { this.clearTint(); });
 
-        if (this.health <= 0) {
-            this.scene.endGame(this.name);
-        }
         let i = 0;
+        let flashInterval = 150;
         let flashes = 5;
-        let flashInterval = 200;
+        
+        if (this.health <= 0) {
+            this.scene.sound.play('ahMyAura');
+            this.scene.endGame(this.name);
+            flashes = 10;
+        } else {
+            this.scene.sound.play('ah');
+        }
+
         this.flash(i, flashes, flashInterval, attackTint);
     }
 

@@ -164,8 +164,8 @@ export class Game extends Phaser.Scene
     endGame (deadWizard)
     {
         this.gameState = 'end';
-        this.sound.stopAll();
-        this.time.delayedCall(1000, () => {
+        this.sound.stopByKey('riseOfTheManimals');
+        this.time.delayedCall(2000, () => {
             this.endGameText.setText(
                 `AURA FADED!\n${deadWizard} is Auraless\nPress Spacebar`
             );
