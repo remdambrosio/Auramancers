@@ -1,6 +1,7 @@
 import ASSETS from '../assets.js';
 import Wizard from '../gameObjects/Wizard.js';
 import HealthBar from '../gameObjects/HealthBar.js';
+import Watcher from '../gameObjects/Watcher.js';
 
 export class Game extends Phaser.Scene
 {
@@ -18,6 +19,7 @@ export class Game extends Phaser.Scene
         this.initMap();
         this.initWizard1();
         this.initWizard2();
+        this.initWatchers();
         this.sound.play('auraBlazing');
     }
 
@@ -83,6 +85,7 @@ export class Game extends Phaser.Scene
     {
         this.wizardGroup = this.add.group();
         this.wizardBarGroup = this.add.group();
+        this.watcherGroup = this.add.group();
     }
 
     initInput ()
@@ -102,7 +105,6 @@ export class Game extends Phaser.Scene
         });
     }
 
-    // create tile map data
     initMap ()
     {
         const mapData = [];
@@ -197,10 +199,22 @@ export class Game extends Phaser.Scene
 
     initWizard2 ()
     {
-        const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 'Red Wizard', 0xFF0000, 48);
+        const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 'Red Wizard', 0xFF0000, 2);
         this.wizardGroup.add(wizard2);
         const wizard2bar = new HealthBar(this, this.centreX + 5, this.centreY + 120, wizard2);
         this.wizardBarGroup.add(wizard2bar);
+    }
+
+    initWatchers ()
+    {
+        const watcher1 = new Watcher(this, this.wizard1Start.x-2, this.wizard1Start.y-1, 27);
+        this.watcherGroup.add(watcher1);
+
+        const watcher2 = new Watcher(this, this.wizard1Start.x+3, this.wizard1Start.y-4, 13);
+        this.watcherGroup.add(watcher2);
+
+        const watcher3 = new Watcher(this, this.wizard2Start.x+2, this.wizard1Start.y+1, 60);
+        this.watcherGroup.add(watcher3);
     }
 
     getMapOffset ()

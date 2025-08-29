@@ -144,7 +144,15 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.scene.time.delayedCall(50 * i, () => {
                 let wizardHit = this.wasWizardHit(tile.x, tile.y);
-                if (wizardHit) wizardHit.takeDamage(1, this.energyTint);
+                if (wizardHit) {
+                    wizardHit.takeDamage(1, this.energyTint);
+                } 
+                
+                let watcherHit = this.wasWatcherHit(tile.x, tile.y);
+                if (watcherHit) {
+                    watcherHit.die();
+                }
+
                 this.emitter.emitParticleAt(pixelX, pixelY, 5);
             });
         });
@@ -157,6 +165,13 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
                 return false;      // friendly fire will not be tolerated
             }
             return wizard.tile.x === tileX && wizard.tile.y === tileY;
+        });
+    }
+
+    wasWatcherHit(tileX, tileY)
+    {
+        return this.scene.watcherGroup.getChildren().find(watcher => {
+            return watcher.tile.x === tileX && watcher.tile.y === tileY;
         });
     }
 
