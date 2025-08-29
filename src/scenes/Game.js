@@ -176,7 +176,7 @@ export class Game extends Phaser.Scene
 
     initWizard1 ()
     {
-        const wizard1 = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 'Red Wizard', 0x0000FF, 1);
+        const wizard1 = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 'Blue Wizard', 0x0000FF, 1);
         this.wizardGroup.add(wizard1);
         const wizard1bar = new HealthBar(this, this.centreX - 105, this.centreY + 120, wizard1);
         this.wizardBarGroup.add(wizard1bar);
