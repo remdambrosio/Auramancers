@@ -184,13 +184,13 @@ export class Game extends Phaser.Scene
             if (this.deadWizards.length === 0) {
                 this.sound.play('whatATie');
             } else if (this.deadWizards.length === 1) {
-                deadWizardNames = `[color=#${this.deadWizards[0].energyTint.toString(16).padStart(6, '0').toUpperCase()}]${this.deadWizards[0].name}[/color]`
+                deadWizardNames = this.deadWizards[0].name;
                 deadWizardVerb = 'is';
                 this.sound.play('ahMyAura');
             } else {
                 deadWizardNames =
                     this.deadWizards
-                    .map(wiz => `[color=#${wiz.energyTint.toString(16).padStart(6, '0').toUpperCase()}]${wiz.name}[/color]`)
+                    .map(wiz => wiz.name)
                     .join(' & ');
                 this.sound.play('whatATie');
             }
