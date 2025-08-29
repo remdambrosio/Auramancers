@@ -1,5 +1,7 @@
 # Auramancers
 
+https://remdambrosio.github.io/Auramancers/
+
 A Phaser "game" where two wizards face off in an arena.
 
 ## Setup
@@ -29,3 +31,11 @@ A Phaser "game" where two wizards face off in an arena.
 │   ├── scenes/        # Game scenes
 │   └── gameObjects/   # Game object classes
 ```
+
+## Credits
+
+**Music** - Jordan Rosenbaum
+
+**Narration** - Rem D'Ambrosio
+
+**Character Voices** - Mia Vandenschrick
