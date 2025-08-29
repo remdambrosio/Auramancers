@@ -34,6 +34,8 @@ A Phaser "game" where two wizards face off in an arena.
 
 ## Credits
 
-Music: Jordan Rosenbaum
-Narration: Rem D'Ambrosio
-Character Voices: Mia Vandenschrick
+**Music** - Jordan Rosenbaum
+
+**Narration** - Rem D'Ambrosio
+
+**Character Voices** - Mia Vandenschrick
