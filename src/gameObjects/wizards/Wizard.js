@@ -192,19 +192,38 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.setTint(attackTint);
         this.scene.time.delayedCall(500, () => { this.clearTint(); });
 
-        let i = 0;
-        let flashInterval = 150;
-        let flashes = 5;
-
         if (this.health <= 0) {
-            this.scene.sound.play(this.voicelines.die);
-            this.scene.deadWizards.push(this);
-            this.scene.endGame();
-            flashes = 10;
+            this.die(attackTint);
+        } else {
+            this.scene.sound.play(this.voicelines.hit);
+            this.flash(0, 5, 150, attackTint);
         }
+    }
 
-        this.scene.sound.play(this.voicelines.hit);
-        this.flash(i, flashes, flashInterval, attackTint);
+    die(attackTint) {
+        this.scene.sound.play(this.voicelines.die);
+        this.setTint(attackTint);
+        this.scene.deadWizards.push(this);
+        this.scene.liveWizards = this.scene.liveWizards.filter(wiz => wiz !== this);
+        if (this.scene.liveWizards.length <= 1) {
+            this.scene.endGame();
+        }
+        this.emitter.emitParticleAt(this.x, this.y, 10);
+        const ash = this.scene.add.image(this.x, this.y, ASSETS.image.ash.key);
+        ash.setAlpha(0);
+        ash.tint = attackTint;
+        this.scene.tweens.add({
+            targets: [this, ash],
+            alpha: {
+                getStart: (target) => target === this ? 1 : 0,
+                getEnd: (target) => target === this ? 0 : 1
+            },
+            duration: 500,
+            ease: 'Linear',
+            onComplete: () => {
+                this.destroy();
+            }
+        });
     }
 
     flash(i, flashes, flashInterval, attackTint) {

@@ -36,7 +36,6 @@ preload() {
             if (obj[key].args && obj[key].key) {
                 let args = obj[key].args.slice();
                 args.unshift(obj[key].key);
-                console.log(`Loading ${type}:`, args); // Debug log
                 loader[type].apply(loader, args);
             } else if (typeof obj[key] === 'object') {
                 loadAssets(type, obj[key], loader);

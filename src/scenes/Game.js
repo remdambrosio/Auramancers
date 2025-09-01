@@ -32,6 +32,7 @@ export class Game extends Phaser.Scene
     {
         this.gameState = 'start';   // 'start', 'live', 'end'
         this.turnInterval = 1000;
+        this.liveWizards = [];
         this.deadWizards = [];
 
         this.centreX = this.scale.width * 0.5;
@@ -69,7 +70,7 @@ export class Game extends Phaser.Scene
 
     initGameUi ()
     {
-        this.startGameText = this.add.text(this.centreX, this.centreY, 'AURA BLAZING!', {
+        this.startGameText = this.add.text(this.centreX, this.centreY - 172, 'AURA BLAZING!', {
             fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
             stroke: '#000000', strokeThickness: 6,
             align: 'center',
@@ -194,23 +195,17 @@ export class Game extends Phaser.Scene
         this.gameState = 'end';
         this.sound.stopByKey('riseOfTheManimals');
 
-        let deadWizardNames = 'No Wizards';
-        let deadWizardVerb = 'are';
+        let winnerName = 'Nobody';
+
         this.time.delayedCall(500, () => {
-            if (this.deadWizards.length === 0) {
-            } else if (this.deadWizards.length === 1) {
-                deadWizardNames = this.deadWizards[0].name;
-                deadWizardVerb = 'is';
-            } else {
-                deadWizardNames =
-                    this.deadWizards
-                    .map(wiz => wiz.name)
-                    .join(' & ');
+            if (this.liveWizards.length === 1) {
+                winnerName = this.liveWizards[0].name;
             }
         });
+
         this.time.delayedCall(2000, () => {
             this.endGameText.setText(
-                `AURA FADED!\n${deadWizardNames}\n${deadWizardVerb} Auraless\n`
+                `AURA FADED!\n${winnerName}\nis the AURAMANCER\n`
             );
             this.endGameText.setVisible(true);
             this.sound.play('auraFaded');
@@ -228,6 +223,8 @@ export class Game extends Phaser.Scene
         this.wizardGroup.add(wizard2);
         const wizard2bar = new HealthBar(this, this.centreX + 15, this.centreY + 175, wizard2);
         this.wizardBarGroup.add(wizard2bar);
+
+        this.liveWizards = this.wizardGroup.getChildren();
     }
 
     initWatchers ()
