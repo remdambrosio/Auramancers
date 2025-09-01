@@ -161,7 +161,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
                 
                 let watcherHit = this.wasWatcherHit(tile.x, tile.y);
                 if (watcherHit) {
-                    watcherHit.die();
+                    watcherHit.die(this.energyTint);
                 }
 
                 this.emitter.emitParticleAt(pixelX, pixelY, 5);

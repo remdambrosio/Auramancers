@@ -30,15 +30,23 @@ export class Preloader extends Phaser.Scene {
             .setVisible(false);
     }
 
-    preload() {
-        for (let type in ASSETS) {
-            for (let key in ASSETS[type]) {
-                let args = ASSETS[type][key].args.slice();
-                args.unshift(ASSETS[type][key].key);
-                this.load[type].apply(this.load, args);
+preload() {
+    function loadAssets(type, obj, loader) {
+        for (let key in obj) {
+            if (obj[key].args && obj[key].key) {
+                let args = obj[key].args.slice();
+                args.unshift(obj[key].key);
+                console.log(`Loading ${type}:`, args); // Debug log
+                loader[type].apply(loader, args);
+            } else if (typeof obj[key] === 'object') {
+                loadAssets(type, obj[key], loader);
             }
         }
     }
+    for (let type in ASSETS) {
+        loadAssets(type, ASSETS[type], this.load);
+    }
+}
 
     create() {
         this.outline.setVisible(false);

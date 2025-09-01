@@ -12,21 +12,25 @@ export default {
             key: 'auraFaded',
             args: ['assets/audio/auraFaded.mp3']
         },
-        mia_hit: {
-            key: 'mia_hit',
-            args: ['assets/audio/wizards/mia_hit.mp3']
+        mia: {
+            hit: {
+                key: 'mia_hit',
+                args: ['assets/audio/wizards/mia/hit.mp3']
+            },
+            die: {
+                key: 'mia_die',
+                args: ['assets/audio/wizards/mia/die.mp3']
+            }
         },
-        mia_die: {
-            key: 'mia_die',
-            args: ['assets/audio/wizards/mia_die.mp3']
-        },
-        andrew_hit: {
-            key: 'andrew_hit',
-            args: ['assets/audio/wizards/andrew_hit.mp3']
-        },
-        andrew_die: {
-            key: 'mia_die',
-            args: ['assets/audio/wizards/andrew_die.mp3']
+        andrew: {
+            hit: {
+                key: 'andrew_hit',
+                args: ['assets/audio/wizards/andrew/hit.mp3']
+            },
+            die: {
+                key: 'andrew_die',
+                args: ['assets/audio/wizards/andrew/die.mp3']
+            }
         },
     },
     'image': {

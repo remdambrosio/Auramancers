@@ -31,7 +31,7 @@ export class Game extends Phaser.Scene
     initVariables ()
     {
         this.gameState = 'start';   // 'start', 'live', 'end'
-        this.turnInterval = 500;
+        this.turnInterval = 1000;
         this.deadWizards = [];
 
         this.centreX = this.scale.width * 0.5;
