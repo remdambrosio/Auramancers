@@ -42,6 +42,10 @@ export default {
             key: 'spark',
             args: ['assets/image/spark.png']
         },
+        ash: {
+            key: 'ash',
+            args: ['assets/image/ash.png']
+        },
     },
     'spritesheet': {
         tiles: {

@@ -21,7 +21,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         }
 
         this.emitter = scene.add.particles(0, 0, 'spark', {
-            tint: 0x000000,
+            tint: 0x3b3b3b,
             lifespan: 1000,
             speed: { min: 10, max: 50 },
             scale: { start: 0.5, end: 0 },
@@ -35,9 +35,14 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
     {
         this.setTint(0x000000);
         this.emitter.emitParticleAt(this.x, this.y, 10);
+        const ash = this.scene.add.image(this.x, this.y, ASSETS.image.ash.key);
+        ash.setAlpha(0);
         this.scene.tweens.add({
-            targets: this,
-            alpha: 0,
+            targets: [this, ash],
+            alpha: {
+                getStart: (target) => target === this ? 1 : 0,
+                getEnd: (target) => target === this ? 0 : 1
+            },
             duration: 500,
             ease: 'Linear',
             onComplete: () => {
