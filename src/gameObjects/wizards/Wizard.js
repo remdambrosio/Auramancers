@@ -215,7 +215,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             targets: [this, ash],
             alpha: {
                 getStart: (target) => target === this ? 1 : 0,
-                getEnd: (target) => target === this ? 0 : Phaser.Math.FloatBetween(0.4, 0.8)
+                getEnd: (target) => target === this ? 0 : 1
             },
             duration: 500,
             ease: 'Linear',

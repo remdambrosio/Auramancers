@@ -41,7 +41,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
             targets: [this, ash],
             alpha: {
                 getStart: (target) => target === this ? 1 : 0,
-                getEnd: (target) => target === this ? 0 : Phaser.Math.FloatBetween(0.4, 0.8)
+                getEnd: (target) => target === this ? 0 : Phaser.Math.FloatBetween(0.6, 0.9)
             },
             duration: 500,
             ease: 'Linear',
