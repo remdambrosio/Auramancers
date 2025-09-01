@@ -4,7 +4,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {
     constructor(scene, x, y, name, energyTint, spriteKey)
     {
-        super(scene, x, y, ASSETS.spritesheet.characters.key, spriteKey);
+        super(scene, x, y, ASSETS.spritesheet.wizards.key, spriteKey);
         scene.add.existing(this);
         scene.physics.add.existing(this);
 

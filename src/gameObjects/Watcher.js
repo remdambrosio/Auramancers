@@ -4,7 +4,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
 {
     constructor(scene, x, y, spriteKey)
     {
-        super(scene, x, y, ASSETS.spritesheet.characters.key, spriteKey);
+        super(scene, x, y, ASSETS.spritesheet.watchers.key, spriteKey);
         scene.add.existing(this);
         this.mapOffset = scene.getMapOffset();
         this.tileSize = this.mapOffset.tileSize;
@@ -15,6 +15,10 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         this.setDepth(100);
         this.scene = scene;
         this.tile = { x: x, y: y };
+
+        if (this.x < scene.cameras.main.width / 2) {
+            this.flipX = true;
+        }
 
         this.emitter = scene.add.particles(0, 0, 'spark', {
             tint: 0x000000,

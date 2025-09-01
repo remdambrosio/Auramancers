@@ -1,7 +1,7 @@
 import ASSETS from '../assets.js';
 import Wizard from '../gameObjects/Wizard.js';
-import HealthBar from '../gameObjects/HealthBar.js';
 import Watcher from '../gameObjects/Watcher.js';
+import HealthBar from '../gameObjects/HealthBar.js';
 
 export class Game extends Phaser.Scene
 {
@@ -38,11 +38,15 @@ export class Game extends Phaser.Scene
         this.centreY = this.scale.height * 0.5;
 
         this.tileIds = {
+            watcherSide: 117,
+            watcherUpDown: 129,
             wizard1: 96,
             wizard2: 95,
-            walls: [ 45, 46, 47, 48, 53, 54, 55, 56, 57, 58, 59, 60, 65, 66, 67, 68, 69, 70, 71, 72, 77, 78, 79, 80, 81, 82, 83, 84, 96, 97, 98, 99, 100, 101, 102, 108, 109, 110, 111, 112, 113, 114, 120, 121, 122, 123, 124, 125, ],
+            walls: [ 45, 46, 47, 48, 57, 58, 59, 60, 69, 70, 71, 72, 81, 82, 83, 84 ],
         }
 
+        this.watcherSideTiles = [];
+        this.watcherUpDownTiles = [];
         this.wizard1Start = { x: 0, y: 0 };
         this.wizard2Start = { x: 0, y: 0 };
 
@@ -128,7 +132,6 @@ export class Game extends Phaser.Scene
             mapData.push(row);
         }
         this.map = this.make.tilemap({ key: ASSETS.tilemapTiledJSON.map.key });
-        this.map.setCollision(this.tileIds.walls);
         const tileset = this.map.addTilesetImage(ASSETS.spritesheet.tiles.key);
 
         this.groundLayer = this.map.createLayer('ground', tileset, this.mapX, this.mapY);
@@ -144,14 +147,17 @@ export class Game extends Phaser.Scene
                 const tile = this.levelLayer.getTileAt(x, y);
                 if (!tile) continue
 
-                if (tile.index === this.tileIds.wizard1)
-                {
+                if (tile.index === this.tileIds.watcherSide) {
+                    tile.index = -1;
+                    this.watcherSideTiles.push({ x: x, y: y });
+                } else if (tile.index === this.tileIds.watcherUpDown) {
+                    tile.index = -1;
+                    this.watcherUpDownTiles.push({ x: x, y: y });
+                } else if (tile.index === this.tileIds.wizard1) {
                     tile.index = -1;
                     this.wizard1Start.x = x;
                     this.wizard1Start.y = y;
-                }
-                else if (tile.index === this.tileIds.wizard2)
-                {
+                } else if (tile.index === this.tileIds.wizard2){
                     tile.index = -1;
                     this.wizard2Start.x = x;
                     this.wizard2Start.y = y;
@@ -208,7 +214,7 @@ export class Game extends Phaser.Scene
     {
         const wizard1 = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 'Blue Wizard', 0x0000FF, 0);
         this.wizardGroup.add(wizard1);
-        const wizard1bar = new HealthBar(this, this.centreX - 105, this.centreY + 120, wizard1);
+        const wizard1bar = new HealthBar(this, this.centreX - 108, this.centreY + 165, wizard1);
         this.wizardBarGroup.add(wizard1bar);
     }
 
@@ -216,20 +222,26 @@ export class Game extends Phaser.Scene
     {
         const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 'Red Wizard', 0xFF0000, 2);
         this.wizardGroup.add(wizard2);
-        const wizard2bar = new HealthBar(this, this.centreX + 5, this.centreY + 120, wizard2);
+        const wizard2bar = new HealthBar(this, this.centreX + 8, this.centreY + 165, wizard2);
         this.wizardBarGroup.add(wizard2bar);
     }
 
     initWatchers ()
     {
-        const watcher1 = new Watcher(this, this.wizard1Start.x-2, this.wizard1Start.y-1, 27);
-        this.watcherGroup.add(watcher1);
-
-        const watcher2 = new Watcher(this, this.wizard1Start.x+3, this.wizard1Start.y-4, 13);
-        this.watcherGroup.add(watcher2);
-
-        const watcher3 = new Watcher(this, this.wizard2Start.x+2, this.wizard1Start.y+1, 60);
-        this.watcherGroup.add(watcher3);
+        for (const tile of this.watcherSideTiles) {
+            if (Phaser.Math.RND.frac() >= 0.4) {
+                const watcherSprite = Phaser.Math.RND.between(0, 7);
+                const watcher = new Watcher(this, tile.x, tile.y, watcherSprite);
+                this.watcherGroup.add(watcher);
+            }
+        }
+        for (const tile of this.watcherUpDownTiles) {
+            if (Phaser.Math.RND.frac() >= 0.4) {
+                const watcherSprite = Phaser.Math.RND.between(8, 15);
+                const watcher = new Watcher(this, tile.x, tile.y, watcherSprite);
+                this.watcherGroup.add(watcher);
+            }
+        }
     }
 
     getMapOffset ()

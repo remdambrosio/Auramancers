@@ -43,9 +43,16 @@ export default {
                 frameHeight: 32
             }]
         },
-        characters: {
-            key: 'characters',
-            args: ['assets/spritesheet/characters.png', {
+        wizards: {
+            key: 'wizards',
+            args: ['assets/spritesheet/wizards.png', {
+                frameWidth: 32,
+                frameHeight: 32
+            }]
+        },
+        watchers: {
+            key: 'watchers',
+            args: ['assets/spritesheet/watchers.png', {
                 frameWidth: 32,
                 frameHeight: 32
             }]
