@@ -42,10 +42,6 @@ export default {
             key: 'spark',
             args: ['assets/image/spark.png']
         },
-        ash: {
-            key: 'ash',
-            args: ['assets/image/ash.png']
-        },
     },
     'spritesheet': {
         tiles: {
@@ -65,6 +61,13 @@ export default {
         watchers: {
             key: 'watchers',
             args: ['assets/spritesheet/watchers.png', {
+                frameWidth: 32,
+                frameHeight: 32
+            }]
+        },
+        ash: {
+            key: 'ash',
+            args: ['assets/spritesheet/ash.png', {
                 frameWidth: 32,
                 frameHeight: 32
             }]

@@ -80,7 +80,17 @@ export class Game extends Phaser.Scene
             .setDepth(1000)
             .setVisible(true);
 
-        this.endGameText = this.add.text(this.scale.width * 0.5, this.scale.height * 0.5, 'AURA FADED!', {
+        this.endGameText = this.add.text(this.centreX, this.centreY - 172, 'AURA FADED!', {
+            fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
+            stroke: '#000000', strokeThickness: 6,
+            align: 'center',
+            richText: true
+        })
+            .setOrigin(0.5)
+            .setDepth(1000)
+            .setVisible(false);
+
+        this.winnerText = this.add.text(this.centreX, this.centreY, 'The Auramancer is\nNobody', {
             fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
             stroke: '#000000', strokeThickness: 6,
             align: 'center',
@@ -195,20 +205,17 @@ export class Game extends Phaser.Scene
         this.gameState = 'end';
         this.sound.stopByKey('riseOfTheManimals');
 
-        let winnerName = 'Nobody';
-
-        this.time.delayedCall(500, () => {
+        this.time.delayedCall(1500, () => {
             if (this.liveWizards.length === 1) {
-                winnerName = this.liveWizards[0].name;
+                this.winnerText.setText(`The Auramancer is\n${this.liveWizards[0].name}`);
+                this.winnerText.setColor(`#${this.liveWizards[0].energyTint.toString(16).padStart(6, '0')}`);
             }
-        });
-
-        this.time.delayedCall(2000, () => {
-            this.endGameText.setText(
-                `AURA FADED!\n${winnerName}\nis the AURAMANCER\n`
-            );
             this.endGameText.setVisible(true);
             this.sound.play('auraFaded');
+        });
+
+        this.time.delayedCall(3000, () => {
+            this.winnerText.setVisible(true);
         });
     }
 

@@ -35,7 +35,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
     {
         this.setTint(0x000000);
         this.emitter.emitParticleAt(this.x, this.y, 10);
-        const ash = this.scene.add.image(this.x, this.y, ASSETS.image.ash.key);
+        const ash = this.scene.add.image(this.x, this.y, ASSETS.spritesheet.ash.key, Phaser.Math.RND.between(0, 15));
         ash.setAlpha(0);
         ash.tint = attackTint;
         this.scene.tweens.add({
