@@ -210,13 +210,12 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         }
         this.emitter.emitParticleAt(this.x, this.y, 10);
         const ash = this.scene.add.image(this.x, this.y, ASSETS.spritesheet.ash.key, Phaser.Math.RND.between(0, 15));
-        ash.setAlpha(0);
         ash.tint = attackTint;
         this.scene.tweens.add({
             targets: [this, ash],
             alpha: {
                 getStart: (target) => target === this ? 1 : 0,
-                getEnd: (target) => target === this ? 0 : 1
+                getEnd: (target) => target === this ? 0 : Phaser.Math.FloatBetween(0.4, 0.8)
             },
             duration: 500,
             ease: 'Linear',

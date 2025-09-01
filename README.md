@@ -34,8 +34,16 @@ A Phaser "game" where two wizards face off in an arena.
 
 ## Credits
 
+### Collaborators
+
+**This Stuff** - Rem D'Ambrosio
+
 **Music** - Jordan Rosenbaum
 
 **Narration** - Rem D'Ambrosio
 
-**Character Voices** - Mia Vandenschrick
+**Character Voices** - Mia Vandenschrick, Andrew Silbernagel
+
+### Assets
+
+Map Tiles - Tiny Town by Kennay
