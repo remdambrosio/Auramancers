@@ -40,8 +40,10 @@ export class Game extends Phaser.Scene
         this.tileIds = {
             watcherSide: 117,
             watcherUpDown: 129,
-            wizard1: 96,
-            wizard2: 95,
+            wizard1: 95,
+            wizard2: 96,
+            wizard3: 107,
+            wizard4: 108,
             walls: [ 45, 46, 47, 48, 57, 58, 59, 60, 69, 70, 71, 72, 81, 82, 83, 84 ],
         }
 
@@ -50,7 +52,7 @@ export class Game extends Phaser.Scene
         this.wizard1Start = { x: 0, y: 0 };
         this.wizard2Start = { x: 0, y: 0 };
 
-        // used to generate random background image
+        // generate random background image
         this.tiles = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 44 ];
         this.tileSize = 32;     // width and height of a tile in pixels
         this.halfTileSize = this.tileSize * 0.5; // width and height of a tile in pixels
@@ -161,6 +163,14 @@ export class Game extends Phaser.Scene
                     tile.index = -1;
                     this.wizard2Start.x = x;
                     this.wizard2Start.y = y;
+                } else if (tile.index === this.tileIds.wizard3){
+                    tile.index = -1;
+                    // this.wizard3Start.x = x;
+                    // this.wizard3Start.y = y;
+                } else if (tile.index === this.tileIds.wizard4){
+                    tile.index = -1;
+                    // this.wizard4Start.x = x;
+                    // this.wizard4Start.y = y;
                 }
             }
         }
@@ -188,17 +198,14 @@ export class Game extends Phaser.Scene
         let deadWizardVerb = 'are';
         this.time.delayedCall(500, () => {
             if (this.deadWizards.length === 0) {
-                this.sound.play('whatATie');
             } else if (this.deadWizards.length === 1) {
                 deadWizardNames = this.deadWizards[0].name;
                 deadWizardVerb = 'is';
-                this.sound.play('ahMyAura');
             } else {
                 deadWizardNames =
                     this.deadWizards
                     .map(wiz => wiz.name)
                     .join(' & ');
-                this.sound.play('whatATie');
             }
         });
         this.time.delayedCall(2000, () => {
@@ -214,15 +221,15 @@ export class Game extends Phaser.Scene
     {
         const wizard1 = new Wizard(this, this.wizard1Start.x, this.wizard1Start.y, 'Blue Wizard', 0x0000FF, 0);
         this.wizardGroup.add(wizard1);
-        const wizard1bar = new HealthBar(this, this.centreX - 108, this.centreY + 165, wizard1);
+        const wizard1bar = new HealthBar(this, this.centreX - 135, this.centreY + 175, wizard1);
         this.wizardBarGroup.add(wizard1bar);
     }
 
     initWizard2 ()
     {
-        const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 'Red Wizard', 0xFF0000, 2);
+        const wizard2 = new Wizard(this, this.wizard2Start.x, this.wizard2Start.y, 'Red Wizard', 0xFF0000, 4);
         this.wizardGroup.add(wizard2);
-        const wizard2bar = new HealthBar(this, this.centreX + 8, this.centreY + 165, wizard2);
+        const wizard2bar = new HealthBar(this, this.centreX + 15, this.centreY + 175, wizard2);
         this.wizardBarGroup.add(wizard2bar);
     }
 

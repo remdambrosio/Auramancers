@@ -1,5 +1,9 @@
 export default {
     'audio': {
+        riseOfTheManimals: {
+            key: 'riseOfTheManimals',
+            args: ['assets/audio/riseOfTheManimals.mp3']
+        },
         auraBlazing: {
             key: 'auraBlazing',
             args: ['assets/audio/auraBlazing.mp3']
@@ -8,22 +12,26 @@ export default {
             key: 'auraFaded',
             args: ['assets/audio/auraFaded.mp3']
         },
-        ah: {
-            key: 'ah',
-            args: ['assets/audio/ah.mp3']
+        mia_hit: {
+            key: 'mia_hit',
+            args: ['assets/audio/wizards/mia_hit.mp3']
         },
-        ahMyAura: {
-            key: 'ahMyAura',
-            args: ['assets/audio/ahMyAura.mp3']
+        mia_die: {
+            key: 'mia_die',
+            args: ['assets/audio/wizards/mia_die.mp3']
         },
-        whatATie: {
-            key: 'whatATie',
-            args: ['assets/audio/whatATie.mp3']
+        andrew_hit: {
+            key: 'andrew_hit',
+            args: ['assets/audio/wizards/andrew_hit.mp3']
         },
-        riseOfTheManimals: {
-            key: 'riseOfTheManimals',
-            args: ['assets/audio/riseOfTheManimals.mp3']
-        }
+        andrew_die: {
+            key: 'mia_die',
+            args: ['assets/audio/wizards/andrew_die.mp3']
+        },
+        andrew_tie: {
+            key: 'mia_tie',
+            args: ['assets/audio/wizards/andrew_tie.mp3']
+        },
     },
     'image': {
         icon: {

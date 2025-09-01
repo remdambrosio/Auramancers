@@ -9,7 +9,7 @@ export default class HealthBar extends Phaser.GameObjects.Graphics {
         this.curHealth = this.maxHealth;
 
         this.setPosition(x, y);
-        this.barWidth = 100;
+        this.barWidth = 120;
         this.barHeight = 16;
         this.barBorder = 2;
         this.percent = this.barWidth / this.maxHealth;

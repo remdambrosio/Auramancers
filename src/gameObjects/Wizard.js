@@ -21,7 +21,8 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
 
         this.name = name
         this.energyTint = energyTint;
-        this.health = 3;
+        this.maxHealth = 3;
+        this.health = this.maxHealth;
         this.tile = { x: x, y: y };
 
         this.turnInterval = this.scene.turnInterval;
@@ -135,8 +136,18 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             this.targetAttackTiles.push({ ...curTile });
         }
 
-        this.setFrame(this.frame.name + 1);
-        this.scene.time.delayedCall(250, () => { this.setFrame(this.frame.name - 1); });
+        let healthRatio = this.health / this.maxHealth;
+        let healthFrame;
+        if (healthRatio === 1) {
+            healthFrame = 1;
+        } else if (healthRatio > 0.5) {
+            healthFrame = 2;
+        } else {
+            healthFrame = 3;
+        }
+
+        this.setFrame(this.frame.name + healthFrame);
+        this.scene.time.delayedCall(250, () => { this.setFrame(this.frame.name - healthFrame); });
 
         this.targetAttackTiles.forEach((tile, i) => {
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
@@ -185,12 +196,13 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         let flashes = 5;
 
         if (this.health <= 0) {
+            this.scene.sound.play('mia_die');
             this.scene.deadWizards.push(this);
             this.scene.endGame();
             flashes = 10;
         }
 
-        this.scene.sound.play('ah');
+        this.scene.sound.play('mia_hit');
         this.flash(i, flashes, flashInterval, attackTint);
     }
 
