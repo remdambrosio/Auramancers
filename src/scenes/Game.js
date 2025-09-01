@@ -11,8 +11,9 @@ export class Game extends Phaser.Scene
         super('Game');
     }
 
-    create ()
+    create (data = {})
     {
+        this.selectedWizards = data.selectedWizards
         this.initVariables();
         this.initGameUi();
         this.initInput();
@@ -221,15 +222,18 @@ export class Game extends Phaser.Scene
 
     initWizards ()
     {
-        const wizard1 = new Andrew(this, this.wizard1Start.x, this.wizard1Start.y);
-        this.wizardGroup.add(wizard1);
-        const wizard1bar = new HealthBar(this, this.centreX - 135, this.centreY + 175, wizard1);
-        this.wizardBarGroup.add(wizard1bar);
-
-        const wizard2 = new Mia(this, this.wizard2Start.x, this.wizard2Start.y);
-        this.wizardGroup.add(wizard2);
-        const wizard2bar = new HealthBar(this, this.centreX + 15, this.centreY + 175, wizard2);
-        this.wizardBarGroup.add(wizard2bar);
+        if (this.selectedWizards[0]) {
+            const andrew = new Andrew(this, this.wizard1Start.x, this.wizard1Start.y);
+            this.wizardGroup.add(andrew);
+            const andrewBar = new HealthBar(this, this.centreX - 135, this.centreY + 175, andrew);
+            this.wizardBarGroup.add(andrewBar);
+        }
+        if (this.selectedWizards[1]) {
+            const mia = new Mia(this, this.wizard2Start.x, this.wizard2Start.y);
+            this.wizardGroup.add(mia);
+            const miaBar = new HealthBar(this, this.centreX + 15, this.centreY + 175, mia);
+            this.wizardBarGroup.add(miaBar);
+        }
 
         this.liveWizards = this.wizardGroup.getChildren();
     }

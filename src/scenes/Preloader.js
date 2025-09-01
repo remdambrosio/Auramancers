@@ -53,7 +53,7 @@ preload() {
         this.startGameText.setVisible(true);
         this.startGameText.setVisible(true);
         this.input.once('pointerdown', () => {
-            this.scene.start('Game');
+            this.scene.start('Menu');
         });
     }
 }
