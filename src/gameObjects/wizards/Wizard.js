@@ -2,7 +2,7 @@ import ASSETS from '../../assets.js';
 
 export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {
-    constructor(scene, x, y, name, energyTint, spriteKey)
+    constructor(scene, x, y, name, voicelines, energyTint, spriteKey)
     {
         super(scene, x, y, ASSETS.spritesheet.wizards.key, spriteKey);
         scene.add.existing(this);
@@ -20,6 +20,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.scene = scene;
 
         this.name = name
+        this.voicelines = voicelines;
         this.energyTint = energyTint;
         this.maxHealth = 3;
         this.health = this.maxHealth;
@@ -196,13 +197,13 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         let flashes = 5;
 
         if (this.health <= 0) {
-            this.scene.sound.play('mia_die');
+            this.scene.sound.play(this.voicelines.die);
             this.scene.deadWizards.push(this);
             this.scene.endGame();
             flashes = 10;
         }
 
-        this.scene.sound.play('mia_hit');
+        this.scene.sound.play(this.voicelines.hit);
         this.flash(i, flashes, flashInterval, attackTint);
     }
 

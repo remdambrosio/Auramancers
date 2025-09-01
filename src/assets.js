@@ -28,10 +28,6 @@ export default {
             key: 'mia_die',
             args: ['assets/audio/wizards/andrew_die.mp3']
         },
-        andrew_tie: {
-            key: 'mia_tie',
-            args: ['assets/audio/wizards/andrew_tie.mp3']
-        },
     },
     'image': {
         icon: {
