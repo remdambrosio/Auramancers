@@ -1,13 +1,11 @@
 export class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
-        this.selectedWizards = Array(12).fill(false);
-        this.selectedWizards[0] = true;
-        this.selectedWizards[1] = true;
         this.wizardNames = [
             'Andrew', 'Mia', '???', '???', '???', '???', '???', '???',
             '???', '???', '???', '???'
         ];
+        this.selectedWizards = ['Andrew', 'Mia'];
     }
 
     create() {
@@ -25,19 +23,30 @@ export class Menu extends Phaser.Scene {
             const x = centreX - buttonSpacing * (buttonsPerRow / 2 - 0.5) + buttonSpacing * col;
             const y = centreY - 50 - buttonSpacing * 0.5 + buttonSpacing * row;
 
-            const isEnabled = i < this.wizardNames.length;
+            const isEnabled = this.wizardNames[i] !== '???';
+            let isSelected = this.selectedWizards.includes(this.wizardNames[i]);
 
             const btn = this.add.rectangle(
                 x,
                 y,
                 100, 100,
                 isEnabled
-                    ? (this.selectedWizards[i] ? 0x008000 : 0x555555)
+                    ? ( (isSelected) ? 0x008000 : 0x555555 )
                     : 0x222222
-            ).setStrokeStyle(4, 0xffffff);
+            ).setStrokeStyle(4, 0x000000);
 
             if (isEnabled) {
                 btn.setInteractive();
+                btn.on('pointerdown', () => {
+                    isSelected = this.selectedWizards.includes(this.wizardNames[i]);
+                    if (isSelected) {
+                        this.selectedWizards = this.selectedWizards.filter(name => name !== this.wizardNames[i]);
+                    } else {
+                        this.selectedWizards.push(this.wizardNames[i]);
+                    }
+                    btn.setFillStyle(this.selectedWizards.includes(this.wizardNames[i]) ? 0x008000 : 0x555555);
+                    this.updateStartButtonState();
+                });
             }
 
             this.add.text(
@@ -47,24 +56,23 @@ export class Menu extends Phaser.Scene {
                     fontFamily: 'Arial Black',
                     fontSize: 18,
                     color: isEnabled ? '#ffffff' : '#888888',
-                    align: 'center'
+                    stroke: '#000000',
+                    strokeThickness: 4,
+                    align: 'center',
+                    resolution: 2
                 }
             ).setOrigin(0.5);
-
-            if (isEnabled) {
-                btn.on('pointerdown', () => {
-                    this.selectedWizards[i] = !this.selectedWizards[i];
-                    btn.setFillStyle(this.selectedWizards[i] ? 0x008000 : 0x555555);
-                    this.updateStartButtonState();
-                });
-            }
 
             this.buttons.push(btn);
         }
 
         this.startBtn = this.add.text(centreX, buttonSpacing * numRows + 110, 'IGNITE AURA', {
-            fontFamily: 'Arial Black', fontSize: 24, color: '#ffffff',
-            backgroundColor: '#000000', padding: { x: 16, y: 8 }
+            fontFamily: 'Arial Black',
+            fontSize: 24,
+            color: '#ffffff',
+            backgroundColor: '#000000',
+            padding: { x: 16, y: 8 },
+            resolution: 2
         }).setOrigin(0.5).setInteractive();
 
         this.startBtn.on('pointerdown', () => {
@@ -77,12 +85,7 @@ export class Menu extends Phaser.Scene {
     }
 
     canStartGame() {
-        let count = 0;
-        for (let i = 0; i < this.selectedWizards.length; i++) {
-            if (this.selectedWizards[i] && this.wizardNames[i] !== '???') {
-                count++;
-            }
-        }
+        const count = this.selectedWizards.length;
         return count >= 2 && count <= 4;
     }
 

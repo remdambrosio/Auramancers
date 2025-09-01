@@ -23,7 +23,8 @@ export class Preloader extends Phaser.Scene {
         this.startGameText = this.add.text(centreX, centreY, 'AURAMANCERS\nClick to Start', {
             fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
             stroke: '#000000', strokeThickness: 8,
-            align: 'center'
+            align: 'center',
+            resolution: 2
         })
             .setOrigin(0.5)
             .setDepth(1000)

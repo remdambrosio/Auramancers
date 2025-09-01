@@ -72,9 +72,13 @@ export class Game extends Phaser.Scene
     initGameUi ()
     {
         this.startGameText = this.add.text(this.centreX, this.centreY - 172, 'AURA BLAZING!', {
-            fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 6,
+            fontFamily: 'Arial Black',
+            fontSize: 32,
+            color: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 6,
             align: 'center',
+            resolution: 2,
             richText: true
         })
             .setOrigin(0.5)
@@ -82,9 +86,13 @@ export class Game extends Phaser.Scene
             .setVisible(true);
 
         this.endGameText = this.add.text(this.centreX, this.centreY - 172, 'AURA FADED!', {
-            fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 6,
+            fontFamily: 'Arial Black',
+            fontSize: 32,
+            color: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 6,
             align: 'center',
+            resolution: 2,
             richText: true
         })
             .setOrigin(0.5)
@@ -92,9 +100,13 @@ export class Game extends Phaser.Scene
             .setVisible(false);
 
         this.winnerText = this.add.text(this.centreX, this.centreY, 'The Auramancer is\nNobody', {
-            fontFamily: 'Arial Black', fontSize: 32, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 6,
+            fontFamily: 'Arial Black',
+            fontSize: 32,
+            color: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 6,
             align: 'center',
+            resolution: 2,
             richText: true
         })
             .setOrigin(0.5)
@@ -222,17 +234,30 @@ export class Game extends Phaser.Scene
 
     initWizards ()
     {
-        if (this.selectedWizards[0]) {
-            const andrew = new Andrew(this, this.wizard1Start.x, this.wizard1Start.y);
-            this.wizardGroup.add(andrew);
-            const andrewBar = new HealthBar(this, this.centreX - 135, this.centreY + 175, andrew);
-            this.wizardBarGroup.add(andrewBar);
-        }
-        if (this.selectedWizards[1]) {
-            const mia = new Mia(this, this.wizard2Start.x, this.wizard2Start.y);
-            this.wizardGroup.add(mia);
-            const miaBar = new HealthBar(this, this.centreX + 15, this.centreY + 175, mia);
-            this.wizardBarGroup.add(miaBar);
+        let wizardStartPositions = [
+            { x: this.wizard1Start.x, y: this.wizard1Start.y },
+            { x: this.wizard2Start.x, y: this.wizard2Start.y }
+        ]
+        let wizardBarPositions = [
+            { x: this.centreX - 135, y: this.centreY + 175 },
+            { x: this.centreX + 15, y: this.centreY + 175 }
+        ];
+
+        let wizardIndex = 0;
+        for (const name of this.selectedWizards) {
+            if (name === 'Andrew') {
+                const andrew = new Andrew(this, wizardStartPositions[wizardIndex].x, wizardStartPositions[wizardIndex].y);
+                this.wizardGroup.add(andrew);
+                const andrewBar = new HealthBar(this, wizardBarPositions[wizardIndex].x, wizardBarPositions[wizardIndex].y, andrew);
+                this.wizardBarGroup.add(andrewBar);
+                wizardIndex++;
+            } else if (name === 'Mia'){
+                const mia = new Mia(this, wizardStartPositions[wizardIndex].x, wizardStartPositions[wizardIndex].y);
+                this.wizardGroup.add(mia);
+                const miaBar = new HealthBar(this, wizardBarPositions[wizardIndex].x, wizardBarPositions[wizardIndex].y, mia);
+                this.wizardBarGroup.add(miaBar);
+                wizardIndex++;
+            }
         }
 
         this.liveWizards = this.wizardGroup.getChildren();
