@@ -127,7 +127,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.targetAttackTiles = [];
 
         let curTile = this.tile;
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 5; i++) {
             curTile = {
                 x: curTile.x + chosenDir.x,
                 y: curTile.y + chosenDir.y
