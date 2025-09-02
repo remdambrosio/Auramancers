@@ -112,8 +112,24 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
 
     charmedAttack()
     {
-        // target tiles
-        const chosenDir = Phaser.Math.RND.pick(this.directions);
+        // find center of map
+        const centerTile = {
+            x: Math.floor(this.scene.mapWidth / 2),
+            y: Math.floor(this.scene.mapHeight / 2)
+        };
+        const dx = centerTile.x - this.tile.x;
+        const dy = centerTile.y - this.tile.y;
+
+        let chosenDir;
+        if (Math.abs(dx) > Math.abs(dy)) {
+            chosenDir = dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 };
+        } else if (dy !== 0) {
+            chosenDir = dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 };
+        } else {
+            chosenDir = Phaser.Math.RND.pick(this.directions);
+        }
+
+        // target tiles towards center
         this.targetAttackTiles = [];
         let curTile = this.tile;
         for (let i = 0; i < 3; i++) {

@@ -205,6 +205,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
 
     takeDamage(amount, attackTint)
     {
+        if (this.lifeState === 'dead') return;
         this.health -= amount;
         this.setTint(attackTint);
         this.scene.time.delayedCall(500, () => { this.clearTint(); });
