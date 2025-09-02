@@ -9,6 +9,6 @@ actions.forEach(action => {
 
 export default class Andrew extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, 'Andrew the Red', voicelines, 0xFF0000, 0);
+        super(scene, x, y, 'Andrew the Firesavvy', voicelines, 0xFF0000, 0);
     }
 }
