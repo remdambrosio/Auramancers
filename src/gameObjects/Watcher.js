@@ -81,7 +81,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
 
     die(attackTint)
     {
-        if (this.lifeState === 'alive') {
+        if (this.lifeState !== 'dead') {
             this.lifeState = 'dead';
             this.setTint(0x000000);
             this.ashEmitter.emitParticleAt(this.x, this.y, 10);

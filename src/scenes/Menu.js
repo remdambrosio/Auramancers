@@ -31,7 +31,7 @@ export class Menu extends Phaser.Scene {
                 y,
                 100, 100,
                 isEnabled
-                    ? ( (isSelected) ? 0x008000 : 0x555555 )
+                    ? ( (isSelected) ? 0xFFFFFF : 0x555555 )
                     : 0x222222
             ).setStrokeStyle(4, 0x000000);
 
@@ -44,7 +44,7 @@ export class Menu extends Phaser.Scene {
                     } else {
                         this.selectedWizards.push(this.wizardNames[i]);
                     }
-                    btn.setFillStyle(this.selectedWizards.includes(this.wizardNames[i]) ? 0x008000 : 0x555555);
+                    btn.setFillStyle(this.selectedWizards.includes(this.wizardNames[i]) ? 0xFFFFFF : 0x555555);
                     this.updateStartButtonState();
                 });
             }

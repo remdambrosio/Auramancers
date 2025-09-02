@@ -9,7 +9,7 @@ actions.forEach(action => {
 
 export default class Mia extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, 'Mia the Faeblessed', voicelines, 0x8300FF, 4);
+        super(scene, x, y, `Mia, Blessed by Fae`, voicelines, 0x8300FF, 4);
     }
 
     attack()

@@ -9,6 +9,6 @@ actions.forEach(action => {
 
 export default class Tariq extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, 'Tariq the Woodspeaker', voicelines, 0x228B22, 8);
+        super(scene, x, y, `Tariq, Friend of Trees`, voicelines, 0x228B22, 8);
     }
 }
