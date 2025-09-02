@@ -16,6 +16,7 @@ export default class HealthBar extends Phaser.GameObjects.Graphics {
 
         this.draw();
         scene.add.existing(this);
+        this.setDepth(1000);
     }
 
     update ()
