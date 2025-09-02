@@ -95,7 +95,6 @@ export class Game extends Phaser.Scene
             stroke: '#000000',
             strokeThickness: 6,
             align: 'center',
-            resolution: 2,
             richText: true
         })
             .setOrigin(0.5)
@@ -109,7 +108,6 @@ export class Game extends Phaser.Scene
             stroke: '#000000',
             strokeThickness: 4,
             align: 'center',
-            resolution: 2,
             richText: true
         })
             .setOrigin(0.5)

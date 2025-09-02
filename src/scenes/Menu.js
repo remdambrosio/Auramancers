@@ -59,7 +59,6 @@ export class Menu extends Phaser.Scene {
                     stroke: '#000000',
                     strokeThickness: 4,
                     align: 'center',
-                    resolution: 2
                 }
             ).setOrigin(0.5);
 
@@ -72,7 +71,6 @@ export class Menu extends Phaser.Scene {
             color: '#ffffff',
             backgroundColor: '#000000',
             padding: { x: 16, y: 8 },
-            resolution: 2
         }).setOrigin(0.5).setInteractive();
 
         this.startBtn.on('pointerdown', () => {

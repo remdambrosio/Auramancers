@@ -10,8 +10,6 @@ actions.forEach(action => {
 export default class Mia extends Wizard {
     constructor(scene, x, y) {
         super(scene, x, y, 'Mia the Faeblessed', voicelines, 0x8300FF, 4);
-
-        this.enspiritTint = 0xC6B2FF;
     }
 
     attack()
@@ -50,7 +48,7 @@ export default class Mia extends Wizard {
         }
         let watcherHit = this.wasWatcherHit(tileX, tileY);
         if (watcherHit) {
-            watcherHit.enspirit(this, this.enspiritTint);
+            watcherHit.charm(this, this.energyTint);
         }
     }
 }

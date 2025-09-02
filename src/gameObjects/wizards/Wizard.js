@@ -22,6 +22,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.name = name
         this.voicelines = voicelines;
         this.energyTint = energyTint;
+        this.lifeState = 'alive';   // 'alive', 'dead'
         this.maxHealth = 3;
         this.health = this.maxHealth;
         this.tile = { x: x, y: y };
@@ -65,7 +66,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
     preUpdate (time, delta)
     {
         super.preUpdate(time, delta);
-        if (this.scene.gameState != 'live') return;
+        if (this.scene.gameState != 'live' || this.lifeState === 'dead') return;
 
         this.moveTimer += delta;
         if (this.moveTimer > this.turnInterval)
@@ -208,7 +209,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.setTint(attackTint);
         this.scene.time.delayedCall(500, () => { this.clearTint(); });
 
-        if (this.health <= 0) {
+        if (this.health <= 0 && this.lifeState !== 'dead') {
             this.die(attackTint);
         } else {
             this.scene.sound.play(this.voicelines.hit);
@@ -217,6 +218,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
     }
 
     die(attackTint) {
+        this.lifeState = 'dead';
         this.scene.sound.play(this.voicelines.die);
         this.setTint(attackTint);
         this.scene.deadWizards.push(this);
@@ -236,7 +238,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             duration: 500,
             ease: 'Linear',
             onComplete: () => {
-                this.destroy();
+                this.setVisible(false);
             }
         });
     }

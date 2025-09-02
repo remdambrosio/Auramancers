@@ -20,9 +20,9 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
             this.flipX = true;
         }
 
-        this.lifeState = 'alive';   // 'alive', 'dead', 'spirit'
+        this.lifeState = 'alive';   // 'alive', 'dead', 'charmed'
         this.energyTint = 0x000000;
-        this.reviver = null;
+        this.master = null;
 
         this.turnInterval = this.scene.turnInterval;
         this.attackTimer = this.turnInterval / 2;
@@ -36,7 +36,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         ];
 
         this.ashEmitter = scene.add.particles(0, 0, 'spark', {
-            tint: 0x3b3b3b,
+            tint: 0x000000,
             lifespan: 1000,
             speed: { min: 10, max: 50 },
             scale: { start: 0.5, end: 0 },
@@ -46,7 +46,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         this.ashEmitter.setDepth(100);
 
         this.attackEmitter = scene.add.particles(0, 0, 'spark', {
-            tint: this.energyTint,
+            tint: 0x000000,
             lifespan: 250,
             speed: { min: 5, max: 50 },
             scale: { start: 0.8, end: 0 },
@@ -59,7 +59,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
     preUpdate (time, delta)
     {
         super.preUpdate(time, delta);
-        if (this.scene.gameState != 'live') return;
+        if (this.scene.gameState != 'live' || this.lifeState === 'dead') return;
 
         this.attackTimer += delta;
         if (this.attackTimer > this.turnInterval)
@@ -67,14 +67,14 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
             this.attackTimer = 0;
             this.scene.tweens.add({
                 targets: this,
-                y: this.y - Phaser.Math.Between(1, 4),
+                y: this.y - 4,
                 duration: 100,
                 yoyo: true,
                 ease: 'Quad.easeOut',
             });
 
-            if (this.lifeState === 'spirit') {
-                this.spiritAttack();
+            if (this.lifeState === 'charmed') {
+                this.charmedAttack();
             }
         }
     }
@@ -99,29 +99,18 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         }
     }
 
-    enspirit(reviver, enspiritTint)
+    charm(master, masterTint)
     {
-        if (this.lifeState === 'dead' || this.lifeState === 'alive') {
-            this.reviver = reviver;
-            this.setTint(enspiritTint);
-            this.energyTint = enspiritTint;
-            this.attackEmitter.setParticleTint(enspiritTint);
-            if (this.lifeState === 'dead') {
-                this.lifeState = 'spirit';
-                this.alpha = 0;
-                this.scene.tweens.add({
-                    targets: this,
-                    alpha: 1,
-                    duration: 500,
-                    ease: 'Linear',
-                });
-            } else {
-                this.lifeState = 'spirit';
-            }
+        if (this.lifeState === 'alive') {
+            this.lifeState = 'charmed';
+            this.master = master;
+            this.setTint(masterTint);
+            this.energyTint = masterTint;
+            this.attackEmitter.setParticleTint(this.energyTint);
         }
     }
 
-    spiritAttack()
+    charmedAttack()
     {
         // target tiles
         const chosenDir = Phaser.Math.RND.pick(this.directions);
@@ -140,13 +129,13 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.scene.time.delayedCall(50 * i, () => {
-                this.spiritHitTile(tile.x, tile.y, 1);
+                this.charmedHitTile(tile.x, tile.y, 1);
                 this.attackEmitter.emitParticleAt(pixelX, pixelY, 5);
             });
         });
     }
 
-    spiritHitTile(tileX, tileY, damage)
+    charmedHitTile(tileX, tileY, damage)
     {
         let wizardHit = this.wasWizardHit(tileX, tileY);
         if (wizardHit) {
@@ -154,7 +143,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         }
         let watcherHit = this.wasWatcherHit(tileX, tileY);
         if (watcherHit) {
-            watcherHit.enspirit(this.reviver, this.energyTint);
+            watcherHit.charm(this.master, this.energyTint);
         }
     }
 
@@ -163,8 +152,8 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         return this.scene.wizardGroup.getChildren().find(wizard => {
             if (wizard === this) {
                 return false;      // friendly fire will not be tolerated
-            } else if (wizard === this.reviver) {
-                return false;      // don't bite the hand that revives you
+            } else if (wizard === this.master) {
+                return false;      // don't bite the hand that charms you
             }
             return wizard.tile.x === tileX && wizard.tile.y === tileY;
         });
