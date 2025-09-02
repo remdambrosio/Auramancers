@@ -2,10 +2,10 @@ export class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
         this.wizardNames = [
-            'Andrew', 'Mia', '???', '???', '???', '???', '???', '???',
+            'Andrew', 'Mia', 'Tariq', '???', '???', '???', '???', '???',
             '???', '???', '???', '???'
         ];
-        this.selectedWizards = ['Andrew', 'Mia'];
+        this.selectedWizards = ['Andrew', 'Mia', 'Tariq'];
     }
 
     create() {

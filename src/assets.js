@@ -4,34 +4,64 @@ export default {
             key: 'riseOfTheManimals',
             args: ['assets/audio/riseOfTheManimals.mp3']
         },
-        auraBlazing: {
-            key: 'auraBlazing',
-            args: ['assets/audio/auraBlazing.mp3']
-        },
-        auraFaded: {
-            key: 'auraFaded',
-            args: ['assets/audio/auraFaded.mp3']
-        },
-        mia: {
-            hit: {
-                key: 'mia_hit',
-                args: ['assets/audio/wizards/mia/hit.mp3']
+        narration: {
+            auraBlazing: {
+                key: 'auraBlazing',
+                args: ['assets/audio/narration/auraBlazing.mp3']
             },
-            die: {
-                key: 'mia_die',
-                args: ['assets/audio/wizards/mia/die.mp3']
+            auraFaded: {
+                key: 'auraFaded',
+                args: ['assets/audio/narration/auraFaded.mp3']
+            },
+            tie: {
+                key: 'tie',
+                args: ['assets/audio/narration/tie.mp3']
             }
         },
-        andrew: {
-            hit: {
-                key: 'andrew_hit',
-                args: ['assets/audio/wizards/andrew/hit.mp3']
+        wizards: {
+            mia: {
+                hit: {
+                    key: 'mia_hit',
+                    args: ['assets/audio/wizards/mia/hit.mp3']
+                },
+                die: {
+                    key: 'mia_die',
+                    args: ['assets/audio/wizards/mia/die.mp3']
+                },
+                win: {
+                    key: 'mia_win',
+                    args: ['assets/audio/wizards/mia/win.mp3']
+                }
             },
-            die: {
-                key: 'andrew_die',
-                args: ['assets/audio/wizards/andrew/die.mp3']
+            andrew: {
+                hit: {
+                    key: 'andrew_hit',
+                    args: ['assets/audio/wizards/andrew/hit.mp3']
+                },
+                die: {
+                    key: 'andrew_die',
+                    args: ['assets/audio/wizards/andrew/die.mp3']
+                },
+                win: {
+                    key: 'andrew_win',
+                    args: ['assets/audio/wizards/andrew/win.mp3']
+                }
+            },
+            tariq: {
+                hit: {
+                    key: 'tariq_hit',
+                    args: ['assets/audio/wizards/tariq/hit.mp3']
+                },
+                die: {
+                    key: 'tariq_die',
+                    args: ['assets/audio/wizards/tariq/die.mp3']
+                },
+                win: {
+                    key: 'tariq_win',
+                    args: ['assets/audio/wizards/tariq/win.mp3']
+                }
             }
-        },
+        }
     },
     'image': {
         icon: {

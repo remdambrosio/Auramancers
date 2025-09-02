@@ -41,7 +41,17 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             { x: 0, y: 1 }
         ];
 
-        this.emitter = scene.add.particles(0, 0, 'spark', {
+        this.ashEmitter = scene.add.particles(0, 0, 'spark', {
+            tint: 0x3b3b3b,
+            lifespan: 1000,
+            speed: { min: 10, max: 50 },
+            scale: { start: 0.5, end: 0 },
+            blendMode: 'NORMAL',
+            emitting: false
+        });
+        this.ashEmitter.setDepth(100);
+
+        this.attackEmitter = scene.add.particles(0, 0, 'spark', {
             tint: this.energyTint,
             lifespan: 250,
             speed: { min: 5, max: 50 },
@@ -49,13 +59,12 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             blendMode: 'NORMAL',
             emitting: false
         });
-        this.emitter.setDepth(200);
+        this.attackEmitter.setDepth(200);
     }
 
     preUpdate (time, delta)
     {
         super.preUpdate(time, delta);
-
         if (this.scene.gameState != 'live') return;
 
         this.moveTimer += delta;
@@ -123,11 +132,11 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         });
     }
 
-    attack ()
+    attack()
     {
+        // target tiles
         const chosenDir = Phaser.Math.RND.pick(this.directions);
         this.targetAttackTiles = [];
-
         let curTile = this.tile;
         for (let i = 0; i < 5; i++) {
             curTile = {
@@ -137,6 +146,21 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             this.targetAttackTiles.push({ ...curTile });
         }
 
+        // aura indicates current health
+        this.auraPulse();
+
+        // attack tiles
+        this.targetAttackTiles.forEach((tile, i) => {
+            const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
+            const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
+            this.scene.time.delayedCall(50 * i, () => {
+                this.hitTile(tile.x, tile.y, 1);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 5);
+            });
+        });
+    }
+
+    auraPulse() {
         let healthRatio = this.health / this.maxHealth;
         let healthFrame;
         if (healthRatio === 1) {
@@ -146,27 +170,19 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         } else {
             healthFrame = 3;
         }
-
         this.setFrame(this.frame.name + healthFrame);
         this.scene.time.delayedCall(250, () => { this.setFrame(this.frame.name - healthFrame); });
+    }
 
-        this.targetAttackTiles.forEach((tile, i) => {
-            const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
-            const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
-            this.scene.time.delayedCall(50 * i, () => {
-                let wizardHit = this.wasWizardHit(tile.x, tile.y);
-                if (wizardHit) {
-                    wizardHit.takeDamage(1, this.energyTint);
-                } 
-                
-                let watcherHit = this.wasWatcherHit(tile.x, tile.y);
-                if (watcherHit) {
-                    watcherHit.die(this.energyTint);
-                }
-
-                this.emitter.emitParticleAt(pixelX, pixelY, 5);
-            });
-        });
+    hitTile(tileX, tileY, damage) {
+        let wizardHit = this.wasWizardHit(tileX, tileY);
+        if (wizardHit) {
+            wizardHit.takeDamage(damage, this.energyTint);
+        }
+        let watcherHit = this.wasWatcherHit(tileX, tileY);
+        if (watcherHit) {
+            watcherHit.die(this.energyTint);
+        }
     }
 
     wasWizardHit(tileX, tileY)
@@ -208,7 +224,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         if (this.scene.liveWizards.length <= 1) {
             this.scene.endGame();
         }
-        this.emitter.emitParticleAt(this.x, this.y, 10);
+        this.ashEmitter.emitParticleAt(this.x, this.y, 10);
         const ash = this.scene.add.image(this.x, this.y, ASSETS.spritesheet.ash.key, Phaser.Math.RND.between(0, 15));
         ash.tint = attackTint;
         this.scene.tweens.add({

@@ -1,10 +1,10 @@
 import ASSETS from '../../assets.js';
 import Wizard from './Wizard.js';
 
-const actions = Object.keys(ASSETS.audio.andrew);
+const actions = Object.keys(ASSETS.audio.wizards.andrew);
 const voicelines = {};
 actions.forEach(action => {
-    voicelines[action] = ASSETS.audio.andrew[action].key;
+    voicelines[action] = ASSETS.audio.wizards.andrew[action].key;
 });
 
 export default class Andrew extends Wizard {

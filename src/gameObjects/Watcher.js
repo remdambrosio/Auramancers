@@ -20,7 +20,22 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
             this.flipX = true;
         }
 
-        this.emitter = scene.add.particles(0, 0, 'spark', {
+        this.lifeState = 'alive';   // 'alive', 'dead', 'spirit'
+        this.energyTint = 0x000000;
+        this.reviver = null;
+
+        this.turnInterval = this.scene.turnInterval;
+        this.attackTimer = this.turnInterval / 2;
+        this.targetAttackTiles = null;
+
+        this.directions = [
+            { x: -1, y: 0 },
+            { x: 1, y: 0 },
+            { x: 0, y: -1 },
+            { x: 0, y: 1 }
+        ];
+
+        this.ashEmitter = scene.add.particles(0, 0, 'spark', {
             tint: 0x3b3b3b,
             lifespan: 1000,
             speed: { min: 10, max: 50 },
@@ -28,26 +43,137 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
             blendMode: 'NORMAL',
             emitting: false
         });
-        this.emitter.setDepth(100);
+        this.ashEmitter.setDepth(100);
+
+        this.attackEmitter = scene.add.particles(0, 0, 'spark', {
+            tint: this.energyTint,
+            lifespan: 250,
+            speed: { min: 5, max: 50 },
+            scale: { start: 0.8, end: 0 },
+            blendMode: 'NORMAL',
+            emitting: false
+        });
+        this.attackEmitter.setDepth(200);
+    }
+
+    preUpdate (time, delta)
+    {
+        super.preUpdate(time, delta);
+        if (this.scene.gameState != 'live') return;
+
+        this.attackTimer += delta;
+        if (this.attackTimer > this.turnInterval)
+        {
+            this.attackTimer = 0;
+            this.scene.tweens.add({
+                targets: this,
+                y: this.y - Phaser.Math.Between(1, 4),
+                duration: 100,
+                yoyo: true,
+                ease: 'Quad.easeOut',
+            });
+
+            if (this.lifeState === 'spirit') {
+                this.spiritAttack();
+            }
+        }
     }
 
     die(attackTint)
     {
-        this.setTint(0x000000);
-        this.emitter.emitParticleAt(this.x, this.y, 10);
-        const ash = this.scene.add.image(this.x, this.y, ASSETS.spritesheet.ash.key, Phaser.Math.RND.between(0, 15));
-        ash.tint = attackTint;
-        this.scene.tweens.add({
-            targets: [this, ash],
-            alpha: {
-                getStart: (target) => target === this ? 1 : 0,
-                getEnd: (target) => target === this ? 0 : Phaser.Math.FloatBetween(0.6, 0.9)
-            },
-            duration: 500,
-            ease: 'Linear',
-            onComplete: () => {
-                this.destroy();
+        if (this.lifeState === 'alive') {
+            this.lifeState = 'dead';
+            this.setTint(0x000000);
+            this.ashEmitter.emitParticleAt(this.x, this.y, 10);
+            const ash = this.scene.add.image(this.x, this.y, ASSETS.spritesheet.ash.key, Phaser.Math.RND.between(0, 15));
+            ash.tint = attackTint;
+            this.scene.tweens.add({
+                targets: [this, ash],
+                alpha: {
+                    getStart: (target) => target === this ? 1 : 0,
+                    getEnd: (target) => target === this ? 0 : Phaser.Math.FloatBetween(0.6, 0.9)
+                },
+                duration: 500,
+                ease: 'Linear',
+            });
+        }
+    }
+
+    enspirit(reviver, enspiritTint)
+    {
+        if (this.lifeState === 'dead' || this.lifeState === 'alive') {
+            this.reviver = reviver;
+            this.setTint(enspiritTint);
+            this.energyTint = enspiritTint;
+            this.attackEmitter.setParticleTint(enspiritTint);
+            if (this.lifeState === 'dead') {
+                this.lifeState = 'spirit';
+                this.alpha = 0;
+                this.scene.tweens.add({
+                    targets: this,
+                    alpha: 1,
+                    duration: 500,
+                    ease: 'Linear',
+                });
+            } else {
+                this.lifeState = 'spirit';
             }
+        }
+    }
+
+    spiritAttack()
+    {
+        // target tiles
+        const chosenDir = Phaser.Math.RND.pick(this.directions);
+        this.targetAttackTiles = [];
+        let curTile = this.tile;
+        for (let i = 0; i < 3; i++) {
+            curTile = {
+                x: curTile.x + chosenDir.x,
+                y: curTile.y + chosenDir.y
+            };
+            this.targetAttackTiles.push({ ...curTile });
+        }
+
+        // attack tiles
+        this.targetAttackTiles.forEach((tile, i) => {
+            const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
+            const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
+            this.scene.time.delayedCall(50 * i, () => {
+                this.spiritHitTile(tile.x, tile.y, 1);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 5);
+            });
+        });
+    }
+
+    spiritHitTile(tileX, tileY, damage)
+    {
+        let wizardHit = this.wasWizardHit(tileX, tileY);
+        if (wizardHit) {
+            wizardHit.takeDamage(damage, this.energyTint);
+        }
+        let watcherHit = this.wasWatcherHit(tileX, tileY);
+        if (watcherHit) {
+            watcherHit.enspirit(this.reviver, this.energyTint);
+        }
+    }
+
+    wasWizardHit(tileX, tileY)
+    {
+        return this.scene.wizardGroup.getChildren().find(wizard => {
+            if (wizard === this) {
+                return false;      // friendly fire will not be tolerated
+            } else if (wizard === this.reviver) {
+                return false;      // don't bite the hand that revives you
+            }
+            return wizard.tile.x === tileX && wizard.tile.y === tileY;
+        });
+    }
+
+    wasWatcherHit(tileX, tileY)
+    {
+        return this.scene.watcherGroup.getChildren().find(watcher => {
+            return watcher.tile.x === tileX && watcher.tile.y === tileY;
         });
     }
 }

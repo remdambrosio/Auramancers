@@ -20,15 +20,15 @@ export class Preloader extends Phaser.Scene {
             this.bar.width = barMargin + ((barWidth - (barMargin * 2)) * progress);
         });
 
-        this.startGameText = this.add.text(centreX, centreY, 'AURAMANCERS\nClick to Start', {
-            fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
-            stroke: '#000000', strokeThickness: 8,
-            align: 'center',
-            resolution: 2
-        })
-            .setOrigin(0.5)
-            .setDepth(1000)
-            .setVisible(false);
+        // this.startGameText = this.add.text(centreX, centreY, 'AURAMANCERS\nClick to Start', {
+        //     fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
+        //     stroke: '#000000', strokeThickness: 8,
+        //     align: 'center',
+        //     resolution: 2
+        // })
+        //     .setOrigin(0.5)
+        //     .setDepth(1000)
+        //     .setVisible(false);
     }
 
 preload() {
@@ -51,10 +51,11 @@ preload() {
     create() {
         this.outline.setVisible(false);
         this.bar.setVisible(false);
-        this.startGameText.setVisible(true);
-        this.startGameText.setVisible(true);
-        this.input.once('pointerdown', () => {
-            this.scene.start('Menu');
-        });
+        // this.startGameText.setVisible(true);
+        // this.startGameText.setVisible(true);
+        // this.input.once('pointerdown', () => {
+        //     this.scene.start('Menu');
+        // });
+        this.scene.start('Menu');
     }
 }

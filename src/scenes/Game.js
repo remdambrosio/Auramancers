@@ -2,7 +2,8 @@ import ASSETS from '../assets.js';
 import HealthBar from '../gameObjects/HealthBar.js';
 import Watcher from '../gameObjects/Watcher.js';
 import Andrew from '../gameObjects/wizards/Andrew.js';
-import Mia from '../gameObjects/wizards/mia.js';
+import Mia from '../gameObjects/wizards/Mia.js';
+import Tariq from '../gameObjects/wizards/Tariq.js';
 
 export class Game extends Phaser.Scene
 {
@@ -53,6 +54,8 @@ export class Game extends Phaser.Scene
         this.watcherUpDownTiles = [];
         this.wizard1Start = { x: 0, y: 0 };
         this.wizard2Start = { x: 0, y: 0 };
+        this.wizard3Start = { x: 0, y: 0 };
+        this.wizard4Start = { x: 0, y: 0 };
 
         // generate random background image
         this.tiles = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 44 ];
@@ -99,12 +102,12 @@ export class Game extends Phaser.Scene
             .setDepth(1000)
             .setVisible(false);
 
-        this.winnerText = this.add.text(this.centreX, this.centreY, 'The Auramancer is\nNobody', {
+        this.winnerText = this.add.text(this.centreX, this.centreY, 'No Auramaster\nhas Risen', {
             fontFamily: 'Arial Black',
-            fontSize: 32,
+            fontSize: 18,
             color: '#ffffff',
             stroke: '#000000',
-            strokeThickness: 6,
+            strokeThickness: 4,
             align: 'center',
             resolution: 2,
             richText: true
@@ -189,12 +192,12 @@ export class Game extends Phaser.Scene
                     this.wizard2Start.y = y;
                 } else if (tile.index === this.tileIds.wizard3){
                     tile.index = -1;
-                    // this.wizard3Start.x = x;
-                    // this.wizard3Start.y = y;
+                    this.wizard3Start.x = x;
+                    this.wizard3Start.y = y;
                 } else if (tile.index === this.tileIds.wizard4){
                     tile.index = -1;
-                    // this.wizard4Start.x = x;
-                    // this.wizard4Start.y = y;
+                    this.wizard4Start.x = x;
+                    this.wizard4Start.y = y;
                 }
             }
         }
@@ -217,11 +220,13 @@ export class Game extends Phaser.Scene
     endGame() {
         this.gameState = 'end';
         this.sound.stopByKey('riseOfTheManimals');
+        let winSound = 'tie';
 
         this.time.delayedCall(1500, () => {
             if (this.liveWizards.length === 1) {
-                this.winnerText.setText(`The Auramancer is\n${this.liveWizards[0].name}`);
+                this.winnerText.setText(`The Auramaster is\n${this.liveWizards[0].name}`);
                 this.winnerText.setColor(`#${this.liveWizards[0].energyTint.toString(16).padStart(6, '0')}`);
+                winSound = this.liveWizards[0].voicelines.win;
             }
             this.endGameText.setVisible(true);
             this.sound.play('auraFaded');
@@ -229,33 +234,53 @@ export class Game extends Phaser.Scene
 
         this.time.delayedCall(3000, () => {
             this.winnerText.setVisible(true);
+            this.sound.play(winSound);
         });
     }
 
     initWizards ()
     {
-        let wizardStartPositions = [
-            { x: this.wizard1Start.x, y: this.wizard1Start.y },
-            { x: this.wizard2Start.x, y: this.wizard2Start.y }
-        ]
-        let wizardBarPositions = [
-            { x: this.centreX - 135, y: this.centreY + 175 },
-            { x: this.centreX + 15, y: this.centreY + 175 }
+        let wizardPairs = [
+            {
+                start: { x: this.wizard1Start.x, y: this.wizard1Start.y },
+                bar:   { x: this.centreX - 135, y: this.centreY + 175 }
+            },
+            {
+                start: { x: this.wizard2Start.x, y: this.wizard2Start.y },
+                bar:   { x: this.centreX + 15, y: this.centreY + 175 }
+            },
+            {
+                start: { x: this.wizard3Start.x, y: this.wizard3Start.y },
+                bar:   { x: this.centreX + 15, y: this.centreY + 208 }
+            },
+            {
+                start: { x: this.wizard4Start.x, y: this.wizard4Start.y },
+                bar:   { x: this.centreX - 135, y: this.centreY + 208 }
+            },
         ];
+
+        Phaser.Utils.Array.Shuffle(wizardPairs);
 
         let wizardIndex = 0;
         for (const name of this.selectedWizards) {
+            const pair = wizardPairs[wizardIndex];
             if (name === 'Andrew') {
-                const andrew = new Andrew(this, wizardStartPositions[wizardIndex].x, wizardStartPositions[wizardIndex].y);
+                const andrew = new Andrew(this, pair.start.x, pair.start.y);
                 this.wizardGroup.add(andrew);
-                const andrewBar = new HealthBar(this, wizardBarPositions[wizardIndex].x, wizardBarPositions[wizardIndex].y, andrew);
+                const andrewBar = new HealthBar(this, pair.bar.x, pair.bar.y, andrew);
                 this.wizardBarGroup.add(andrewBar);
                 wizardIndex++;
             } else if (name === 'Mia'){
-                const mia = new Mia(this, wizardStartPositions[wizardIndex].x, wizardStartPositions[wizardIndex].y);
+                const mia = new Mia(this, pair.start.x, pair.start.y);
                 this.wizardGroup.add(mia);
-                const miaBar = new HealthBar(this, wizardBarPositions[wizardIndex].x, wizardBarPositions[wizardIndex].y, mia);
+                const miaBar = new HealthBar(this, pair.bar.x, pair.bar.y, mia);
                 this.wizardBarGroup.add(miaBar);
+                wizardIndex++;
+            } else if (name === 'Tariq'){
+                const tariq = new Tariq(this, pair.start.x, pair.start.y);
+                this.wizardGroup.add(tariq);
+                const tariqBar = new HealthBar(this, pair.bar.x, pair.bar.y, tariq);
+                this.wizardBarGroup.add(tariqBar);
                 wizardIndex++;
             }
         }
