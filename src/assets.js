@@ -25,6 +25,10 @@ export default {
                 key: 'auraFaded',
                 args: ['assets/audio/narration/auraFaded.mp3']
             },
+            uhOh: {
+                key: 'uhOh',
+                args: ['assets/audio/narration/uhOh.mp3']
+            },
             tie: {
                 key: 'tie',
                 args: ['assets/audio/narration/tie.mp3']
@@ -71,6 +75,20 @@ export default {
                 win: {
                     key: 'tariq_win',
                     args: ['assets/audio/wizards/tariq/win.mp3']
+                }
+            },
+            rem: {
+                hit: {
+                    key: 'rem_hit',
+                    args: ['assets/audio/wizards/rem/hit.mp3']
+                },
+                die: {
+                    key: 'rem_die',
+                    args: ['assets/audio/wizards/rem/die.mp3']
+                },
+                win: {
+                    key: 'rem_win',
+                    args: ['assets/audio/wizards/rem/win.mp3']
                 }
             }
         }

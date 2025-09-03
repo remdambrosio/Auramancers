@@ -1,9 +1,8 @@
 import ASSETS from '../assets.js';
 import HealthBar from '../gameObjects/HealthBar.js';
 import Watcher from '../gameObjects/Watcher.js';
-import Andrew from '../gameObjects/wizards/Andrew.js';
-import Mia from '../gameObjects/wizards/Mia.js';
-import Tariq from '../gameObjects/wizards/Tariq.js';
+import wizardClasses from '../wizardClasses.js';
+
 
 export class Game extends Phaser.Scene
 {
@@ -135,6 +134,7 @@ export class Game extends Phaser.Scene
         this.input.keyboard.on('keydown-X', () => {
             if (this.gameState === 'live') {
                 this.endGame('Nobody');
+                this.sound.play('uhOh');
             }
         });
     }
@@ -218,7 +218,7 @@ export class Game extends Phaser.Scene
     endGame() {
         this.gameState = 'end';
         this.sound.stopByKey('riseOfTheManimals');
-
+        
         let winSound = 'tie';
         this.time.delayedCall(1500, () => {
             if (this.liveWizards.length === 1) {
@@ -261,23 +261,12 @@ export class Game extends Phaser.Scene
         let wizardIndex = 0;
         for (const name of this.selectedWizards) {
             const pair = wizardPairs[wizardIndex];
-            if (name === 'Andrew') {
-                const andrew = new Andrew(this, pair.start.x, pair.start.y);
-                this.wizardGroup.add(andrew);
-                const andrewBar = new HealthBar(this, pair.bar.x, pair.bar.y, andrew);
-                this.wizardBarGroup.add(andrewBar);
-                wizardIndex++;
-            } else if (name === 'Mia'){
-                const mia = new Mia(this, pair.start.x, pair.start.y);
-                this.wizardGroup.add(mia);
-                const miaBar = new HealthBar(this, pair.bar.x, pair.bar.y, mia);
-                this.wizardBarGroup.add(miaBar);
-                wizardIndex++;
-            } else if (name === 'Tariq'){
-                const tariq = new Tariq(this, pair.start.x, pair.start.y);
-                this.wizardGroup.add(tariq);
-                const tariqBar = new HealthBar(this, pair.bar.x, pair.bar.y, tariq);
-                this.wizardBarGroup.add(tariqBar);
+            const WizardClass = wizardClasses[name];
+            if (WizardClass) {
+                const wizard = new WizardClass(this, pair.start.x, pair.start.y);
+                this.wizardGroup.add(wizard);
+                const wizardBar = new HealthBar(this, pair.bar.x, pair.bar.y, wizard);
+                this.wizardBarGroup.add(wizardBar);
                 wizardIndex++;
             }
         }

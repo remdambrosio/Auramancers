@@ -1,11 +1,14 @@
+import wizardClasses from '../wizardClasses.js';
+
 export class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
+        const classNames = Object.keys(wizardClasses);
         this.wizardNames = [
-            'Andrew', 'Mia', 'Tariq', '???', '???', '???', '???', '???',
-            '???', '???', '???', '???'
+            ...classNames,
+            ...Array(12 - classNames.length).fill('???')
         ];
-        this.selectedWizards = ['Andrew', 'Mia', 'Tariq'];
+        this.selectedWizards = ['Andrew', 'Mia', 'Tariq', 'Rem'];
     }
 
     create() {
