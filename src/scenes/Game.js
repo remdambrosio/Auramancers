@@ -207,7 +207,7 @@ export class Game extends Phaser.Scene
         this.startGameText.setVisible(false);
         this.endGameText.setVisible(false);
         this.sound.play('riseOfTheManimals', { volume: 0.1, loop: true });
-
+        
         // // tie testing
         // this.wizardGroup.getChildren().forEach(wizard => wizard.health = 1);
         // this.time.delayedCall(500, () => {
@@ -218,8 +218,8 @@ export class Game extends Phaser.Scene
     endGame() {
         this.gameState = 'end';
         this.sound.stopByKey('riseOfTheManimals');
-        let winSound = 'tie';
 
+        let winSound = 'tie';
         this.time.delayedCall(1500, () => {
             if (this.liveWizards.length === 1) {
                 this.winnerText.setText(`The Auramaster is\n${this.liveWizards[0].name}`);
@@ -229,7 +229,6 @@ export class Game extends Phaser.Scene
             this.endGameText.setVisible(true);
             this.sound.play('auraFaded');
         });
-
         this.time.delayedCall(3000, () => {
             this.winnerText.setVisible(true);
             this.sound.play(winSound);

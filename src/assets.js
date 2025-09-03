@@ -1,8 +1,20 @@
 export default {
     'audio': {
-        riseOfTheManimals: {
-            key: 'riseOfTheManimals',
-            args: ['assets/audio/riseOfTheManimals.mp3']
+        music: {
+            riseOfTheManimals: {
+                key: 'riseOfTheManimals',
+                args: ['assets/audio/music/riseOfTheManimals.mp3']
+            }
+        },
+        sfx: {
+            startSting: {
+                key: 'startSting',
+                args: ['assets/audio/sfx/startSting.mp3']
+            },
+            endSting: {
+                key: 'endSting',
+                args: ['assets/audio/sfx/endSting.mp3']
+            },
         },
         narration: {
             auraBlazing: {

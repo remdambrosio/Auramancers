@@ -2,7 +2,7 @@
 
 https://remdambrosio.github.io/Auramancers/
 
-A Phaser "game" where two wizards face off in an arena.
+A Phaser "game" wherein brave wizards face off to become the Auramaster.
 
 ## Setup
 
@@ -42,7 +42,7 @@ A Phaser "game" where two wizards face off in an arena.
 
 **Narration** - Rem D'Ambrosio
 
-**Character Voices** - Mia Vandenschrick, Andrew Silbernagel
+**Character Voices** - Mia Vandenschrick, Andrew Silbernagel, Tariq Chatur
 
 ### Assets
 
