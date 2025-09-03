@@ -3,7 +3,6 @@ import HealthBar from '../gameObjects/HealthBar.js';
 import Watcher from '../gameObjects/Watcher.js';
 import wizardClasses from '../wizardClasses.js';
 
-
 export class Game extends Phaser.Scene
 {
     constructor()

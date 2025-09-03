@@ -48,7 +48,8 @@ export default class Andrew extends Wizard {
             wizardHit.takeDamage(damage, this.energyTint);
         }
         let watcherHit = this.wasWatcherHit(tileX, tileY);
-        if (watcherHit) {
+        if (watcherHit && watcherHit.lifeState !== 'dead') {
+            this.scene.sound.play(ASSETS.audio.watcher.hit.key, { volume: 0.4 });
             watcherHit.die(this.energyTint);
             this.rage += 1;
         }

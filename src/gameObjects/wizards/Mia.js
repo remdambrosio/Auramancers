@@ -47,7 +47,8 @@ export default class Mia extends Wizard {
             wizardHit.takeDamage(damage, this.energyTint);
         }
         let watcherHit = this.wasWatcherHit(tileX, tileY);
-        if (watcherHit) {
+        if (watcherHit && watcherHit.lifeState === 'alive') {
+            this.scene.sound.play(ASSETS.audio.watcher.charm.key, { volume: 0.8 });
             watcherHit.charm(this, this.energyTint);
         }
     }

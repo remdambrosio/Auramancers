@@ -11,4 +11,47 @@ export default class Tariq extends Wizard {
     constructor(scene, x, y) {
         super(scene, x, y, `Tariq, Friend of Trees`, voicelines, 0x228B22, 8);
     }
+
+    attack()
+    {
+        // target initial line of tiles
+        const chosenDir = Phaser.Math.RND.pick(this.directions);
+        this.targetAttackTiles = [];
+        let curTile = this.tile;
+        for (let i = 0; i < 2; i++) {
+            curTile = {
+                x: curTile.x + chosenDir.x,
+                y: curTile.y + chosenDir.y
+            };
+            this.targetAttackTiles.push({ ...curTile });
+        }
+
+        // target end tiles
+        const finalTile = this.targetAttackTiles[this.targetAttackTiles.length - 1];
+        let perpDirs;
+        if (chosenDir.x === 0) {
+            perpDirs = [{ x: 1, y: 0 }, { x: -1, y: 0 }];
+        } else {
+            perpDirs = [{ x: 0, y: 1 }, { x: 0, y: -1 }];
+        }
+        perpDirs.forEach(dir => {
+            this.targetAttackTiles.push({
+                x: finalTile.x + dir.x,
+                y: finalTile.y + dir.y
+            });
+        });
+
+        // aura indicates current health
+        this.auraPulse();
+
+        // attack tiles
+        this.targetAttackTiles.forEach((tile, i) => {
+            const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
+            const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
+            this.scene.time.delayedCall(50 * i, () => {
+                this.hitTile(tile.x, tile.y, 1);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 5);
+            });
+        });
+    }
 }

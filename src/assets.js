@@ -34,6 +34,16 @@ export default {
                 args: ['assets/audio/narration/tie.mp3']
             }
         },
+        watcher: {
+            hit: {
+                key: 'hit',
+                args: ['assets/audio/watcher/hit.mp3']
+            },
+            charm: {
+                key: 'charm',
+                args: ['assets/audio/watcher/charm.mp3']
+            },
+        },
         wizards: {
             mia: {
                 hit: {
