@@ -132,7 +132,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         // target tiles towards center
         this.targetAttackTiles = [];
         let curTile = this.tile;
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             curTile = {
                 x: curTile.x + chosenDir.x,
                 y: curTile.y + chosenDir.y
@@ -157,10 +157,6 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         if (wizardHit) {
             wizardHit.takeDamage(damage, this.energyTint);
         }
-        let watcherHit = this.wasWatcherHit(tileX, tileY);
-        if (watcherHit) {
-            watcherHit.charm(this.master, this.energyTint);
-        }
     }
 
     wasWizardHit(tileX, tileY)
@@ -172,13 +168,6 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
                 return false;      // don't bite the hand that charms you
             }
             return wizard.tile.x === tileX && wizard.tile.y === tileY;
-        });
-    }
-
-    wasWatcherHit(tileX, tileY)
-    {
-        return this.scene.watcherGroup.getChildren().find(watcher => {
-            return watcher.tile.x === tileX && watcher.tile.y === tileY;
         });
     }
 }
