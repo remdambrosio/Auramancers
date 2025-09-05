@@ -18,7 +18,7 @@ export default class Tariq extends Wizard {
         const chosenDir = Phaser.Math.RND.pick(this.directions);
         this.targetAttackTiles = [];
         let curTile = this.tile;
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             curTile = {
                 x: curTile.x + chosenDir.x,
                 y: curTile.y + chosenDir.y
