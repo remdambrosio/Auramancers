@@ -9,7 +9,17 @@ actions.forEach(action => {
 
 export default class Rem extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Rem, Seasick Prince`, voicelines, 0x0026FF, 12);
+        super(scene, x, y, `Rem, Soggy Sorcerer`, voicelines, 0x0026FF, 12);
+
+        this.attackEmitter = scene.add.particles(0, 0, 'orb', {
+            tint: [0xFFFFFF, 0xC9F1FF, 0x4C8DFF, 0x0026FF, 0x0026FF, 0x0026FF],
+            lifespan: 400,
+            speed: { min: 5, max: 50 },
+            scale: { start: 1.2, end: 0 },
+            blendMode: 'NORMAL',
+            emitting: false
+        });
+        this.attackEmitter.setDepth(200);
 
         this.attackMode = 0;
     }
@@ -60,7 +70,7 @@ export default class Rem extends Wizard {
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.hitTile(tile.x, tile.y, 1);
-            this.attackEmitter.emitParticleAt(pixelX, pixelY, 5);
+            this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
         });
     }
 }

@@ -112,6 +112,18 @@ export default {
             key: 'spark',
             args: ['assets/image/spark.png']
         },
+        orb: {
+            key: 'orb',
+            args: ['assets/image/orb.png']
+        },
+        flame: {
+            key: 'flame',
+            args: ['assets/image/flame.png']
+        },
+        slash: {
+            key: 'slash',
+            args: ['assets/image/slash.png']
+        },
     },
     'spritesheet': {
         tiles: {

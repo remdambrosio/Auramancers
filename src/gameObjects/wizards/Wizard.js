@@ -42,11 +42,11 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             { x: 0, y: 1 }
         ];
 
-        this.ashEmitter = scene.add.particles(0, 0, 'spark', {
+        this.ashEmitter = scene.add.particles(0, 0, 'orb', {
             tint: 0x3b3b3b,
             lifespan: 1000,
             speed: { min: 10, max: 50 },
-            scale: { start: 0.5, end: 0 },
+            scale: { start: 1, end: 0 },
             blendMode: 'NORMAL',
             emitting: false
         });
@@ -56,7 +56,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             tint: this.energyTint,
             lifespan: 250,
             speed: { min: 5, max: 50 },
-            scale: { start: 0.8, end: 0 },
+            scale: { start: 1.5, end: 0 },
             blendMode: 'NORMAL',
             emitting: false
         });
@@ -156,7 +156,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.scene.time.delayedCall(50 * i, () => {
                 this.hitTile(tile.x, tile.y, 1);
-                this.attackEmitter.emitParticleAt(pixelX, pixelY, 5);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
             });
         });
     }

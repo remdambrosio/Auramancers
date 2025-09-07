@@ -11,6 +11,16 @@ export default class Andrew extends Wizard {
     constructor(scene, x, y) {
         super(scene, x, y, `Andrew, Flame's Rage`, voicelines, 0xFF0000, 0);
 
+        this.attackEmitter = scene.add.particles(0, 0, 'flame', {
+            tint: [0x3b3b3b, 0xFFC73A, 0xFF8832, 0xFF0000, 0xFF0000, 0xFF0000],
+            lifespan: 250,
+            speed: { min: 5, max: 50 },
+            scale: { start: 1.5, end: 0 },
+            blendMode: 'NORMAL',
+            emitting: false
+        });
+        this.attackEmitter.setDepth(200);
+
         this.rage = 3;
     }
 
@@ -37,7 +47,7 @@ export default class Andrew extends Wizard {
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.scene.time.delayedCall(50 * i, () => {
                 this.hitTile(tile.x, tile.y, 1);
-                this.attackEmitter.emitParticleAt(pixelX, pixelY, 5);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
             });
         });
     }
