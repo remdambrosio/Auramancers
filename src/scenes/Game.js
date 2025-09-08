@@ -205,7 +205,7 @@ export class Game extends Phaser.Scene
         this.gameState = 'live';
         this.startGameText.setVisible(false);
         this.endGameText.setVisible(false);
-        this.sound.play('riseOfTheManimals', { volume: 0.1, loop: true });
+        this.sound.play('riseOfTheManimals', { volume: 0.05, loop: true });
         
         // // tie testing
         // this.wizardGroup.getChildren().forEach(wizard => wizard.health = 1);

@@ -12,7 +12,7 @@ export default class Tariq extends Wizard {
         super(scene, x, y, `Tariq, Friend of Trees`, voicelines, 0x228B22, 8);
 
         this.attackEmitter = scene.add.particles(0, 0, 'slash', {
-            tint: [0x603B22, 0x228B22],
+            tint: [0x603B22, 0x228B22, 0x228B22],
             lifespan: 250,
             speed: { min: 5, max: 50 },
             scale: { start: 1.5, end: 0 },
@@ -61,7 +61,7 @@ export default class Tariq extends Wizard {
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.scene.time.delayedCall(50 * i, () => {
                 this.hitTile(tile.x, tile.y, 1);
-                this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 8);
             });
         });
     }
