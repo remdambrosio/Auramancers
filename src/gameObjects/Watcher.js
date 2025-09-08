@@ -73,7 +73,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
                 ease: 'Quad.easeOut',
             });
 
-            if (this.lifeState === 'charmed') {
+            if (this.lifeState === 'charmed' || this.lifeState === 'ghost') {
                 this.charmedAttack();
             }
         }
@@ -81,7 +81,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
 
     die(attackTint)
     {
-        if (this.lifeState !== 'dead') {
+        if (this.lifeState !== 'dead' && this.lifeState !== 'ghost') {
             this.lifeState = 'dead';
             this.setTint(0x000000);
             this.ashEmitter.emitParticleAt(this.x, this.y, 10);
@@ -156,6 +156,18 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         let wizardHit = this.wasWizardHit(tileX, tileY);
         if (wizardHit) {
             wizardHit.takeDamage(damage, this.energyTint);
+        }
+    }
+
+    ghostify(master, masterTint)
+    {
+        if (this.lifeState === 'dead') {
+            this.lifeState = 'ghost';
+            this.master = master;
+            this.setTint(masterTint);
+            this.alpha = 0.75;
+            this.energyTint = masterTint;
+            this.attackEmitter.setParticleTint(this.energyTint);
         }
     }
 

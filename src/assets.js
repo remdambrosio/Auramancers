@@ -100,6 +100,20 @@ export default {
                     key: 'rem_win',
                     args: ['assets/audio/wizards/rem/win.mp3']
                 }
+            },
+            chris: {
+                hit: {
+                    key: 'chris_hit',
+                    args: ['assets/audio/wizards/chris/hit.mp3']
+                },
+                die: {
+                    key: 'chris_die',
+                    args: ['assets/audio/wizards/chris/die.mp3']
+                },
+                win: {
+                    key: 'chris_win',
+                    args: ['assets/audio/wizards/chris/win.mp3']
+                }
             }
         }
     },

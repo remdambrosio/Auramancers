@@ -8,7 +8,7 @@ export class Menu extends Phaser.Scene {
             ...classNames,
             ...Array(12 - classNames.length).fill('???')
         ];
-        this.selectedWizards = ['Andrew', 'Mia', 'Tariq', 'Rem'];
+        this.selectedWizards = ['Rem', 'Chris'];
     }
 
     create() {
