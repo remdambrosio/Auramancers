@@ -9,7 +9,7 @@ actions.forEach(action => {
 
 export default class Chris extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Chris, Ghost Gardener`, voicelines, 0x32D398, 16);
+        super(scene, x, y, `Chris, Deathly Developer`, voicelines, 0x32D398, 16);
 
         this.attackEmitter = scene.add.particles(0, 0, 'flame', {
             tint: [0x8C8C83, 0x32D398, 0x32D398, 0x32D398],

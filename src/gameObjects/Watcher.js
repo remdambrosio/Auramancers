@@ -73,8 +73,10 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
                 ease: 'Quad.easeOut',
             });
 
-            if (this.lifeState === 'charmed' || this.lifeState === 'ghost') {
+            if (this.lifeState === 'charmed') {
                 this.charmedAttack();
+            } else if (this.lifeState === 'ghost') {
+                this.ghostAttack();
             }
         }
     }
@@ -145,18 +147,10 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.scene.time.delayedCall(50 * i, () => {
-                this.charmedHitTile(tile.x, tile.y, 1);
+                this.hitTile(tile.x, tile.y, 1);
                 this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
             });
         });
-    }
-
-    charmedHitTile(tileX, tileY, damage)
-    {
-        let wizardHit = this.wasWizardHit(tileX, tileY);
-        if (wizardHit) {
-            wizardHit.takeDamage(damage, this.energyTint);
-        }
     }
 
     ghostify(master, masterTint)
@@ -165,9 +159,58 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
             this.lifeState = 'ghost';
             this.master = master;
             this.setTint(masterTint);
-            this.alpha = 0.75;
+            this.alpha = 0.5;
             this.energyTint = masterTint;
             this.attackEmitter.setParticleTint(this.energyTint);
+        }
+    }
+
+    ghostAttack()
+    {
+        // find center of map
+        const centerTile = {
+            x: Math.floor(this.scene.mapWidth / 2),
+            y: Math.floor(this.scene.mapHeight / 2)
+        };
+        const dx = centerTile.x - this.tile.x;
+        const dy = centerTile.y - this.tile.y;
+
+        let chosenDir;
+        if (Math.abs(dx) > Math.abs(dy)) {
+            chosenDir = dx > 0 ? { x: 1, y: 0 } : { x: -1, y: 0 };
+        } else if (dy !== 0) {
+            chosenDir = dy > 0 ? { x: 0, y: 1 } : { x: 0, y: -1 };
+        } else {
+            chosenDir = Phaser.Math.RND.pick(this.directions);
+        }
+
+        // target tiles towards center
+        this.targetAttackTiles = [];
+        let curTile = this.tile;
+        for (let i = 0; i < 5; i++) {
+            curTile = {
+                x: curTile.x + chosenDir.x,
+                y: curTile.y + chosenDir.y
+            };
+            this.targetAttackTiles.push({ ...curTile });
+        }
+
+        // attack tiles
+        this.targetAttackTiles.forEach((tile, i) => {
+            const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
+            const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
+            this.scene.time.delayedCall(50 * i, () => {
+                this.hitTile(tile.x, tile.y, 1);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
+            });
+        });
+    }
+
+    hitTile(tileX, tileY, damage)
+    {
+        let wizardHit = this.wasWizardHit(tileX, tileY);
+        if (wizardHit) {
+            wizardHit.takeDamage(damage, this.energyTint);
         }
     }
 
