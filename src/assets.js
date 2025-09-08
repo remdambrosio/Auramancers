@@ -138,10 +138,6 @@ export default {
             key: 'slash',
             args: ['assets/image/slash.png']
         },
-        water: {
-            key: 'water',
-            args: ['assets/image/water.png']
-        },
     },
     'spritesheet': {
         tiles: {

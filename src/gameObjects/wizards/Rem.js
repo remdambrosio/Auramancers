@@ -11,11 +11,10 @@ export default class Rem extends Wizard {
     constructor(scene, x, y) {
         super(scene, x, y, `Rem, Spell Sprinkler`, voicelines, 0x0026FF, 12);
 
-        this.attackEmitter = scene.add.particles(0, 0, 'water', {
+        this.attackEmitter = scene.add.particles(0, 0, 'orb', {
             tint: [0xFFFFFF, 0x0026FF, 0x0026FF, 0x0026FF],
-            alpha: { start: 1, end: 0 },
             lifespan: 400,
-            speed: { min: 5, max: 50 },
+            speed: { min: 5, max: 35 },
             scale: { start: 1.2, end: 0 },
             blendMode: 'NORMAL',
             emitting: false
