@@ -7,27 +7,27 @@ import Chris from './gameObjects/wizards/Chris.js';
 const wizardClasses = [
     {
         name: 'Andrew',
-        description: 'Fire grows longer with each spectator burned',
+        description: 'His flame grows longer for each spectator burned',
         class: Andrew
     },
     {
         name: 'Mia',
-        description: 'Entrances spectators with otherworldly charm',
+        description: 'She charms spectators to do her bidding',
         class: Mia
     },
     {
         name: 'Tariq',
-        description: 'Thorny branches reach out in a T',
+        description: 'His thorny branches reach out in a T',
         class: Tariq
     },
     {
         name: 'Rem',
-        description: 'Stands in the eye of a harmful hurricane',
+        description: 'He stands in the eye of a harmful hurricane',
         class: Rem
     },
     {
         name: 'Chris',
-        description: 'Revives dead spectators as vengeful spirits',
+        description: 'He revives dead spectators as vengeful spirits',
         class: Chris
     }
 ];
