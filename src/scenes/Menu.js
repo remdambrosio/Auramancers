@@ -3,12 +3,8 @@ import wizardClasses from '../wizardClasses.js';
 export class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
-        const classNames = Object.keys(wizardClasses);
-        this.wizardNames = [
-            ...classNames,
-            ...Array(12 - classNames.length).fill('???')
-        ];
-        this.selectedWizards = ['Rem', 'Chris'];
+        this.selectedWizards = [wizardClasses[0], wizardClasses[1]];
+        this.descriptionText = null;
     }
 
     create() {
@@ -18,6 +14,20 @@ export class Menu extends Phaser.Scene {
         const buttonsPerRow = 4;
         const numRows = 3;
 
+        this.descriptionText = this.add.text(
+            centreX, buttonSpacing * numRows + 75,
+            '',
+            {
+                fontFamily: 'Arial',
+                fontSize: 16,
+                color: '#ffffff',
+                stroke: '#000000',
+                strokeThickness: 4,
+                align: 'center',
+                wordWrap: { width: 500 },
+            }
+        ).setOrigin(0.5);
+
         this.buttons = [];
 
         for (let i = 0; i < 12; i++) {
@@ -26,8 +36,9 @@ export class Menu extends Phaser.Scene {
             const x = centreX - buttonSpacing * (buttonsPerRow / 2 - 0.5) + buttonSpacing * col;
             const y = centreY - 50 - buttonSpacing * 0.5 + buttonSpacing * row;
 
-            const isEnabled = this.wizardNames[i] !== '???';
-            let isSelected = this.selectedWizards.includes(this.wizardNames[i]);
+            const wizardInfo = wizardClasses[i];
+            const isEnabled = !!wizardInfo;
+            const isSelected = isEnabled && this.selectedWizards.includes(wizardInfo);
 
             const btn = this.add.rectangle(
                 x,
@@ -40,21 +51,34 @@ export class Menu extends Phaser.Scene {
 
             if (isEnabled) {
                 btn.setInteractive();
+
                 btn.on('pointerdown', () => {
-                    isSelected = this.selectedWizards.includes(this.wizardNames[i]);
-                    if (isSelected) {
-                        this.selectedWizards = this.selectedWizards.filter(name => name !== this.wizardNames[i]);
+                    const idx = this.selectedWizards.indexOf(wizardInfo);
+                    if (idx !== -1) {
+                        this.selectedWizards.splice(idx, 1);
                     } else {
-                        this.selectedWizards.push(this.wizardNames[i]);
+                        this.selectedWizards.push(wizardInfo);
                     }
-                    btn.setFillStyle(this.selectedWizards.includes(this.wizardNames[i]) ? 0xFFFFFF : 0x555555);
+                    btn.setFillStyle(this.selectedWizards.includes(wizardInfo) ? 0xFFFFFF : 0x555555);
                     this.updateStartButtonState();
+                });
+
+                btn.on('pointerover', () => {
+                    if (this.descriptionText) {
+                        this.descriptionText.setText(wizardInfo.description);
+                    }
+                });
+
+                btn.on('pointerout', () => {
+                    if (this.descriptionText) {
+                        this.descriptionText.setText('');
+                    }
                 });
             }
 
             this.add.text(
                 btn.x, btn.y,
-                this.wizardNames[i],
+                isEnabled ? wizardInfo.name : '???',
                 {
                     fontFamily: 'Arial Black',
                     fontSize: 18,
@@ -68,7 +92,7 @@ export class Menu extends Phaser.Scene {
             this.buttons.push(btn);
         }
 
-        this.startBtn = this.add.text(centreX, buttonSpacing * numRows + 110, 'IGNITE AURA', {
+        this.startBtn = this.add.text(centreX, buttonSpacing * numRows + 130, 'IGNITE AURA', {
             fontFamily: 'Arial Black',
             fontSize: 24,
             color: '#ffffff',

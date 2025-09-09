@@ -258,11 +258,10 @@ export class Game extends Phaser.Scene
         Phaser.Utils.Array.Shuffle(wizardPairs);
 
         let wizardIndex = 0;
-        for (const name of this.selectedWizards) {
+        for (const wizardInfo of this.selectedWizards) {
             const pair = wizardPairs[wizardIndex];
-            const WizardClass = wizardClasses[name];
-            if (WizardClass) {
-                const wizard = new WizardClass(this, pair.start.x, pair.start.y);
+            if (wizardInfo && wizardInfo.class) {
+                const wizard = new wizardInfo.class(this, pair.start.x, pair.start.y);
                 this.wizardGroup.add(wizard);
                 const wizardBar = new HealthBar(this, pair.bar.x, pair.bar.y, wizard);
                 this.wizardBarGroup.add(wizardBar);

@@ -9,7 +9,7 @@ actions.forEach(action => {
 
 export default class Rem extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Rem, Spell Sprinkler`, voicelines, 0x0026FF, 12);
+        super(scene, x, y, `Rem, Spell-Sprinkler`, voicelines, 0x0026FF, 12);
 
         this.attackEmitter = scene.add.particles(0, 0, 'orb', {
             tint: [0xFFFFFF, 0x0026FF, 0x0026FF, 0x0026FF],

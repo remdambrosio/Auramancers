@@ -187,7 +187,7 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         // target tiles towards center
         this.targetAttackTiles = [];
         let curTile = this.tile;
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
             curTile = {
                 x: curTile.x + chosenDir.x,
                 y: curTile.y + chosenDir.y
