@@ -15,6 +15,7 @@ export class Game extends Phaser.Scene
         this.selectedWizards = data.selectedWizards
         this.initVariables();
         this.initGameUi();
+        this.initTimer();
         this.initInput();
         this.initGroups();
         this.initMap();
@@ -72,6 +73,19 @@ export class Game extends Phaser.Scene
 
     initGameUi ()
     {
+        this.timerText = this.add.text(this.centreX, 25, '', {
+            fontFamily: 'Arial',
+            fontSize: 18,
+            color: '#ffffff',
+            stroke: '#000000',
+            strokeThickness: 4,
+            align: 'center',
+            richText: true
+        })
+            .setOrigin(0.5)
+            .setDepth(1000)
+            .setVisible(true);
+
         this.startGameText = this.add.text(this.centreX, this.centreY - 172, 'AURA BLAZING!', {
             fontFamily: 'Arial Black',
             fontSize: 32,
@@ -79,7 +93,6 @@ export class Game extends Phaser.Scene
             stroke: '#000000',
             strokeThickness: 6,
             align: 'center',
-            resolution: 2,
             richText: true
         })
             .setOrigin(0.5)
@@ -111,6 +124,30 @@ export class Game extends Phaser.Scene
             .setOrigin(0.5)
             .setDepth(1000)
             .setVisible(false);
+    }
+
+    initTimer ()
+    {
+        this.timerValue = 40;
+        this.timerEvent = this.time.addEvent({
+            delay: this.turnInterval,
+            loop: true,
+            callback: () => {
+                if (this.gameState !== 'live') {
+                    this.timerText.setText('');
+                    return;
+                }
+                this.timerValue--;
+                if (this.timerValue > 0) {
+                    this.timerText.setText(this.timerValue);
+                } else {
+                    this.timerText.setText('DIE');
+                    this.liveWizards.forEach(wizard => {
+                        wizard.takeDamage(1, wizard.energyTint);
+                    });
+                }
+            }
+        });
     }
 
     initGroups ()
@@ -203,6 +240,7 @@ export class Game extends Phaser.Scene
     startGame ()
     {
         this.gameState = 'live';
+        this.timerText.setText(this.timerValue);
         this.startGameText.setVisible(false);
         this.endGameText.setVisible(false);
         this.sound.play('riseOfTheManimals', { volume: 0.05, loop: true });
