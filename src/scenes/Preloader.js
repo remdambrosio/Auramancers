@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import ASSETS from '../assets.js';
 
 export class Preloader extends Phaser.Scene {

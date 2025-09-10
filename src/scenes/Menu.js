@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import wizardClasses from '../wizardClasses.js';
 
 export class Menu extends Phaser.Scene {

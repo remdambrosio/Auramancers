@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 export default class HealthBar extends Phaser.GameObjects.Graphics {
 
     constructor (scene, x, y, wizard)

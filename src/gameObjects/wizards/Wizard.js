@@ -1,3 +1,4 @@
+import Phaser from 'phaser';
 import ASSETS from '../../assets.js';
 
 export default class Wizard extends Phaser.Physics.Arcade.Sprite
@@ -88,7 +89,7 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         const validMoveDirections = this.validMoveDirections();
 
         if (validMoveDirections.length === 0) {
-            targetMoveTile = null;
+            this.targetMoveTile = null;
             return;
         }
 
