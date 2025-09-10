@@ -11,14 +11,14 @@ const wizardClasses = [
         class: Andrew
     },
     {
+        name: 'Chris',
+        description: 'He revives dead spectators as vengeful spirits',
+        class: Chris
+    },
+    {
         name: 'Mia',
         description: 'She charms spectators to do her bidding',
         class: Mia
-    },
-    {
-        name: 'Tariq',
-        description: 'His thorny branches reach out in a T',
-        class: Tariq
     },
     {
         name: 'Rem',
@@ -26,10 +26,10 @@ const wizardClasses = [
         class: Rem
     },
     {
-        name: 'Chris',
-        description: 'He revives dead spectators as vengeful spirits',
-        class: Chris
-    }
+        name: 'Tariq',
+        description: 'His thorny branches reach out in a T',
+        class: Tariq
+    },
 ];
 
 export default wizardClasses;
