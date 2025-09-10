@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+/* global Phaser */
 
 export class Boot extends Phaser.Scene
 {

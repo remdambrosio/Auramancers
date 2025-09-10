@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+/* global Phaser */
 import { Boot } from './scenes/Boot.js';
 import { Preloader } from './scenes/Preloader.js';
 import { Menu } from './scenes/Menu.js';

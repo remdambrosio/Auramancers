@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+/* global Phaser */
 import ASSETS from '../assets.js';
 import HealthBar from '../gameObjects/HealthBar.js';
 import Watcher from '../gameObjects/Watcher.js';

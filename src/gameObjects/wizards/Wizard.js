@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+/* global Phaser */
 import ASSETS from '../../assets.js';
 
 export default class Wizard extends Phaser.Physics.Arcade.Sprite

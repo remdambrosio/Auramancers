@@ -1,4 +1,4 @@
-import Phaser from 'phaser';
+/* global Phaser */
 import ASSETS from '../../assets.js';
 import Wizard from './Wizard.js';
 
