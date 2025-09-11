@@ -1,6 +1,10 @@
 export default {
     'audio': {
         music: {
+            auramancerSelect: {
+                key: 'auramancerSelect',
+                args: ['assets/audio/music/auramancerSelect.mp3']
+            },
             riseOfTheManimals: {
                 key: 'riseOfTheManimals',
                 args: ['assets/audio/music/riseOfTheManimals.mp3']

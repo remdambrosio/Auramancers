@@ -9,6 +9,7 @@ export class Menu extends Phaser.Scene {
     }
 
     create() {
+        this.sound.play('auramancerSelect', { volume: 1, loop: true });
         const centreX = this.scale.width * 0.5;
         const centreY = this.scale.height * 0.5 -50;
         const buttonSpacing = 100;
@@ -103,6 +104,7 @@ export class Menu extends Phaser.Scene {
 
         this.startBtn.on('pointerdown', () => {
             if (this.canStartGame()) {
+                this.sound.stopByKey('auramancerSelect');
                 this.scene.start('Game', { selectedWizards: this.selectedWizards });
             }
         });
