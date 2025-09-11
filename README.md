@@ -47,3 +47,5 @@ A Phaser "game" wherein brave wizards face off to become the Auramaster.
 ### Assets
 
 Map Tiles - Tiny Town by Kennay
+
+Main Menu Beat - Dumb by David Renda
