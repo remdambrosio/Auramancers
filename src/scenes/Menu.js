@@ -20,11 +20,11 @@ export class Menu extends Phaser.Scene {
             centreX, buttonSpacing * numRows + 75,
             '',
             {
-                fontFamily: 'Arial',
+                fontFamily: 'Tagesschrift',
                 fontSize: 16,
                 color: '#ffffff',
                 stroke: '#000000',
-                strokeThickness: 4,
+                strokeThickness: 6,
                 align: 'center',
                 wordWrap: { width: 500 },
             }
@@ -82,11 +82,11 @@ export class Menu extends Phaser.Scene {
                 btn.x, btn.y,
                 isEnabled ? wizardInfo.name : '???',
                 {
-                    fontFamily: 'Arial Black',
+                    fontFamily: 'Tagesschrift',
                     fontSize: 18,
                     color: isEnabled ? '#ffffff' : '#888888',
                     stroke: '#000000',
-                    strokeThickness: 4,
+                    strokeThickness: 6,
                     align: 'center',
                 }
             ).setOrigin(0.5);
@@ -95,7 +95,7 @@ export class Menu extends Phaser.Scene {
         }
 
         this.startBtn = this.add.text(centreX, buttonSpacing * numRows + 130, 'IGNITE AURA', {
-            fontFamily: 'Arial Black',
+            fontFamily: 'Tagesschrift',
             fontSize: 24,
             color: '#ffffff',
             backgroundColor: '#000000',

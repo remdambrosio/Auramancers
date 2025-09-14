@@ -74,11 +74,11 @@ export class Game extends Phaser.Scene
     initGameUi ()
     {
         this.timerText = this.add.text(this.centreX, 25, '', {
-            fontFamily: 'Arial',
+            fontFamily: 'Tagesschrift',
             fontSize: 18,
             color: '#ffffff',
             stroke: '#000000',
-            strokeThickness: 4,
+            strokeThickness: 6,
             align: 'center',
             richText: true
         })
@@ -87,7 +87,7 @@ export class Game extends Phaser.Scene
             .setVisible(true);
 
         this.startGameText = this.add.text(this.centreX, this.centreY - 172, 'AURA BLAZING!', {
-            fontFamily: 'Arial Black',
+            fontFamily: 'Tagesschrift',
             fontSize: 32,
             color: '#ffffff',
             stroke: '#000000',
@@ -100,7 +100,7 @@ export class Game extends Phaser.Scene
             .setVisible(true);
 
         this.endGameText = this.add.text(this.centreX, this.centreY - 172, 'AURA FADED!', {
-            fontFamily: 'Arial Black',
+            fontFamily: 'Tagesschrift',
             fontSize: 32,
             color: '#ffffff',
             stroke: '#000000',
@@ -113,11 +113,11 @@ export class Game extends Phaser.Scene
             .setVisible(false);
 
         this.winnerText = this.add.text(this.centreX, this.centreY, 'No Auramaster\nhas Risen', {
-            fontFamily: 'Arial Black',
+            fontFamily: 'Tagesschrift',
             fontSize: 18,
             color: '#ffffff',
             stroke: '#000000',
-            strokeThickness: 4,
+            strokeThickness: 6,
             align: 'center',
             richText: true
         })
