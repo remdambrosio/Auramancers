@@ -3,6 +3,7 @@ import Mia from './gameObjects/wizards/Mia.js';
 import Tariq from './gameObjects/wizards/Tariq.js';
 import Rem from './gameObjects/wizards/Rem.js';
 import Chris from './gameObjects/wizards/Chris.js';
+import Julian from './gameObjects/wizards/Julian.js';
 
 const wizardClasses = [
     {
@@ -14,6 +15,11 @@ const wizardClasses = [
         name: 'Chris',
         description: 'He revives dead spectators as vengeful spirits',
         class: Chris
+    },
+    {
+        name: 'Julian',
+        description: 'His curse forces him to rise and fight again',
+        class: Julian
     },
     {
         name: 'Mia',

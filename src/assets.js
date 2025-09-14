@@ -49,20 +49,6 @@ export default {
             },
         },
         wizards: {
-            mia: {
-                hit: {
-                    key: 'mia_hit',
-                    args: ['assets/audio/wizards/mia/hit.mp3']
-                },
-                die: {
-                    key: 'mia_die',
-                    args: ['assets/audio/wizards/mia/die.mp3']
-                },
-                win: {
-                    key: 'mia_win',
-                    args: ['assets/audio/wizards/mia/win.mp3']
-                }
-            },
             andrew: {
                 hit: {
                     key: 'andrew_hit',
@@ -77,18 +63,50 @@ export default {
                     args: ['assets/audio/wizards/andrew/win.mp3']
                 }
             },
-            tariq: {
+            chris: {
                 hit: {
-                    key: 'tariq_hit',
-                    args: ['assets/audio/wizards/tariq/hit.mp3']
+                    key: 'chris_hit',
+                    args: ['assets/audio/wizards/chris/hit.mp3']
                 },
                 die: {
-                    key: 'tariq_die',
-                    args: ['assets/audio/wizards/tariq/die.mp3']
+                    key: 'chris_die',
+                    args: ['assets/audio/wizards/chris/die.mp3']
                 },
                 win: {
-                    key: 'tariq_win',
-                    args: ['assets/audio/wizards/tariq/win.mp3']
+                    key: 'chris_win',
+                    args: ['assets/audio/wizards/chris/win.mp3']
+                }
+            },
+            julian: {
+                hit: {
+                    key: 'julian_hit',
+                    args: ['assets/audio/wizards/julian/hit.mp3']
+                },
+                die: {
+                    key: 'julian_die',
+                    args: ['assets/audio/wizards/julian/die.mp3']
+                },
+                win: {
+                    key: 'julian_win',
+                    args: ['assets/audio/wizards/julian/win.mp3']
+                },
+                revive: {
+                    key: 'julian_revive',
+                    args: ['assets/audio/wizards/julian/revive.mp3']
+                }
+            },
+            mia: {
+                hit: {
+                    key: 'mia_hit',
+                    args: ['assets/audio/wizards/mia/hit.mp3']
+                },
+                die: {
+                    key: 'mia_die',
+                    args: ['assets/audio/wizards/mia/die.mp3']
+                },
+                win: {
+                    key: 'mia_win',
+                    args: ['assets/audio/wizards/mia/win.mp3']
                 }
             },
             rem: {
@@ -105,20 +123,20 @@ export default {
                     args: ['assets/audio/wizards/rem/win.mp3']
                 }
             },
-            chris: {
+            tariq: {
                 hit: {
-                    key: 'chris_hit',
-                    args: ['assets/audio/wizards/chris/hit.mp3']
+                    key: 'tariq_hit',
+                    args: ['assets/audio/wizards/tariq/hit.mp3']
                 },
                 die: {
-                    key: 'chris_die',
-                    args: ['assets/audio/wizards/chris/die.mp3']
+                    key: 'tariq_die',
+                    args: ['assets/audio/wizards/tariq/die.mp3']
                 },
                 win: {
-                    key: 'chris_win',
-                    args: ['assets/audio/wizards/chris/win.mp3']
+                    key: 'tariq_win',
+                    args: ['assets/audio/wizards/tariq/win.mp3']
                 }
-            }
+            },
         }
     },
     'image': {
