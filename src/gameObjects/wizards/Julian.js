@@ -12,6 +12,17 @@ export default class Julian extends Wizard {
     constructor(scene, x, y) {
         super(scene, x, y, `Julian, Herald of the Curse`, voicelines, 0xFF8C00, 20);
 
+        this.attackEmitter = scene.add.particles(0, 0, 'slash', {
+            tint: [0xFFC73A, 0xFF8C00],
+            lifespan: 250,
+            speed: { min: 5, max: 50 },
+            scale: { start: 2, end: 0 },
+            rotate: { min: 0, max: 360 },
+            blendMode: 'NORMAL',
+            emitting: false
+        });
+        this.attackEmitter.setDepth(200);
+
         this.hasRevived = false;
     }
 
@@ -38,7 +49,7 @@ export default class Julian extends Wizard {
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.scene.time.delayedCall(50 * i, () => {
                 this.hitTile(tile.x, tile.y, 1);
-                this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 3);
             });
         });
     }
