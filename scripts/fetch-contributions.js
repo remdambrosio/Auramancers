@@ -56,35 +56,31 @@ async function main() {
     process.exit(1);
   }
 
-  // collect all contributions from all repositories
-  const contributions = result.data.user.contributionsCollection
-    .commitContributionsByRepository
-    .flatMap(r => r.contributions.nodes);
-
-  // aggregate by week
   const weekly = {};
-  for (const c of contributions) {
-    const date = new Date(c.occurredAt);
-    const year = getYear(date);
-    const week = getISOWeek(date);
-    const key = `${year}-W${week.toString().padStart(2, "0")}`;
-    weekly[key] = (weekly[key] || 0) + c.commitCount;
+  const repos = result.data.user.contributionsCollection.commitContributionsByRepository;
+  for (const repo of repos) {
+    for (const node of repo.contributions.nodes) {
+      const date = new Date(node.occurredAt);
+      const year = getYear(date);
+      const week = getISOWeek(date);
+      const key = `${year}-W${week.toString().padStart(2, "0")}`;
+      weekly[key] = (weekly[key] || 0) + node.commitCount;
+    }
   }
 
-  // create a sorted array for the last 12 weeks
-  const weeks = [];
+  const counts = [];
   for (let i = 0; i < 12; i++) {
     const d = subWeeks(to, i);
     const year = getYear(d);
     const week = getISOWeek(d);
     const key = `${year}-W${week.toString().padStart(2, "0")}`;
-    weeks.unshift({ week: key, commits: weekly[key] || 0 });
+    counts.unshift(weekly[key] || 0);
   }
 
   fs.mkdirSync("data", { recursive: true });
-  fs.writeFileSync("data/contributions.json", JSON.stringify(weeks, null, 2));
+  fs.writeFileSync("data/contributions.json", JSON.stringify(counts, null, 2));
 
-  console.log("Saved weekly contributions to data/contributions.json");
+  console.log("Saved weekly contribution counts to data/contributions.json");
 }
 
 main().catch(err => {
