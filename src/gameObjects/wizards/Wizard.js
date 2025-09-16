@@ -1,5 +1,6 @@
 /* global Phaser */
 import ASSETS from '../../assets.js';
+import WizardBook from './wizardBook.js';
 
 export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {
@@ -20,10 +21,12 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.setDepth(100);
         this.scene = scene;
 
+        this.book = new WizardBook();
+
         this.name = name
         this.voicelines = voicelines;
         this.energyTint = energyTint;
-        this.lifeState = 'alive';   // 'alive', 'dead'
+        this.lifeState = 'alive';       // 'alive', 'dead'
         this.maxHealth = 3;
         this.health = this.maxHealth;
         this.tile = { x: x, y: y };
@@ -86,17 +89,16 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
 
     move ()
     {
-        const validMoveDirections = this.validMoveDirections();
+        const dir = this.book.moveDirection(this);
 
-        if (validMoveDirections.length === 0) {
+        if (!dir) {
             this.targetMoveTile = null;
             return;
         }
 
-        const chosenDir = Phaser.Math.RND.pick(validMoveDirections);
         this.targetMoveTile = {
-            x: this.tile.x + chosenDir.x,
-            y: this.tile.y + chosenDir.y
+            x: this.tile.x + dir.x,
+            y: this.tile.y + dir.y
         };
 
         this.scene.tweens.add({
@@ -109,17 +111,6 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
                 this.tile.x = this.targetMoveTile.x;
                 this.tile.y = this.targetMoveTile.y;
             }
-        });
-    }
-
-    validMoveDirections()
-    {
-        return this.directions.filter(dir => {
-            const tileX = this.tile.x + dir.x;
-            const tileY = this.tile.y + dir.y;
-            const pixelX = this.mapOffset.x + (tileX * this.tileSize);
-            const pixelY = this.mapOffset.y + (tileY * this.tileSize);
-            return this.scene.getTileAt(pixelX, pixelY) === -1 && !this.isTileOccupied(tileX, tileY);
         });
     }
 
@@ -137,13 +128,13 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
     attack()
     {
         // target tiles
-        const chosenDir = Phaser.Math.RND.pick(this.directions);
+        const dir = this.book.attackDirection(this);
         this.targetAttackTiles = [];
         let curTile = this.tile;
         for (let i = 0; i < 5; i++) {
             curTile = {
-                x: curTile.x + chosenDir.x,
-                y: curTile.y + chosenDir.y
+                x: curTile.x + dir.x,
+                y: curTile.y + dir.y
             };
             this.targetAttackTiles.push({ ...curTile });
         }

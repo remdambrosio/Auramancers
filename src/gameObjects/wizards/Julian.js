@@ -67,6 +67,8 @@ export default class Julian extends Wizard {
             this.lifeState = 'dead';
             this.scene.time.delayedCall(2000, () => {
                 this.scene.sound.play(this.voicelines.revive);
+                this.frame.name = this.frame.name + 4;
+                this.setFrame(this.frame.name);
                 this.lifeState = 'alive';
                 this.health = this.maxHealth;
                 this.scene.tweens.add({
