@@ -48,6 +48,15 @@ async function main() {
 
   const result = await response.json();
 
+  if (result.errors) {
+    console.error("GraphQL errors:", result.errors);
+    process.exit(1);
+  }
+  if (!result.data || !result.data.user) {
+    console.error("No user data found in response:", JSON.stringify(result, null, 2));
+    process.exit(1);
+  }
+
   // pull out only the contributions for the requested repo
   const repoData = result.data.user.contributionsCollection
     .commitContributionsByRepository
