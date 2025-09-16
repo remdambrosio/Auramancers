@@ -1,0 +1,9 @@
+{
+  "name": "update-data-script",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "node-fetch": "^3.0.0",
+    "date-fns": "^3.0.0"
+  }
+}
