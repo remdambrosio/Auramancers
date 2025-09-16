@@ -1,13 +1,13 @@
 import process from "node:process";
 import fs from "fs";
 import fetch from "node-fetch";
-import { subWeeks } from "date-fns";
+import { subWeeks, getISOWeek, getYear } from "date-fns";
 
 const endpoint = "https://api.github.com/graphql";
 const token = process.env.GITHUB_TOKEN;
 
 const query = `
-  query($username: String!, $repo: String!, $from: DateTime!, $to: DateTime!) {
+  query($username: String!, $from: DateTime!, $to: DateTime!) {
     user(login: $username) {
       contributionsCollection(from: $from, to: $to) {
         commitContributionsByRepository {
@@ -32,7 +32,6 @@ async function main() {
 
   const variables = {
     username: "remdambrosio",
-    repo: "Auramancers",
     from: from.toISOString(),
     to: to.toISOString(),
   };
@@ -57,18 +56,35 @@ async function main() {
     process.exit(1);
   }
 
-  // pull out only the contributions for the requested repo
-  const repoData = result.data.user.contributionsCollection
+  // collect all contributions from all repositories
+  const contributions = result.data.user.contributionsCollection
     .commitContributionsByRepository
-    .find(r => r.repository.name === variables.repo);
+    .flatMap(r => r.contributions.nodes);
 
-  const contributions = repoData ? repoData.contributions.nodes : [];
+  // aggregate by week
+  const weekly = {};
+  for (const c of contributions) {
+    const date = new Date(c.occurredAt);
+    const year = getYear(date);
+    const week = getISOWeek(date);
+    const key = `${year}-W${week.toString().padStart(2, "0")}`;
+    weekly[key] = (weekly[key] || 0) + c.commitCount;
+  }
 
-  // save to JSON file
+  // create a sorted array for the last 12 weeks
+  const weeks = [];
+  for (let i = 0; i < 12; i++) {
+    const d = subWeeks(to, i);
+    const year = getYear(d);
+    const week = getISOWeek(d);
+    const key = `${year}-W${week.toString().padStart(2, "0")}`;
+    weeks.unshift({ week: key, commits: weekly[key] || 0 });
+  }
+
   fs.mkdirSync("data", { recursive: true });
-  fs.writeFileSync("data/contributions.json", JSON.stringify(contributions, null, 2));
+  fs.writeFileSync("data/contributions.json", JSON.stringify(weeks, null, 2));
 
-  console.log("Saved contributions to data/contributions.json");
+  console.log("Saved weekly contributions to data/contributions.json");
 }
 
 main().catch(err => {
