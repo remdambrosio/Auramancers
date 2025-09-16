@@ -1,0 +1,34 @@
+name: Update Contributions Data
+
+on:
+  schedule:
+    - cron: '0 2 * * *'    # run daily at 2 AM UTC
+  workflow_dispatch:       # allow manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install node-fetch@3 date-fns
+
+      - name: Fetch contributions
+        run: node scripts/fetch-contributions.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/contributions.json
+          git commit -m "Update contributions data [skip ci]" || echo "No changes"
+          git push
