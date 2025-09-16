@@ -31,8 +31,8 @@ async function main() {
   const from = subWeeks(to, 12); // last 12 weeks
 
   const variables = {
-    username: "octocat",   // <-- change to target user
-    repo: "Hello-World",   // <-- change to target repo
+    username: "remdambrosio",
+    repo: "Auramancers",
     from: from.toISOString(),
     to: to.toISOString(),
   };
