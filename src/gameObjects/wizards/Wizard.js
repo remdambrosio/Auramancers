@@ -1,6 +1,6 @@
 /* global Phaser */
 import ASSETS from '../../assets.js';
-import WizardBook from './wizardBook.js';
+import WizardBook from './WizardBook.js';
 
 export default class Wizard extends Phaser.Physics.Arcade.Sprite
 {

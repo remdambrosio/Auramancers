@@ -1,4 +1,4 @@
-import WizardBook from './wizardBook.js';
+import WizardBook from './WizardBook.js';
 import Potion from '../Potion.js';
 
 async function loadWow() {

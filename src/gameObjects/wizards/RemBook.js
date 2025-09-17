@@ -1,4 +1,4 @@
-import WizardBook from './wizardBook.js';
+import WizardBook from './WizardBook.js';
 
 async function loadContributions() {
     const response = await fetch('../../../data/contributions.json');
