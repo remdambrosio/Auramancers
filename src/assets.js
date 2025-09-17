@@ -204,9 +204,9 @@ export default {
                 frameHeight: 32
             }]
         },
-        items: {
-            key: 'items',
-            args: ['assets/spritesheet/items.png', {
+        potions: {
+            key: 'potions',
+            args: ['assets/spritesheet/potions.png', {
                 frameWidth: 32,
                 frameHeight: 32
             }]

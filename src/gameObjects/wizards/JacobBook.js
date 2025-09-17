@@ -10,21 +10,27 @@ export default class JacobBook extends WizardBook {
     constructor() {
         super();
 
-        loadWow().then(sentiments => {
-            this.normalizedSentiments = sentiments.map(s => 
-                s < 0 ? -1 : (s > 0 ? 1 : 0)
-            );
-        });
-
         this.currentSentimentIndex = 0;
+
+        // normalize from 1-9, with neutral sentiment always being 5 (no potion)
+        loadWow().then(sentiments => {
+            const nonZero = sentiments.filter(s => s !== 0);
+            const bound = Math.max(...nonZero.map(Math.abs));
+            this.normalizedSentiments = sentiments.map(s => {
+                if (s === 0) return 5;
+                if (s < 0) {
+                    return 1 + Math.round((Math.abs(s) - 1) * 3 / (bound - 1));
+                }
+                return 6 + Math.round((s - 1) * 3 / (bound - 1));
+            });
+        });
     }
-
+    
     wowPotionDrop(wizard) {
-        const potionType = this.normalizedSentiments?.[this.currentSentimentIndex] ?? 0;
-
-        const potion = new Potion(wizard.scene, wizard.x, wizard.y, 0, potionType);
-        wizard.scene.add.existing(potion);
-
+        if (this.normalizedSentiments[this.currentSentimentIndex] !== 5) {
+            const potionType = this.normalizedSentiments[this.currentSentimentIndex];
+            new Potion(wizard.scene, wizard.tile.x, wizard.tile.y, wizard, potionType);
+        }
         this.currentSentimentIndex = (this.currentSentimentIndex + 1) % (this.normalizedSentiments?.length ?? 1);
     }
 }

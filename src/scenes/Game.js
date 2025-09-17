@@ -21,6 +21,7 @@ export class Game extends Phaser.Scene
         this.initMap();
         this.initWizards();
         this.initWatchers();
+        this.initPhysics();
         this.sound.play('auraBlazing');
     }
 
@@ -155,6 +156,15 @@ export class Game extends Phaser.Scene
         this.wizardGroup = this.add.group();
         this.wizardBarGroup = this.add.group();
         this.watcherGroup = this.add.group();
+        this.potionGroup = this.add.group();
+    }
+
+    initPhysics ()
+    {
+        this.physics.add.overlap(this.wizardGroup, this.potionGroup, (wizard, potion) => {
+            if (potion.justDropped) return;
+            if (potion.explode) { potion.explode(); } 
+        });
     }
 
     initInput ()

@@ -23,10 +23,15 @@ export default class Jacob extends Wizard {
         this.attackEmitter.setDepth(200);
 
         this.book = new JacobBook();
+
+        this.attackStep = 0;
     }
 
     attack() {
         this.auraPulse();
-        this.book.wowPotionDrop(this);
+        this.attackStep++;
+        if (this.attackStep % 2 === 0) {
+            this.book.wowPotionDrop(this);
+        }
     }
 }

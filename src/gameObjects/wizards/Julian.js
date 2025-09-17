@@ -81,6 +81,7 @@ export default class Julian extends Wizard {
                     ease: 'Linear',
                     onComplete: () => {
                         this.setVisible(true);
+                        this.clearTint();
                     }
                 });
             });

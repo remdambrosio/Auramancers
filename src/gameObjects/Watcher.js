@@ -218,10 +218,8 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
     wasWizardHit(tileX, tileY)
     {
         return this.scene.wizardGroup.getChildren().find(wizard => {
-            if (wizard === this) {
+            if (wizard === this.master) {
                 return false;      // friendly fire will not be tolerated
-            } else if (wizard === this.master) {
-                return false;      // don't bite the hand that charms you
             }
             return wizard.tile.x === tileX && wizard.tile.y === tileY;
         });

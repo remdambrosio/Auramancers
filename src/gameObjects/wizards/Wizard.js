@@ -192,15 +192,19 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
     {
         if (this.lifeState === 'dead') return;
         this.health -= amount;
-        this.setTint(attackTint);
-        this.scene.time.delayedCall(500, () => { this.clearTint(); });
-
         if (this.health <= 0 && this.lifeState !== 'dead') {
             this.die(attackTint);
         } else {
             this.scene.sound.play(this.voicelines.hit);
             this.flash(0, 5, 150, attackTint);
         }
+    }
+
+    heal(amount, healTint)
+    {
+        if (this.lifeState === 'dead') return;
+        this.health = Math.min(this.maxHealth, this.health + amount);
+        this.flash(0, 5, 150, healTint);
     }
 
     die(attackTint) {
