@@ -77,6 +77,20 @@ export default {
                     args: ['assets/audio/wizards/chris/win.mp3']
                 }
             },
+            jacob: {
+                hit: {
+                    key: 'jacob_hit',
+                    args: ['assets/audio/wizards/jacob/hit.mp3']
+                },
+                die: {
+                    key: 'jacob_die',
+                    args: ['assets/audio/wizards/jacob/die.mp3']
+                },
+                win: {
+                    key: 'jacob_win',
+                    args: ['assets/audio/wizards/jacob/win.mp3']
+                }
+            },
             julian: {
                 hit: {
                     key: 'julian_hit',

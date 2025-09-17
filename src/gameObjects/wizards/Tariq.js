@@ -29,7 +29,7 @@ export default class Tariq extends Wizard {
         const dir = this.book.attackDirection(this);
         this.targetAttackTiles = [];
         let curTile = this.tile;
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 4; i++) {
             curTile = {
                 x: curTile.x + dir.x,
                 y: curTile.y + dir.y

@@ -4,6 +4,7 @@ import Tariq from './gameObjects/wizards/Tariq.js';
 import Rem from './gameObjects/wizards/Rem.js';
 import Chris from './gameObjects/wizards/Chris.js';
 import Julian from './gameObjects/wizards/Julian.js';
+import Jacob from './gameObjects/wizards/Jacob.js';
 
 const wizardClasses = [
     {
@@ -17,6 +18,11 @@ const wizardClasses = [
         class: Chris
     },
     {
+        name: 'Jacob',
+        description: 'His elixers draw upon the WoW subreddit to hurt or heal',
+        class: Jacob
+    },
+    {
         name: 'Julian',
         description: 'His curse forces him to rise and fight again',
         class: Julian
@@ -28,7 +34,7 @@ const wizardClasses = [
     },
     {
         name: 'Rem',
-        description: 'He stands in the eye of a harmful hurricane',
+        description: 'His harmful hurricane is fueled by contributions to this game',
         class: Rem
     },
     {
