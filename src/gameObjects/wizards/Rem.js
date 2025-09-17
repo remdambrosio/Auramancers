@@ -1,5 +1,6 @@
 import ASSETS from '../../assets.js';
 import Wizard from './Wizard.js';
+import RemBook from './RemBook.js';
 
 const actions = Object.keys(ASSETS.audio.wizards.rem);
 const voicelines = {};
@@ -21,48 +22,11 @@ export default class Rem extends Wizard {
         });
         this.attackEmitter.setDepth(200);
 
-        this.attackMode = 0;
+        this.book = new RemBook();
     }
 
     attack() {
-        this.targetAttackTiles = [];
-        const diagonals = [
-            { x: -1, y: -1 },
-            { x: 1, y: -1 },
-            { x: -1, y: 1 },
-            { x: 1, y: 1 }
-        ];
-        const adjacents = [
-            { x: -1, y: 0 },
-            { x: 1, y: 0 },
-            { x: 0, y: -1 },
-            { x: 0, y: 1 }
-        ];
-
-        if (this.attackMode === 0) {
-            adjacents.forEach(dir => {
-                this.targetAttackTiles.push({
-                    x: this.tile.x + dir.x,
-                    y: this.tile.y + dir.y
-                });
-            });
-        } else if (this.attackMode === 1) {
-            diagonals.forEach(dir => {
-                this.targetAttackTiles.push({
-                    x: this.tile.x + dir.x,
-                    y: this.tile.y + dir.y
-                });
-            });
-        } else if (this.attackMode === 2) {
-            [...diagonals, ...adjacents].forEach(dir => {
-                this.targetAttackTiles.push({
-                    x: this.tile.x + dir.x,
-                    y: this.tile.y + dir.y
-                });
-            });
-        }
-
-        this.attackMode = (this.attackMode + 1) % 3;
+        this.targetAttackTiles = this.book.contributionAttack(this);
 
         this.auraPulse();
 
