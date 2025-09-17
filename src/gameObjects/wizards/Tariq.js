@@ -1,4 +1,3 @@
-/* global Phaser */
 import ASSETS from '../../assets.js';
 import Wizard from './Wizard.js';
 
@@ -26,14 +25,14 @@ export default class Tariq extends Wizard {
 
     attack()
     {
-        // target initial line of tiles
-        const chosenDir = Phaser.Math.RND.pick(this.directions);
+        // target tiles
+        const dir = this.book.attackDirection(this);
         this.targetAttackTiles = [];
         let curTile = this.tile;
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 5; i++) {
             curTile = {
-                x: curTile.x + chosenDir.x,
-                y: curTile.y + chosenDir.y
+                x: curTile.x + dir.x,
+                y: curTile.y + dir.y
             };
             this.targetAttackTiles.push({ ...curTile });
         }
@@ -41,7 +40,7 @@ export default class Tariq extends Wizard {
         // target end tiles
         const finalTile = this.targetAttackTiles[this.targetAttackTiles.length - 1];
         let perpDirs;
-        if (chosenDir.x === 0) {
+        if (dir.x === 0) {
             perpDirs = [{ x: 1, y: 0 }, { x: -1, y: 0 }];
         } else {
             perpDirs = [{ x: 0, y: 1 }, { x: 0, y: -1 }];

@@ -39,13 +39,6 @@ export default class Wizard extends Phaser.Physics.Arcade.Sprite
         this.attackTimer = this.turnInterval / 2;
         this.targetAttackTiles = null;
 
-        this.directions = [
-            { x: -1, y: 0 },
-            { x: 1, y: 0 },
-            { x: 0, y: -1 },
-            { x: 0, y: 1 }
-        ];
-
         this.ashEmitter = scene.add.particles(0, 0, 'orb', {
             tint: 0x3b3b3b,
             lifespan: 1000,

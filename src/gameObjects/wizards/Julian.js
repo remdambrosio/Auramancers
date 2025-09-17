@@ -29,13 +29,13 @@ export default class Julian extends Wizard {
     attack()
     {
         // target tiles
-        const chosenDir = Phaser.Math.RND.pick(this.directions);
+        const dir = this.book.attackDirection(this);
         this.targetAttackTiles = [];
         let curTile = this.tile;
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 5; i++) {
             curTile = {
-                x: curTile.x + chosenDir.x,
-                y: curTile.y + chosenDir.y
+                x: curTile.x + dir.x,
+                y: curTile.y + dir.y
             };
             this.targetAttackTiles.push({ ...curTile });
         }
