@@ -26,7 +26,7 @@ export default class Rem extends Wizard {
     }
 
     attack() {
-        this.targetAttackTiles = this.book.contributionAttack(this);
+        this.targetAttackTiles = this.book.contributionAttackTiles(this);
 
         this.auraPulse();
 

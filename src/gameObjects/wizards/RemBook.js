@@ -32,8 +32,8 @@ export default class RemBook extends WizardBook {
         });
     }
 
-    contributionAttack(wizard) {
-        const attackCount = this.normalizedCommits[this.currentWeekIndex] || 1;
+    contributionAttackTiles(wizard) {
+        const attackCount = this.normalizedCommits[this.currentWeekIndex] || 4;
         const tiles = [];
 
         // group tiles by distance

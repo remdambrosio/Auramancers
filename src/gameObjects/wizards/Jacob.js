@@ -26,15 +26,7 @@ export default class Jacob extends Wizard {
     }
 
     attack() {
-        this.targetAttackTiles = this.book.wowAttack(this);
-
         this.auraPulse();
-
-        this.targetAttackTiles.forEach(tile => {
-            const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
-            const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
-            this.hitTile(tile.x, tile.y, 1);
-            this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
-        });
+        this.book.wowPotionDrop(this);
     }
 }

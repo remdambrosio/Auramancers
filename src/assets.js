@@ -204,6 +204,13 @@ export default {
                 frameHeight: 32
             }]
         },
+        items: {
+            key: 'items',
+            args: ['assets/spritesheet/items.png', {
+                frameWidth: 32,
+                frameHeight: 32
+            }]
+        },
     },
     'tilemapTiledJSON': {
         map: {
