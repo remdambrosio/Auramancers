@@ -1,4 +1,4 @@
-name: Update Contributions Data
+name: Update Data
 
 on:
   schedule:
@@ -27,10 +27,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Fetch WoW sentiment
+        run: node scripts/fetch-wow.js
+
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/contributions.json
-          git commit -m "Update contributions data [skip ci]" || echo "No changes"
+          git add data/contributions.json data/wow.json
+          git commit -m "Update contributions and WoW sentiment data [skip ci]" || echo "No changes"
           git push
