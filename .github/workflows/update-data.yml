@@ -2,7 +2,7 @@ name: Update Contributions Data
 
 on:
   schedule:
-    - cron: '0 2 * * *'    # run daily at 2 AM UTC
+    - cron: '0 2 * * 3'    # run weekly at 2 AM UTC on Wednesday
   workflow_dispatch:       # allow manual trigger
 
 jobs:
