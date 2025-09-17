@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "node-fetch": "^3.0.0",
-    "date-fns": "^3.0.0"
+    "date-fns": "^3.0.0",
+    "node-fetch": "^3.3.2",
+    "sentiment": "^5.0.2"
   }
 }
