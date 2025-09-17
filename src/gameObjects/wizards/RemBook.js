@@ -20,12 +20,12 @@ export default class RemBook extends WizardBook {
         this.currentWeekIndex = 0;
 
         loadContributions().then(contributions => {
-            const commits = contributions.map(c => c.commits);
+            const commits = contributions;
             const min = Math.min(...commits);
             const max = Math.max(...commits);
             this.normalizedCommits = commits.map(c => {
                 if (max !== min) {
-                    return Math.round(4 + ((c - min) / (max - min)) * (this.surroundingTiles.length - 4));
+                    return Math.max(1, Math.round(4 + ((c - min) / (max - min)) * (this.surroundingTiles.length - 4)));
                 }
                 return 4;
             });
@@ -63,7 +63,7 @@ export default class RemBook extends WizardBook {
         }
 
         this.currentWeekIndex = (this.currentWeekIndex + 1) % this.normalizedCommits.length;
-
+        
         return tiles;
     }
 
