@@ -10,7 +10,7 @@ actions.forEach(action => {
 
 export default class Jacob extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Jacob, Naughty Alchemist`, voicelines, 0xBED300, 28);
+        super(scene, x, y, `Jacob, Guild Apothecary`, voicelines, 0xBED300, 28);
 
         this.attackEmitter = scene.add.particles(0, 0, 'orb', {
             tint: this.energyTint,
@@ -23,15 +23,10 @@ export default class Jacob extends Wizard {
         this.attackEmitter.setDepth(200);
 
         this.book = new JacobBook();
-
-        this.attackStep = 0;
     }
 
     attack() {
         this.auraPulse();
-        this.attackStep++;
-        if (this.attackStep % 2 === 0) {
-            this.book.wowPotionDrop(this);
-        }
+        this.book.wowPotionDrop(this);
     }
 }

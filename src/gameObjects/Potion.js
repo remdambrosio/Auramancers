@@ -17,41 +17,45 @@ export default class Potion extends Phaser.Physics.Arcade.Sprite
             this.mapOffset.x + (tileX * this.tileSize),
             this.mapOffset.y + (tileY * this.tileSize)
         );
-        this.setDepth(100);
+        this.setDepth(150);
 
         this.master = master;
-        this.setFrame(potionIndex - 1);
+        this.setFrame(potionIndex);
 
         this.justDropped = true;
         scene.time.delayedCall(scene.turnInterval * 0.75, () => { this.justDropped = false; });
 
-        let explosionTint;
-        if (potionIndex < 5) {
+        if (potionIndex < 4) {
             this.potionType = 'poison';
-            this.power = 5 - potionIndex;
-            explosionTint = 0xBED300;
+            this.power = 4 - potionIndex;
+            this.typeTint = 0xBED300;
         } else {
             this.potionType = 'health';
             this.power = potionIndex - 4;
-            explosionTint = 0xFF7D7A;
+            this.typeTint = 0xFF7D7A;
         }
 
         this.emitter = scene.add.particles(0, 0, 'orb', {
-            tint: explosionTint,
+            tint: this.typeTint,
             lifespan: 1000,
             speed: { min: 10, max: 50 },
             scale: { start: 1, end: 0 },
             blendMode: 'NORMAL',
             emitting: false
         });
-        this.emitter.setDepth(100);
+        this.emitter.setDepth(200);
     }
 
     explode() {
-        this.targetTiles = this.targetTiles();
-        this.targetTiles.forEach(tile => {
+        if (this.potionType === 'poison') {
+            this.scene.sound.play('hiss');
+        } else {
+            this.scene.sound.play('heal');
+        }
+        const tiles = this.targetTiles();
+        tiles.forEach(tile => {
             if (this.potionType === 'poison') {
-                this.hitTile(tile.x, tile.y);
+                this.damageTile(tile.x, tile.y);
             } else {
                 this.healTile(tile.x, tile.y);
             }
@@ -94,29 +98,29 @@ export default class Potion extends Phaser.Physics.Arcade.Sprite
         return tiles;
     }
 
-    hitTile(tileX, tileY) {
+    damageTile(tileX, tileY) {
         let wizardHit = this.wasWizardHit(tileX, tileY);
         if (wizardHit) {
-            wizardHit.takeDamage(1, 0xBED300);
+            wizardHit.takeDamage(1, this.typeTint);
         }
         let watcherHit = this.wasWatcherHit(tileX, tileY);
         if (watcherHit) {
-            watcherHit.die(0xBED300);
+            watcherHit.die(this.typeTint);
         }
     }
 
     healTile(tileX, tileY) {
         let wizardHit = this.wasWizardHit(tileX, tileY);
         if (wizardHit) {
-            wizardHit.heal(1, 0xFF7D7A);
+            wizardHit.heal(1, this.typeTint);
         }
     }
 
     wasWizardHit(tileX, tileY)
     {
         return this.scene.wizardGroup.getChildren().find(wizard => {
-            if (wizard === this.master) {
-                return false;      // friendly fire will not be tolerated
+            if (this.potionType === 'poison' && wizard === this.master) {
+                return false;
             }
             return wizard.tile.x === tileX && wizard.tile.y === tileY;
         });
@@ -127,5 +131,19 @@ export default class Potion extends Phaser.Physics.Arcade.Sprite
         return this.scene.watcherGroup.getChildren().find(watcher => {
             return watcher.tile.x === tileX && watcher.tile.y === tileY;
         });
+    }
+
+    flash(i, flashes) {
+        if (!this.scene || !this.active) return;
+        if (i >= flashes) {
+            if (this.active) this.clearTint();
+            return;
+        }
+        if (i % 2 === 0) {
+            if (this.active) this.setTint(this.typeTint);
+        } else {
+            if (this.active) this.clearTint();
+        }
+        this.scene.time.delayedCall(150, () => { this.flash(i + 1, flashes); }, [], this);
     }
 }

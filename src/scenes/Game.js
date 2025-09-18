@@ -129,7 +129,7 @@ export class Game extends Phaser.Scene
 
     initTimer ()
     {
-        this.timerValue = 40;
+        this.timerValue = 50;
         this.timerEvent = this.time.addEvent({
             delay: this.turnInterval,
             loop: true,
@@ -163,7 +163,14 @@ export class Game extends Phaser.Scene
     {
         this.physics.add.overlap(this.wizardGroup, this.potionGroup, (wizard, potion) => {
             if (potion.justDropped) return;
-            if (potion.explode) { potion.explode(); } 
+            if (potion.explode && !potion.explosionScheduled) {
+                this.sound.play('glass');
+                potion.explosionScheduled = true;
+                potion.flash(0, 5);
+                this.time.delayedCall(this.turnInterval * 0.5, () => {
+                    potion.explode();
+                });
+            }
         });
     }
 

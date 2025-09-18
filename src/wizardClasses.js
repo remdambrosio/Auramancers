@@ -9,37 +9,37 @@ import Jacob from './gameObjects/wizards/Jacob.js';
 const wizardClasses = [
     {
         name: 'Andrew',
-        description: 'His flame grows longer for each spectator burned',
+        description: "His flame grows longer for each spectator burned",
         class: Andrew
     },
     {
         name: 'Chris',
-        description: 'He revives dead spectators as vengeful spirits',
+        description: "He revives dead spectators as vengeful spirits",
         class: Chris
     },
     {
         name: 'Jacob',
-        description: 'His elixers draw upon the WoW subreddit to hurt or heal',
+        description: "His elixers are brewed from the WoW subreddit's sentiment",
         class: Jacob
     },
     {
         name: 'Julian',
-        description: 'His curse forces him to rise and fight again',
+        description: "His curse forces him to rise and fight again",
         class: Julian
     },
     {
         name: 'Mia',
-        description: 'She charms spectators to do her bidding',
+        description: "She charms spectators to do her bidding",
         class: Mia
     },
     {
         name: 'Rem',
-        description: 'His harmful hurricane is fueled by contributions to this game',
+        description: "His harmful hurricane is fueled by contributions to this game",
         class: Rem
     },
     {
         name: 'Tariq',
-        description: 'His thorny branches reach out in a T',
+        description: "His thorny branches reach out in a T",
         class: Tariq
     },
 ];

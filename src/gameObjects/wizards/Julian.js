@@ -24,6 +24,8 @@ export default class Julian extends Wizard {
         this.attackEmitter.setDepth(200);
 
         this.hasRevived = false;
+        this.baseSpriteKey = 20;
+        this.revivedSpriteKey = 24;
     }
 
     attack()
@@ -54,6 +56,21 @@ export default class Julian extends Wizard {
         });
     }
 
+    auraPulse() {
+        let healthRatio = this.health / this.maxHealth;
+        let healthFrame;
+        if (healthRatio === 1) {
+            healthFrame = 1;
+        } else if (healthRatio > 0.5) {
+            healthFrame = 2;
+        } else {
+            healthFrame = 3;
+        }
+
+        this.setFrame(this.getBaseSpriteKey() + healthFrame);
+        this.scene.time.delayedCall(250, () => { this.setFrame(this.getBaseSpriteKey()); });
+    }
+
     die(attackTint) {
         if (this.hasRevived) {
             this.lifeState = 'dead';
@@ -67,8 +84,6 @@ export default class Julian extends Wizard {
             this.lifeState = 'dead';
             this.scene.time.delayedCall(2000, () => {
                 this.scene.sound.play(this.voicelines.revive);
-                this.frame.name = this.frame.name + 4;
-                this.setFrame(this.frame.name);
                 this.lifeState = 'alive';
                 this.health = this.maxHealth;
                 this.scene.tweens.add({
@@ -101,7 +116,15 @@ export default class Julian extends Wizard {
             ease: 'Linear',
             onComplete: () => {
                 this.setVisible(false);
+                this.setFrame(this.getBaseSpriteKey());
             }
         });
+    }
+    getBaseSpriteKey() {
+        if (this.hasRevived) {
+            return this.revivedSpriteKey;
+        } else {
+            return this.baseSpriteKey;
+        }
     }
 }

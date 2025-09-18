@@ -38,6 +38,20 @@ export default {
                 args: ['assets/audio/narration/tie.mp3']
             }
         },
+        potion: {
+            glass: {
+                key: 'glass',
+                args: ['assets/audio/potion/glass.mp3']
+            },
+            heal: {
+                key: 'heal',
+                args: ['assets/audio/potion/heal.mp3']
+            },
+            hiss: {
+                key: 'hiss',
+                args: ['assets/audio/potion/hiss.mp3']
+            }
+        },
         watcher: {
             hit: {
                 key: 'hit',
