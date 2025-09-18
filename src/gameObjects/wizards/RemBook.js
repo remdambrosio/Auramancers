@@ -1,7 +1,11 @@
 import WizardBook from './WizardBook.js';
 
 async function loadContributions() {
-    const response = await fetch('../../../data/contributions.json');
+    let base = '/';
+    if (window.location.hostname === 'remdambrosio.github.io') {
+        base = '/Auramancers/';
+    }
+    const response = await fetch(`${base}data/contributions.json`);
     return await response.json();
 }
 

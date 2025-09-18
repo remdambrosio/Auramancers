@@ -2,7 +2,11 @@ import WizardBook from './WizardBook.js';
 import Potion from '../Potion.js';
 
 async function loadWow() {
-    const response = await fetch('../../../data/wow.json');
+    let base = '/';
+    if (window.location.hostname === 'remdambrosio.github.io') {
+        base = '/Auramancers/';
+    }
+    const response = await fetch(`${base}data/wow.json`);
     return await response.json();
 }
 
