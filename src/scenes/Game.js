@@ -270,6 +270,7 @@ export class Game extends Phaser.Scene
     }
 
     endGame() {
+        if (this.gameState === 'end') return;
         this.gameState = 'end';
         this.sound.stopByKey('riseOfTheManimals');
         
