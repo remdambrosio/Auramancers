@@ -129,7 +129,7 @@ export class Game extends Phaser.Scene
 
     initTimer ()
     {
-        this.timerValue = 50;
+        this.timerValue = 60;
         this.timerEvent = this.time.addEvent({
             delay: this.turnInterval,
             loop: true,

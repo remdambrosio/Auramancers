@@ -10,13 +10,16 @@ export default class TariqBook extends WizardBook {
         let tiles = [];
         let curTile = { ...wizard.tile };
         let prevDir = null;
+        let firstDir = Phaser.Math.RND.pick(this.directions);
 
         for (let i = 0; i < length; i++) {
-            let possibleDirs = this.directions;
-            if (prevDir) {
-                possibleDirs = this.directions.filter(dir => !(dir.x === -prevDir.x && dir.y === -prevDir.y));
+            let dir;
+            if (i < 2) {
+                dir = firstDir;
+            } else {
+                let possibleDirs = this.directions.filter(d => !(d.x === -prevDir.x && d.y === -prevDir.y));
+                dir = Phaser.Math.RND.pick(possibleDirs);
             }
-            const dir = Phaser.Math.RND.pick(possibleDirs);
             curTile = {
                 x: curTile.x + dir.x,
                 y: curTile.y + dir.y
