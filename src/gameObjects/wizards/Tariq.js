@@ -1,5 +1,6 @@
 import ASSETS from '../../assets.js';
 import Wizard from './Wizard.js';
+import TariqBook from './TariqBook.js';
 
 const actions = Object.keys(ASSETS.audio.wizards.tariq);
 const voicelines = {};
@@ -21,41 +22,16 @@ export default class Tariq extends Wizard {
             emitting: false
         });
         this.attackEmitter.setDepth(200);
+
+        this.book = new TariqBook();
     }
 
     attack()
     {
-        // target tiles
-        const dir = this.book.attackDirection(this);
-        this.targetAttackTiles = [];
-        let curTile = this.tile;
-        for (let i = 0; i < 3; i++) {
-            curTile = {
-                x: curTile.x + dir.x,
-                y: curTile.y + dir.y
-            };
-            this.targetAttackTiles.push({ ...curTile });
-        }
+        this.targetAttackTiles = this.book.snakeAttackTiles(this, 5);
 
-        // target end tiles
-        const finalTile = this.targetAttackTiles[this.targetAttackTiles.length - 1];
-        let perpDirs;
-        if (dir.x === 0) {
-            perpDirs = [{ x: 1, y: 0 }, { x: -1, y: 0 }];
-        } else {
-            perpDirs = [{ x: 0, y: 1 }, { x: 0, y: -1 }];
-        }
-        perpDirs.forEach(dir => {
-            this.targetAttackTiles.push({
-                x: finalTile.x + dir.x,
-                y: finalTile.y + dir.y
-            });
-        });
-
-        // aura indicates current health
         this.auraPulse();
 
-        // attack tiles
         this.targetAttackTiles.forEach((tile, i) => {
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
