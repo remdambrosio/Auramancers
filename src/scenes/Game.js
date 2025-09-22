@@ -331,7 +331,7 @@ export class Game extends Phaser.Scene
     initWatchers ()
     {
         for (const tile of this.watcherSideTiles) {
-            if (Phaser.Math.RND.frac() >= 0.4) {
+            if (Phaser.Math.RND.frac() >= 0.3) {
                 const watcherSprite = Phaser.Math.RND.between(0, 7);
                 const watcher = new Watcher(this, tile.x, tile.y, watcherSprite);
                 this.watcherGroup.add(watcher);

@@ -39,7 +39,7 @@ const wizardClasses = [
     },
     {
         name: 'Tariq',
-        description: "His thorny branches reach out in a T",
+        description: "His thorny vines slither unpredictably",
         class: Tariq
     },
 ];
