@@ -36,13 +36,15 @@ A Phaser "game" wherein brave wizards face off to become the Auramaster.
 
 ### Collaborators
 
-**This Stuff** - Rem D'Ambrosio
+**The Boring Stuff** - Rem D'Ambrosio
 
-**Music** - Jordan Rosenbaum
+**Music** - Jordan Rosenbaum, Rem D'Ambrosio
+
+**SFX** - Jordan Rosenbaum, Rem D'Ambrosio
 
 **Narration** - Rem D'Ambrosio
 
-**Character Voices** - Mia Vandenschrick, Andrew Silbernagel, Tariq Chatur
+**Character Voices** - Andrew Silbernagel, Christopher Huk, Jacob Lower, Julian Moore, Mia Vandenschrick, Rem D'Ambrosio, Tariq Chatur
 
 ### Assets
 
