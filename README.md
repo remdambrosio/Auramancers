@@ -1,16 +1,15 @@
 # Auramancers
 
-https://remdambrosio.github.io/Auramancers/
+[CLICK HERE TO PLAY](https://remdambrosio.github.io/Auramancers/)
 
-A Phaser "game" wherein brave wizards face off to become the Auramaster.
+In this non-interactive Phaser "game", 2-4 brave Auramancers face off in an arena. Bet with your friends on which ones will survive to become the next Auramaster.
 
 ## Setup
 
 ### Prerequisites
 - Node.js
 
-### Getting Started
-
+### Run Locally
 1. **Install dependencies**
    ```bash
    npm install
@@ -23,20 +22,18 @@ A Phaser "game" wherein brave wizards face off to become the Auramaster.
 
 ### Structure
 ```
-├── index.html         # Main HTML file
-├── phaser.js          # Phaser 3 library
-├── assets/            # Game assets (images, sounds, etc.)
-├── src/               # Source code
-│   ├── main.js        # Game configuration and startup
-│   ├── scenes/        # Game scenes
-│   └── gameObjects/   # Game object classes
+├── assets/                   # sprites, tilesets, sounds
+├── data/                     # jsons used to define some spell behavior
+├── scripts/                  # populates data via weekly API pulls
+├── src/                      # source code
+└── README.md
 ```
 
 ## Credits
 
 ### Collaborators
 
-**The Boring Stuff** - Rem D'Ambrosio
+**Code** - Rem D'Ambrosio
 
 **Music** - Jordan Rosenbaum, Rem D'Ambrosio
 
@@ -44,10 +41,10 @@ A Phaser "game" wherein brave wizards face off to become the Auramaster.
 
 **Narration** - Rem D'Ambrosio
 
-**Character Voices** - Andrew Silbernagel, Christopher Huk, Jacob Lower, Julian Moore, Mia Vandenschrick, Rem D'Ambrosio, Tariq Chatur
+**Auramancer Voices** - Andrew Silbernagel, Christopher Huk, Jacob Lower, Julian Moore, Mia Vandenschrick, Rem D'Ambrosio, Tariq Chatur
 
 ### Assets
 
-Map Tiles - Tiny Town by Kennay
+**Map Tiles** - Tiny Town by Kennay
 
-Main Menu Beat - Dumb by David Renda
+**Main Menu Beat** - Dumb by David Renda
