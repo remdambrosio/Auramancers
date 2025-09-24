@@ -80,7 +80,7 @@ async function main() {
   fs.mkdirSync("data", { recursive: true });
   fs.writeFileSync("data/contributions.json", JSON.stringify(counts, null, 2));
 
-  console.log("Saved weekly contribution counts to data/contributions.json");
+  console.log("Saved Auramancers contribution counts to data/contributions.json");
 }
 
 main().catch(err => {

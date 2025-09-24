@@ -43,7 +43,7 @@ async function main() {
 
   fs.mkdirSync("data", { recursive: true });
   fs.writeFileSync("data/wow.json", JSON.stringify(scores, null, 2));
-  console.log("Saved sentiment scores to data/wow.json");
+  console.log("Saved WoW subreddit sentiment scores to data/wow.json");
 }
 
 main().catch(err => {

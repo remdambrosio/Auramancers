@@ -33,10 +33,13 @@ jobs:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
 
+      - name: Fetch fae trends
+        run: node scripts/fetch-fae.js
+
       - name: Commit and push changes
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/contributions.json data/wow.json
-          git commit -m "Update contributions and WoW sentiment data [skip ci]" || echo "No changes"
+          git add data/*
+          git commit -m "Update json data [skip ci]" || echo "No changes"
           git push
