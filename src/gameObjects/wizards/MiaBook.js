@@ -1,6 +1,6 @@
 import WizardBook from './WizardBook.js';
 
-async function loadMentions() {
+async function loadPopularities() {
     let base = '/';
     if (window.location.hostname === 'remdambrosio.github.io') {
         base = '/Auramancers/';
@@ -12,6 +12,25 @@ async function loadMentions() {
 export default class MiaBook extends WizardBook {
     constructor() {
         super();
-        this.mentions = loadMentions();
+
+        this.currentPopularityIndex = 0;
+
+        loadPopularities().then(popularities => {
+            const min = Math.min(...popularities);
+            const max = Math.max(...popularities);
+            // normalize 2-6
+            this.normalizedPopularities = popularities.map(val => {
+                if (max === min) return 4;
+                return Math.round(2 + ((val - min) * (6 - 2)) / (max - min));
+            });
+        });
+    }
+
+    incrementIndex() {
+        this.currentPopularityIndex = (this.currentPopularityIndex + 1) % (this.normalizedPopularities?.length ?? 1);
+    }
+
+    getPopularity() {
+        return this.normalizedPopularities[this.currentPopularityIndex];
     }
 }

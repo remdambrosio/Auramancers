@@ -9,7 +9,7 @@ import Jacob from './gameObjects/wizards/Jacob.js';
 const wizardClasses = [
     {
         name: 'Andrew',
-        description: "His flame grows longer for each spectator burned",
+        description: "His flame grows longer with each spectator it burns",
         class: Andrew
     },
     {
@@ -19,7 +19,7 @@ const wizardClasses = [
     },
     {
         name: 'Jacob',
-        description: "His elixers are brewed from the WoW subreddit's sentiment",
+        description: "His poisons and cures are brewed from WoW sentiment on reddit",
         class: Jacob
     },
     {
@@ -29,17 +29,17 @@ const wizardClasses = [
     },
     {
         name: 'Mia',
-        description: "She charms spectators to do her bidding",
+        description: "Her charmed spectators attack with the power of fae search trends",
         class: Mia
     },
     {
         name: 'Rem',
-        description: "His harmful hurricane is fueled by contributions to this game",
+        description: "His hurricane is fueled by contributions to the Auramancers repo",
         class: Rem
     },
     {
         name: 'Tariq',
-        description: "His thorny vines slither unpredictably",
+        description: "His thorny vines choose their own path",
         class: Tariq
     },
 ];

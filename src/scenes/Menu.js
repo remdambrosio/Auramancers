@@ -26,7 +26,7 @@ export class Menu extends Phaser.Scene {
                 stroke: '#000000',
                 strokeThickness: 6,
                 align: 'center',
-                wordWrap: { width: 500 },
+                wordWrap: { width: buttonSpacing * buttonsPerRow },
             }
         ).setOrigin(0.5);
 

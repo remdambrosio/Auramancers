@@ -102,11 +102,12 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
         }
     }
 
-    charm(master, masterTint)
+    charm(master, masterBook, masterTint)
     {
         if (this.lifeState === 'alive') {
             this.lifeState = 'charmed';
             this.master = master;
+            this.masterBook = masterBook;
             this.setTint(masterTint);
             this.energyTint = masterTint;
             this.attackEmitter.setParticleTint(this.energyTint);
@@ -134,8 +135,9 @@ export default class Watcher extends Phaser.Physics.Arcade.Sprite
 
         // target tiles towards center
         this.targetAttackTiles = [];
+        let range = this.masterBook.getPopularity();
         let curTile = this.tile;
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < range; i++) {
             curTile = {
                 x: curTile.x + chosenDir.x,
                 y: curTile.y + chosenDir.y

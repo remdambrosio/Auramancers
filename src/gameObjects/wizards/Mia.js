@@ -1,5 +1,6 @@
 import ASSETS from '../../assets.js';
 import Wizard from './Wizard.js';
+import MiaBook from './MiaBook.js';
 
 const actions = Object.keys(ASSETS.audio.wizards.mia);
 const voicelines = {};
@@ -20,6 +21,14 @@ export default class Mia extends Wizard {
             emitting: false
         });
         this.attackEmitter.setDepth(200);
+
+        this.book = new MiaBook();
+    }
+
+    move() {
+        super.move();
+        // prepare for next Watcher attack, keeping them in sync
+        this.book.incrementIndex();
     }
 
     attack()
@@ -59,7 +68,7 @@ export default class Mia extends Wizard {
         let watcherHit = this.wasWatcherHit(tileX, tileY);
         if (watcherHit && watcherHit.lifeState === 'alive') {
             this.scene.sound.play(ASSETS.audio.watcher.charm.key, { volume: 0.8 });
-            watcherHit.charm(this, this.energyTint);
+            watcherHit.charm(this, this.book, this.energyTint);
         }
     }
 }
