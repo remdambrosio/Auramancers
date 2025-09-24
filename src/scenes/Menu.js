@@ -4,7 +4,7 @@ import wizardClasses from '../wizardClasses.js';
 export class Menu extends Phaser.Scene {
     constructor() {
         super('Menu');
-        this.selectedWizards = [wizardClasses[0], wizardClasses[1]];
+        this.selectedWizards = [];
         this.descriptionText = null;
     }
 
