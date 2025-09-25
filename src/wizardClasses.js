@@ -5,6 +5,9 @@ import Rem from './gameObjects/wizards/Rem.js';
 import Chris from './gameObjects/wizards/Chris.js';
 import Julian from './gameObjects/wizards/Julian.js';
 import Jacob from './gameObjects/wizards/Jacob.js';
+import Avalon from './gameObjects/wizards/Avalon.js';
+import Brianna from './gameObjects/wizards/Brianna.js';
+import Gene from './gameObjects/wizards/Gene.js';
 
 const wizardClasses = [
     {
@@ -13,9 +16,24 @@ const wizardClasses = [
         class: Andrew
     },
     {
+        name: 'Avalon',
+        description: "She does stuff",
+        class: Avalon
+    },
+    {
+        name: 'Brianna',
+        description: "She does stuff",
+        class: Brianna
+    },
+    {
         name: 'Chris',
         description: "He revives dead spectators as vengeful spirits",
         class: Chris
+    },
+    {
+        name: 'Gene',
+        description: "He does stuff",
+        class: Gene
     },
     {
         name: 'Jacob',

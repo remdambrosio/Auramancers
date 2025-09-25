@@ -77,6 +77,34 @@ export default {
                     args: ['assets/audio/wizards/andrew/win.mp3']
                 }
             },
+            avalon: {
+                hit: {
+                    key: 'avalon_hit',
+                    args: ['assets/audio/wizards/avalon/hit.mp3']
+                },
+                die: {
+                    key: 'avalon_die',
+                    args: ['assets/audio/wizards/avalon/die.mp3']
+                },
+                win: {
+                    key: 'avalon_win',
+                    args: ['assets/audio/wizards/avalon/win.mp3']
+                }
+            },
+            brianna: {
+                hit: {
+                    key: 'brianna_hit',
+                    args: ['assets/audio/wizards/brianna/hit.mp3']
+                },
+                die: {
+                    key: 'brianna_die',
+                    args: ['assets/audio/wizards/brianna/die.mp3']
+                },
+                win: {
+                    key: 'brianna_win',
+                    args: ['assets/audio/wizards/brianna/win.mp3']
+                }
+            },
             chris: {
                 hit: {
                     key: 'chris_hit',
@@ -89,6 +117,20 @@ export default {
                 win: {
                     key: 'chris_win',
                     args: ['assets/audio/wizards/chris/win.mp3']
+                }
+            },
+            gene: {
+                hit: {
+                    key: 'gene_hit',
+                    args: ['assets/audio/wizards/gene/hit.mp3']
+                },
+                die: {
+                    key: 'gene_die',
+                    args: ['assets/audio/wizards/gene/die.mp3']
+                },
+                win: {
+                    key: 'gene_win',
+                    args: ['assets/audio/wizards/gene/win.mp3']
                 }
             },
             jacob: {
