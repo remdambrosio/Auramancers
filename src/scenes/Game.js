@@ -261,12 +261,6 @@ export class Game extends Phaser.Scene
         this.startGameText.setVisible(false);
         this.endGameText.setVisible(false);
         this.sound.play('riseOfTheManimals', { volume: 0.08, loop: true });
-        
-        // // tie testing
-        // this.wizardGroup.getChildren().forEach(wizard => wizard.health = 1);
-        // this.time.delayedCall(500, () => {
-        //     this.wizardGroup.getChildren().forEach(wizard => wizard.takeDamage(1, 0xff00ff));
-        // });
     }
 
     endGame() {
@@ -325,7 +319,7 @@ export class Game extends Phaser.Scene
             }
         }
 
-        this.liveWizards = this.wizardGroup.getChildren();
+        this.liveWizards = [...this.wizardGroup.getChildren()];
     }
 
     initWatchers ()

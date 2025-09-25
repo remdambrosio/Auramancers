@@ -131,6 +131,14 @@ export default {
                 win: {
                     key: 'gene_win',
                     args: ['assets/audio/wizards/gene/win.mp3']
+                },
+                clone: {
+                    key: 'gene_clone',
+                    args: ['assets/audio/wizards/gene/clone.mp3']
+                },
+                tada: {
+                    key: 'gene_tada',
+                    args: ['assets/audio/wizards/gene/tada.mp3']
                 }
             },
             jacob: {

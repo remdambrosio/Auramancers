@@ -32,7 +32,7 @@ const wizardClasses = [
     },
     {
         name: 'Gene',
-        description: "He does stuff",
+        description: "His illusory mage fights alongside him",
         class: Gene
     },
     {

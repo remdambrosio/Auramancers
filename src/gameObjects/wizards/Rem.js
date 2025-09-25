@@ -36,5 +36,7 @@ export default class Rem extends Wizard {
             this.hitTile(tile.x, tile.y, 1);
             this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
         });
+
+        console.log(this.scene.wizardGroup.getChildren())
     }
 }
