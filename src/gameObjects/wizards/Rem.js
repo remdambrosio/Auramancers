@@ -10,10 +10,10 @@ actions.forEach(action => {
 
 export default class Rem extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Rem, Auracrafting Admiral`, voicelines, 0x0026FF, 12);
+        super(scene, x, y, `Rem, Auracrafting Admiral`, voicelines, 0x0077FF, 12);
 
         this.attackEmitter = scene.add.particles(0, 0, 'orb', {
-            tint: [0xFFFFFF, 0x0026FF, 0x0026FF, 0x0026FF],
+            tint: [0xFFFFFF, 0x0077FF, 0x0077FF, 0x0077FF],
             lifespan: 400,
             speed: { min: 5, max: 35 },
             scale: { start: 1.2, end: 0 },
@@ -36,7 +36,5 @@ export default class Rem extends Wizard {
             this.hitTile(tile.x, tile.y, 1);
             this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
         });
-
-        console.log(this.scene.wizardGroup.getChildren())
     }
 }

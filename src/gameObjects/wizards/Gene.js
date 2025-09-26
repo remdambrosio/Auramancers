@@ -83,7 +83,7 @@ class GeneClone extends Gene {
         this.master = master;
 
         this.sparkleEmitter = scene.add.particles(0, 0, 'spark', {
-            tint: this.energyTint,
+            tint: [0xFFFFFF, 0xFFC73A, 0xE52B63],
             lifespan: 1000,
             speed: { min: 10, max: 50 },
             scale: { start: 1, end: 0 },
@@ -119,7 +119,7 @@ class GeneClone extends Gene {
             ease: 'Linear',
             onComplete: () => {
                 this.scene.wizardGroup.remove(this, true, true);
-                if (!masterDead) {
+                if (!masterDead && this.master) {
                     this.master.clone = null;
                 }
             }
