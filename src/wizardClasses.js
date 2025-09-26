@@ -17,7 +17,7 @@ const wizardClasses = [
     },
     {
         name: 'Avalon',
-        description: "She does stuff",
+        description: "She lashes out with her dark patron's tentacles",
         class: Avalon
     },
     {
@@ -27,7 +27,7 @@ const wizardClasses = [
     },
     {
         name: 'Chris',
-        description: "He revives dead spectators as vengeful spirits",
+        description: "He revives dead fans as vengeful spirits",
         class: Chris
     },
     {
@@ -47,7 +47,7 @@ const wizardClasses = [
     },
     {
         name: 'Mia',
-        description: "Her charmed spectators attack with the power of fae search trends",
+        description: "Her charmed fans attack with the power of fae search trends",
         class: Mia
     },
     {

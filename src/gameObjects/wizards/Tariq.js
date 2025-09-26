@@ -28,7 +28,7 @@ export default class Tariq extends Wizard {
 
     attack()
     {
-        this.targetAttackTiles = this.book.snakeAttackTiles(this, 4);
+        this.targetAttackTiles = this.book.snakeAttackTiles(this, 5);
 
         this.auraPulse();
 

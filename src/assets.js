@@ -238,6 +238,10 @@ export default {
             key: 'slash',
             args: ['assets/image/slash.png']
         },
+        tentacle: {
+            key: 'tentacle',
+            args: ['assets/image/tentacle.png']
+        },
     },
     'spritesheet': {
         tiles: {

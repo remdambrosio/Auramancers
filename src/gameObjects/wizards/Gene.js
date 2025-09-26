@@ -9,7 +9,7 @@ actions.forEach(action => {
 
 export default class Gene extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Gene, Magus of Mirages`, voicelines, 0xE52B63, 40);
+        super(scene, x, y, `Gene, Mirage Mage`, voicelines, 0xE52B63, 40);
 
         this.turnsSinceClone = 0;
         this.clone = null;
@@ -104,6 +104,9 @@ class GeneClone extends Gene {
     }
 
     die(masterDead = false) {
+        if (this.lifeState === 'dead') {
+            return;
+        }
         if (!masterDead) {
             this.scene.sound.play(this.voicelines.tada);
         }

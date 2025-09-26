@@ -1,5 +1,6 @@
 import ASSETS from '../../assets.js';
 import Wizard from './Wizard.js';
+import AvalonBook from './AvalonBook.js';
 
 const actions = Object.keys(ASSETS.audio.wizards.avalon);
 const voicelines = {};
@@ -9,6 +10,38 @@ actions.forEach(action => {
 
 export default class Avalon extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Avalon, Person of Things`, voicelines, 0x228B22, 32);
+        super(scene, x, y, `Avalon, Wretched Warlock`, voicelines, 0x00A864, 32);
+    
+        this.attackEmitter = scene.add.particles(0, 0, 'tentacle', {
+            tint: this.energyTint,
+            lifespan: 400,
+            blendMode: 'NORMAL',
+            emitting: false,
+            scaleY: { start: 1.6, end: 0, ease: 'expo.in' },
+            scaleX: {
+                onEmit: function () { 
+                    return ( 0.5 > Math.random() ) ? -1.6 : 1.6;
+                }
+            },
+        });
+        this.attackEmitter.setDepth(200);
+
+        this.book = new AvalonBook();
+    }
+
+    attack()
+    {
+        this.targetAttackTiles = this.book.tentacleAttackTiles(this);
+
+        this.auraPulse();
+
+        this.targetAttackTiles.forEach((tile, i) => {
+            const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
+            const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
+            this.scene.time.delayedCall(50 * i, () => {
+                this.hitTile(tile.x, tile.y, 1);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 1);
+            });
+        });
     }
 }
