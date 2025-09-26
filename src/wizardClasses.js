@@ -17,12 +17,12 @@ const wizardClasses = [
     },
     {
         name: 'Avalon',
-        description: "She lashes out with her dark patron's tentacles",
+        description: "Her dark patron's tentacles lash out at foes",
         class: Avalon
     },
     {
         name: 'Brianna',
-        description: "She does stuff",
+        description: "Her arcane blasts appear wherever she pleases",
         class: Brianna
     },
     {

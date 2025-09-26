@@ -10,7 +10,7 @@ actions.forEach(action => {
 
 export default class Brianna extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Brianna, Person of Things`, voicelines, 0xC6009F, 36);
+        super(scene, x, y, `Brianna, Swanky Sorcerer`, voicelines, 0xC6009F, 36);
 
         this.attackEmitter = scene.add.particles(0, 0, 'spark', {
             tint: [0xFFFFFF, 0xC6009F, 0xC6009F, 0xC6009F],
