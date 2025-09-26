@@ -21,7 +21,7 @@ export default class Gene extends Wizard {
         const dir = this.book.attackDirection(this);
         this.targetAttackTiles = [];
         let curTile = this.tile;
-        for (let i = 0; i < 2; i++) {
+        for (let i = 0; i < 3; i++) {
             curTile = {
                 x: curTile.x + dir.x,
                 y: curTile.y + dir.y

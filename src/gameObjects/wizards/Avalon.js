@@ -14,10 +14,10 @@ export default class Avalon extends Wizard {
     
         this.attackEmitter = scene.add.particles(0, 0, 'tentacle', {
             tint: this.energyTint,
-            lifespan: 400,
+            lifespan: 600,
             blendMode: 'NORMAL',
             emitting: false,
-            scaleY: { start: 1.6, end: 0, ease: 'expo.in' },
+            scaleY: { start: 1.6, end: 0, ease: 'expo.inOut' },
             scaleX: {
                 onEmit: function () { 
                     return ( 0.5 > Math.random() ) ? -1.6 : 1.6;
@@ -38,7 +38,7 @@ export default class Avalon extends Wizard {
         this.targetAttackTiles.forEach((tile, i) => {
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
-            this.scene.time.delayedCall(50 * i, () => {
+            this.scene.time.delayedCall(25 * i, () => {
                 this.hitTile(tile.x, tile.y, 1);
                 this.attackEmitter.emitParticleAt(pixelX, pixelY, 1);
             });

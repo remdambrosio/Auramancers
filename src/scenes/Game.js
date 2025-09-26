@@ -50,6 +50,12 @@ export class Game extends Phaser.Scene
             walls: [ 45, 46, 47, 48, 57, 58, 59, 60, 69, 70, 71, 72, 81, 82, 83, 84 ],
         }
 
+        this.arena = {
+            origin: {x: 7, y: 4},
+            width: 7,
+            height: 7
+        };
+
         this.watcherSideTiles = [];
         this.watcherUpDownTiles = [];
         this.wizard1Start = { x: 0, y: 0 };

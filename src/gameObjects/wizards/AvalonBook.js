@@ -15,8 +15,18 @@ export default class AvalonBook extends WizardBook {
             { x: -dir.y, y: dir.x },
             { x: dir.y, y: -dir.x }
         ];
-        const branchIndex = Phaser.Math.RND.pick([null, 1, 2]);
-        const branchSide = Phaser.Math.RND.pick([0, 1]);
+        let branchOrigins = [1, 2];
+        let numBranches = Phaser.Math.RND.pick([1, 2]);
+        let branchIndices = Phaser.Utils.Array.Shuffle(branchOrigins).slice(0, numBranches).sort();
+        let branchSides;
+        if (numBranches === 2) {
+            branchSides = Phaser.Math.RND.pick([
+                [0, 1],
+                [1, 0]
+            ]);
+        } else {
+            branchSides = [Phaser.Math.RND.pick([0, 1])];
+        }
 
         for (let i = 0; i < 4; i++) {
             curTile = {
@@ -25,13 +35,15 @@ export default class AvalonBook extends WizardBook {
             };
             targetTiles.push({ ...curTile });
 
-            if (branchIndex !== null && i === branchIndex) {
-                const perp = perpendiculars[branchSide];
-                targetTiles.push({
-                    x: curTile.x + perp.x,
-                    y: curTile.y + perp.y
-                });
-            }
+            branchIndices.forEach((branchIndex, idx) => {
+                if (i === branchIndex) {
+                    const perp = perpendiculars[branchSides[idx]];
+                    targetTiles.push({
+                        x: curTile.x + perp.x,
+                        y: curTile.y + perp.y
+                    });
+                }
+            });
         }
 
         return targetTiles;
