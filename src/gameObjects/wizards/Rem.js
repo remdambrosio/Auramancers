@@ -10,10 +10,10 @@ actions.forEach(action => {
 
 export default class Rem extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Rem, Auracrafting Admiral`, voicelines, 0x0077FF, 12);
+        super(scene, x, y, `Rem, Master of Magma`, voicelines, 0xFF0000, 12);
 
-        this.attackEmitter = scene.add.particles(0, 0, 'orb', {
-            tint: [0xFFFFFF, 0x0077FF, 0x0077FF, 0x0077FF],
+        this.attackEmitter = scene.add.particles(0, 0, 'flame', {
+            tint: [0x3b3b3b, 0xFF0000, 0xFF0000, 0xFF0000],
             lifespan: 400,
             speed: { min: 5, max: 35 },
             scale: { start: 1.2, end: 0 },

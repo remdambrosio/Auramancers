@@ -10,7 +10,7 @@ actions.forEach(action => {
 
 export default class Julian extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Julian, Herald of the Curse`, voicelines, 0xFF8C00, 20);
+        super(scene, x, y, `Julian, Cursed Cleric`, voicelines, 0xFF8C00, 20);
 
         this.attackEmitter = scene.add.particles(0, 0, 'slash', {
             tint: [0xFFC73A, 0xFF8C00],
@@ -85,7 +85,7 @@ export default class Julian extends Wizard {
             this.scene.time.delayedCall(2000, () => {
                 this.scene.sound.play(this.voicelines.revive);
                 this.lifeState = 'alive';
-                this.health = this.maxHealth;
+                this.health = 1;
                 this.scene.tweens.add({
                     targets: [this, ash],
                     alpha: {

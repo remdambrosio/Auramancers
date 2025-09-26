@@ -9,10 +9,10 @@ actions.forEach(action => {
 
 export default class Andrew extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Andrew, Rage Unbound`, voicelines, 0xFF0000, 0);
+        super(scene, x, y, `Andrew, Rage Unbound`, voicelines, 0xFF4300, 0);
 
         this.attackEmitter = scene.add.particles(0, 0, 'flame', {
-            tint: [0x3b3b3b, 0xFFC73A, 0xFF8832, 0xFF0000, 0xFF0000, 0xFF0000],
+            tint: [0x3b3b3b, 0xFFC73A, 0xFF4300, 0xFF4300, 0xFF4300],
             lifespan: 250,
             speed: { min: 5, max: 50 },
             scale: { start: 1.5, end: 0 },

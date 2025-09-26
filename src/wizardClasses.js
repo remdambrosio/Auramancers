@@ -27,12 +27,12 @@ const wizardClasses = [
     },
     {
         name: 'Chris',
-        description: "He revives dead fans as vengeful spirits",
+        description: "He revives fallen fans as vengeful spirits",
         class: Chris
     },
     {
         name: 'Gene',
-        description: "His illusory mage fights alongside him",
+        description: "His illusory clone fights alongside him",
         class: Gene
     },
     {
@@ -52,7 +52,7 @@ const wizardClasses = [
     },
     {
         name: 'Rem',
-        description: "His hurricane is fueled by contributions to the Auramancers repo",
+        description: "His volcanic blasts are fueled by updates to Auramancers on GitHub",
         class: Rem
     },
     {

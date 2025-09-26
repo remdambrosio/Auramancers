@@ -10,7 +10,7 @@ actions.forEach(action => {
 
 export default class Jacob extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Jacob, Guild Apothecary`, voicelines, 0xBED300, 28);
+        super(scene, x, y, `Jacob, Amoral Alchemist`, voicelines, 0xBED300, 28);
 
         this.attackEmitter = scene.add.particles(0, 0, 'orb', {
             tint: this.energyTint,

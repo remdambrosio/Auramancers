@@ -10,7 +10,7 @@ actions.forEach(action => {
 
 export default class Tariq extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Tariq, Friend of Trees`, voicelines, 0x228B22, 8);
+        super(scene, x, y, `Tariq, Wizard of the Wilds`, voicelines, 0x228B22, 8);
 
         this.attackEmitter = scene.add.particles(0, 0, 'slash', {
             tint: [0x603B22, 0x228B22, 0x228B22],
