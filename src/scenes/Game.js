@@ -131,24 +131,73 @@ export class Game extends Phaser.Scene
             .setOrigin(0.5)
             .setDepth(1000)
             .setVisible(false);
+
+        this.dieFlashRect = this.add.rectangle(
+            this.centreX, this.centreY,
+            this.scale.width, this.scale.height,
+            0xff0000, 1
+        ).setDepth(2000).setAlpha(0);
     }
 
     initTimer ()
     {
         this.timerValue = 60;
+        this.dieTween = null;
         this.timerEvent = this.time.addEvent({
             delay: this.turnInterval,
             loop: true,
             callback: () => {
                 if (this.gameState !== 'live') {
                     this.timerText.setText('');
+                    if (this.dieTween) {
+                        this.dieTween.stop();
+                        this.dieTween = null;
+                        this.timerText.setScale(1);
+                    }
                     return;
                 }
                 this.timerValue--;
+
+                // show timer value, or "DIE" when timer empty
                 if (this.timerValue > 0) {
                     this.timerText.setText(this.timerValue);
                 } else {
                     this.timerText.setText('DIE');
+                }
+
+                // text pulsing when < 10 (including empty)
+                if (this.timerValue <= 10) {
+                    if (!this.dieTween) {
+                        this.dieTween = this.tweens.add({
+                            targets: this.timerText,
+                            scale: { from: 1, to: 1.4 },
+                            duration: 250,
+                            yoyo: true,
+                            repeat: -1,
+                            ease: 'Sine.easeInOut'
+                        });
+                    }
+                } else {
+                    if (this.dieTween) {
+                        this.dieTween.stop();
+                        this.dieTween = null;
+                        this.timerText.setScale(1);
+                    }
+                }
+
+                // screen flashes red when empty
+                if (this.timerValue <= 0) {
+                    this.dieFlashRect.setAlpha(0.6);
+                    this.tweens.add({
+                        targets: this.dieFlashRect,
+                        alpha: 0,
+                        duration: 500,
+                        ease: 'Quad.easeOut'
+                    });
+                }
+
+                // damage wizards when empty
+                if (this.timerValue <= 0) {
                     this.liveWizards.forEach(wizard => {
                         wizard.takeDamage(1, wizard.energyTint);
                     });
