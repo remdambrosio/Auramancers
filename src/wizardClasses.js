@@ -17,12 +17,12 @@ const wizardClasses = [
     },
     {
         name: 'Avalon',
-        description: "Her eldritch patron's tentacles reach across the arena",
+        description: "Her dark patron's tentacles reach across the arena",
         class: Avalon
     },
     {
         name: 'Brianna',
-        description: "Her mighty mer-tail whips up a whirlpool",
+        description: "Her mighty mer-tail whips up a whirlpool, striking surrounding foes",
         class: Brianna
     },
     {
@@ -32,17 +32,17 @@ const wizardClasses = [
     },
     {
         name: 'Gene',
-        description: "His illusory clone supports him in battle and in life",
+        description: "His illusory clone supports him in battle, in life, and in love",
         class: Gene
     },
     {
         name: 'Jacob',
-        description: "He brews poisons and cures from WoW sentiment on reddit",
+        description: "He brews poisons or cures from toxic or wholesome posts on the WoW subreddit",
         class: Jacob
     },
     {
         name: 'Julian',
-        description: "His curse forces him to rise and fight again",
+        description: "His curse forces him to rise from the dead and fight again",
         class: Julian
     },
     {
@@ -52,12 +52,12 @@ const wizardClasses = [
     },
     {
         name: 'Rem',
-        description: "His volcanic blasts are fueled by recent updates to Auramancers",
+        description: "His volcanic blasts are fueled by his updates to this game's code",
         class: Rem
     },
     {
         name: 'Tariq',
-        description: "His thorny vines choose their own path",
+        description: "His thorny vines snake out into the arena",
         class: Tariq
     },
 ];
