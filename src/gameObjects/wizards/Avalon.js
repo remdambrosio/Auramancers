@@ -10,7 +10,7 @@ actions.forEach(action => {
 
 export default class Avalon extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Avalon, Wretched Warlock`, voicelines, 0x00A864, 32);
+        super(scene, x, y, `Avalon, Wretched Witchlock`, voicelines, 0x00A864, 32);
     
         this.attackEmitter = scene.add.particles(0, 0, 'tentacle', {
             tint: this.energyTint,

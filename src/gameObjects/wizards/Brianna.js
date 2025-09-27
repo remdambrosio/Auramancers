@@ -10,48 +10,34 @@ actions.forEach(action => {
 
 export default class Brianna extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Brianna, Swanky Sorcerer`, voicelines, 0xC6009F, 36);
+        super(scene, x, y, `Brianna, Tailor of Tempests`, voicelines, 0x4FA4FF, 36);
 
-        this.attackEmitter = scene.add.particles(0, 0, 'spark', {
-            tint: [0xFFFFFF, 0xC6009F, 0xC6009F, 0xC6009F],
+        this.attackEmitter = scene.add.particles(0, 0, 'orb', {
+            tint: [0xFFFFFF, 0x4FA4FF, 0x4FA4FF, 0x4FA4FF],
             lifespan: 400,
             speed: { min: 5, max: 35 },
-            scale: { start: 1, end: 0, ease: 'expo.in' },
+            scale: { start: 1.2, end: 0},
             blendMode: 'NORMAL',
             emitting: false
         });
         this.attackEmitter.setDepth(200);
 
+        this.attackMode = 0;
+
         this.book = new BriannaBook();
     }
 
     attack() {
-        this.targetAttackTiles = this.book.magicAttackTiles(this.scene);
-        const targetCenterTile = this.targetAttackTiles[0];
-        const targetX = this.mapOffset.x + (targetCenterTile.x * this.tileSize);
-        const targetY = this.mapOffset.y + (targetCenterTile.y * this.tileSize);
+        this.targetAttackTiles = this.book.waveAttackTiles(this, this.attackMode);
+        this.attackMode = (this.attackMode + 1) % 3;
 
         this.auraPulse();
-
-        // draw line from Brianna to target
-        const graphics = this.scene.add.graphics();
-        graphics.lineStyle(4, this.energyTint, 1);
-        graphics.beginPath();
-        graphics.moveTo(this.x, this.y);
-        graphics.lineTo(targetX, targetY);
-        graphics.strokePath();
-        this.scene.tweens.add({
-            targets: graphics,
-            alpha: 0,
-            duration: 400,
-            onComplete: () => graphics.destroy()
-        });
 
         this.targetAttackTiles.forEach(tile => {
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.hitTile(tile.x, tile.y, 1);
-            this.attackEmitter.emitParticleAt(pixelX, pixelY, 5);
+            this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
         });
     }
 }
