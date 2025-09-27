@@ -136,7 +136,7 @@ export class Game extends Phaser.Scene
             this.centreX, this.centreY,
             this.scale.width, this.scale.height,
             0xff0000, 1
-        ).setDepth(2000).setAlpha(0);
+        ).setDepth(3000).setAlpha(0);
     }
 
     initTimer ()
@@ -187,7 +187,7 @@ export class Game extends Phaser.Scene
 
                 // screen flashes red when empty
                 if (this.timerValue <= 0) {
-                    this.dieFlashRect.setAlpha(0.6);
+                    this.dieFlashRect.setAlpha(0.8);
                     this.tweens.add({
                         targets: this.dieFlashRect,
                         alpha: 0,
