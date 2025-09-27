@@ -22,7 +22,7 @@ const wizardClasses = [
     },
     {
         name: 'Brianna',
-        description: "Her swirling cyclone strikes nearby tiles",
+        description: "Her mermaid tail stirs up a hurricane",
         class: Brianna
     },
     {
