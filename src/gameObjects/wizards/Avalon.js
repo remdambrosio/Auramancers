@@ -29,16 +29,44 @@ export default class Avalon extends Wizard {
         this.book = new AvalonBook();
     }
 
+    // attack()
+    // {
+    //     this.targetAttackTiles = this.book.tentacleAttackTiles(this);
+
+    //     this.auraPulse();
+
+    //     this.targetAttackTiles.forEach((tile, i) => {
+    //         const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
+    //         const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
+    //         this.scene.time.delayedCall(25 * i, () => {
+    //             this.hitTile(tile.x, tile.y, 1);
+    //             this.attackEmitter.emitParticleAt(pixelX, pixelY, 1);
+    //         });
+    //     });
+    // }
+
     attack()
     {
-        this.targetAttackTiles = this.book.tentacleAttackTiles(this);
+        // target tiles
+        const dir = this.book.attackDirection(this);
+        this.targetAttackTiles = [];
+        let curTile = this.tile;
+        for (let i = 0; i < 5; i++) {
+            curTile = {
+                x: curTile.x + dir.x,
+                y: curTile.y + dir.y
+            };
+            this.targetAttackTiles.push({ ...curTile });
+        }
 
+        // aura indicates current health
         this.auraPulse();
 
+        // attack tiles
         this.targetAttackTiles.forEach((tile, i) => {
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
-            this.scene.time.delayedCall(25 * i, () => {
+            this.scene.time.delayedCall(50 * i, () => {
                 this.hitTile(tile.x, tile.y, 1);
                 this.attackEmitter.emitParticleAt(pixelX, pixelY, 1);
             });
