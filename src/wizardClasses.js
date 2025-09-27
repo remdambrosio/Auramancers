@@ -12,7 +12,7 @@ import Gene from './gameObjects/wizards/Gene.js';
 const wizardClasses = [
     {
         name: 'Andrew',
-        description: "His flame grows longer with each spectator it burns",
+        description: "His raging flame grows longer with each spectator it burns",
         class: Andrew
     },
     {
