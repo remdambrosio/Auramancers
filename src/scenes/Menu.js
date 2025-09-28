@@ -6,6 +6,7 @@ export class Menu extends Phaser.Scene {
         super('Menu');
         this.selectedWizards = [];
         this.descriptionText = null;
+        this.rainbowHue = 0;
     }
 
     create() {
@@ -15,6 +16,9 @@ export class Menu extends Phaser.Scene {
         const buttonSpacing = 100;
         const buttonsPerRow = 4;
         const numRows = 3;
+
+        this.backdrop = this.add.graphics();
+        this.drawRainbowBackdrop();
 
         this.descriptionText = this.add.text(
             centreX, buttonSpacing * numRows + 75,
@@ -125,5 +129,18 @@ export class Menu extends Phaser.Scene {
             this.startBtn.setAlpha(0.5);
             this.startBtn.disableInteractive();
         }
+    }
+
+    update() {
+        this.rainbowHue = (this.rainbowHue + 0.1) % 360;
+        this.drawRainbowBackdrop();
+    }
+
+    drawRainbowBackdrop() {
+        const color = Phaser.Display.Color.HSLToColor(this.rainbowHue / 360, 0.6, 0.5).color;
+        this.backdrop.clear();
+        this.backdrop.fillStyle(color, 1);
+        this.backdrop.fillRect(0, 0, this.scale.width, this.scale.height);
+        this.backdrop.setDepth(-100);
     }
 }
