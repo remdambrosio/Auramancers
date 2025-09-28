@@ -8,6 +8,7 @@ import Jacob from './gameObjects/wizards/Jacob.js';
 import Avalon from './gameObjects/wizards/Avalon.js';
 import Brianna from './gameObjects/wizards/Brianna.js';
 import Gene from './gameObjects/wizards/Gene.js';
+import Max from './gameObjects/wizards/Max.js';
 
 const wizardClasses = [
     {
@@ -44,6 +45,11 @@ const wizardClasses = [
         name: 'Julian',
         description: "His curse forces him to rise from the dead and fight again",
         class: Julian
+    },
+    {
+        name: 'Max',
+        description: "His lightning blasts reflect his ability to distract Rem from updating this game",
+        class: Max
     },
     {
         name: 'Mia',

@@ -173,6 +173,20 @@ export default {
                     args: ['assets/audio/wizards/julian/revive.mp3']
                 }
             },
+            max: {
+                hit: {
+                    key: 'max_hit',
+                    args: ['assets/audio/wizards/max/hit.mp3']
+                },
+                die: {
+                    key: 'max_die',
+                    args: ['assets/audio/wizards/max/die.mp3']
+                },
+                win: {
+                    key: 'max_win',
+                    args: ['assets/audio/wizards/max/win.mp3']
+                }
+            },
             mia: {
                 hit: {
                     key: 'mia_hit',
