@@ -1,6 +1,5 @@
 import ASSETS from '../../assets.js';
 import Wizard from './Wizard.js';
-import AvalonBook from './AvalonBook.js';
 
 const actions = Object.keys(ASSETS.audio.wizards.avalon);
 const voicelines = {};
@@ -25,25 +24,7 @@ export default class Avalon extends Wizard {
             },
         });
         this.attackEmitter.setDepth(200);
-
-        this.book = new AvalonBook();
     }
-
-    // attack()
-    // {
-    //     this.targetAttackTiles = this.book.tentacleAttackTiles(this);
-
-    //     this.auraPulse();
-
-    //     this.targetAttackTiles.forEach((tile, i) => {
-    //         const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
-    //         const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
-    //         this.scene.time.delayedCall(25 * i, () => {
-    //             this.hitTile(tile.x, tile.y, 1);
-    //             this.attackEmitter.emitParticleAt(pixelX, pixelY, 1);
-    //         });
-    //     });
-    // }
 
     attack()
     {

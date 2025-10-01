@@ -1,0 +1,39 @@
+import ASSETS from '../../assets.js';
+import Wizard from './Wizard.js';
+import TheaBook from './TheaBook.js';
+
+const actions = Object.keys(ASSETS.audio.wizards.thea);
+const voicelines = {};
+actions.forEach(action => {
+    voicelines[action] = ASSETS.audio.wizards.thea[action].key;
+});
+
+export default class Thea extends Wizard {
+    constructor(scene, x, y) {
+        super(scene, x, y, `Thea, Novice Ninja`, voicelines, 0x3b3b3b, 32);
+    
+        this.attackEmitter = this.ashEmitter;
+        this.attackEmitter.setDepth(200);
+
+        this.book = new TheaBook();
+    }
+
+    attack()
+    {
+        // target tiles
+        this.targetAttackTiles = this.book.shadowAttackTiles(this.scene);
+
+        // aura indicates current health
+        this.auraPulse();
+
+        // attack tiles
+        this.targetAttackTiles.forEach((tile, i) => {
+            const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
+            const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
+            this.scene.time.delayedCall(50 * i, () => {
+                this.hitTile(tile.x, tile.y, 1);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
+            });
+        });
+    }
+}

@@ -229,6 +229,20 @@ export default {
                     args: ['assets/audio/wizards/tariq/win.mp3']
                 }
             },
+            thea: {
+                hit: {
+                    key: 'thea_hit',
+                    args: ['assets/audio/wizards/thea/hit.mp3']
+                },
+                die: {
+                    key: 'thea_die',
+                    args: ['assets/audio/wizards/thea/die.mp3']
+                },
+                win: {
+                    key: 'thea_win',
+                    args: ['assets/audio/wizards/thea/win.mp3']
+                }
+            },
         }
     },
     'image': {
