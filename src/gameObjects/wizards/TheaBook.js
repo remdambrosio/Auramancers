@@ -3,22 +3,28 @@ import WizardBook from './WizardBook.js';
 import ASSETS from '../../assets.js';
 
 export default class TheaBook extends WizardBook {
-    constructor() {
+    constructor(scene, wizard) {
         super();
+        this.scene = scene;
+        this.wizard = wizard;
+
+        this.shadowSprite = scene.add.sprite(0, 0, ASSETS.spritesheet.wizards.key, 48)
+            .setTint(0x3b3b3b)
+            .setVisible(false);
     }
 
-    shadowAttackTiles(wizard) {
+    shadowAttackTiles() {
         const targetTiles = [];
         const validTiles = [];
         const dir = this.attackDirection();
 
-        for (let x = wizard.scene.arena.origin.x; x < wizard.scene.arena.origin.x + wizard.scene.arena.width; x++) {
-            for (let y = wizard.scene.arena.origin.y; y < wizard.scene.arena.origin.y + wizard.scene.arena.height; y++) {
-                const tileX = wizard.tile.x;
-                const tileY = wizard.tile.y;
-                const pixelX = wizard.mapOffset.x + (tileX * wizard.tileSize);
-                const pixelY = wizard.mapOffset.y + (tileY * wizard.tileSize);
-                if (wizard.scene.getTileAt(pixelX, pixelY) === -1 && !wizard.isTileOccupied(tileX, tileY)) {
+        for (let x = this.scene.arena.origin.x; x < this.scene.arena.origin.x + this.scene.arena.width; x++) {
+            for (let y = this.scene.arena.origin.y; y < this.scene.arena.origin.y + this.scene.arena.height; y++) {
+                const tileX = x;
+                const tileY = y;
+                const pixelX = this.wizard.mapOffset.x + (tileX * this.wizard.tileSize);
+                const pixelY = this.wizard.mapOffset.y + (tileY * this.wizard.tileSize);
+                if (this.scene.getTileAt(pixelX, pixelY) === -1 && !this.wizard.isTileOccupied(tileX, tileY)) {
                     validTiles.push({ x, y });
                 }
             }
@@ -26,14 +32,26 @@ export default class TheaBook extends WizardBook {
 
         const cloneTile = Phaser.Utils.Array.GetRandom(validTiles);
 
-        const shadowSprite = wizard.scene.add.sprite(
-            cloneTile.x * wizard.tileSize + wizard.mapOffset.x,
-            cloneTile.y * wizard.tileSize + wizard.mapOffset.y,
-            ASSETS.spritesheet.wizards.key,
-            48
-        ).setTint(0x3b3b3b);
-        wizard.scene.time.delayedCall(500, () => {
-            shadowSprite.destroy();
+        this.shadowSprite.setPosition(
+            cloneTile.x * this.wizard.tileSize + this.wizard.mapOffset.x,
+            cloneTile.y * this.wizard.tileSize + this.wizard.mapOffset.y
+        ).setAlpha(0).setVisible(true);
+        this.scene.tweens.add({
+            targets: this.shadowSprite,
+            alpha: 1,
+            duration: 100,
+            onComplete: () => {
+                this.scene.time.delayedCall(300, () => {
+                    this.scene.tweens.add({
+                        targets: this.shadowSprite,
+                        alpha: 0,
+                        duration: 200,
+                        onComplete: () => {
+                            this.shadowSprite.setVisible(false);
+                        }
+                    });
+                });
+            }
         });
 
         if (dir.x !== 0) {

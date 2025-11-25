@@ -14,15 +14,15 @@ export default class Thea extends Wizard {
     
         this.attackEmitter = scene.add.particles(0, 0, 'orb', {
             tint: 0x3b3b3b,
-            lifespan: 250,
-            speed: { min: 10, max: 50 },
+            lifespan: 400,
+            speed: { min: 10, max: 40 },
             scale: { start: 1, end: 0 },
             blendMode: 'NORMAL',
             emitting: false
         });
         this.attackEmitter.setDepth(200);
 
-        this.book = new TheaBook();
+        this.book = new TheaBook(scene, this);
     }
 
     attack()
@@ -39,7 +39,7 @@ export default class Thea extends Wizard {
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.scene.time.delayedCall(50 * i, () => {
                 this.hitTile(tile.x, tile.y, 1);
-                this.attackEmitter.emitParticleAt(pixelX, pixelY, 10);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 8);
             });
         });
     }
