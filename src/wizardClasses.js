@@ -9,6 +9,7 @@ import Avalon from './gameObjects/wizards/Avalon.js';
 import Brianna from './gameObjects/wizards/Brianna.js';
 import Gene from './gameObjects/wizards/Gene.js';
 import Max from './gameObjects/wizards/Max.js';
+import Thea from './gameObjects/wizards/Thea.js';
 
 const wizardClasses = [
     {
@@ -48,7 +49,7 @@ const wizardClasses = [
     },
     {
         name: 'Max',
-        description: "His lightning blasts reflect his ability to distract Rem from updating this game",
+        description: "His lightning blasts grow when Rem doesn't update this game's code",
         class: Max
     },
     {
@@ -66,6 +67,11 @@ const wizardClasses = [
         description: "His thorny vines snake out into the arena",
         class: Tariq
     },
+    {
+        name: 'Thea',
+        description: "Her shadow clone technique strikes without warning",
+        class: Thea
+    }
 ];
 
 export default wizardClasses;

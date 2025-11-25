@@ -10,9 +10,16 @@ actions.forEach(action => {
 
 export default class Thea extends Wizard {
     constructor(scene, x, y) {
-        super(scene, x, y, `Thea, Novice Ninja`, voicelines, 0x3b3b3b, 32);
+        super(scene, x, y, `Thea, Novice Ninja`, voicelines, 0x3b3b3b, 48);
     
-        this.attackEmitter = this.ashEmitter;
+        this.attackEmitter = scene.add.particles(0, 0, 'orb', {
+            tint: 0x3b3b3b,
+            lifespan: 250,
+            speed: { min: 10, max: 50 },
+            scale: { start: 1, end: 0 },
+            blendMode: 'NORMAL',
+            emitting: false
+        });
         this.attackEmitter.setDepth(200);
 
         this.book = new TheaBook();
@@ -21,7 +28,7 @@ export default class Thea extends Wizard {
     attack()
     {
         // target tiles
-        this.targetAttackTiles = this.book.shadowAttackTiles(this.scene);
+        this.targetAttackTiles = this.book.shadowAttackTiles(this);
 
         // aura indicates current health
         this.auraPulse();
