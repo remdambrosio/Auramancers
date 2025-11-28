@@ -41,10 +41,12 @@ In this non-interactive Phaser "game", 2-4 brave Auramancers face off in an aren
 
 **Narration** - Rem D'Ambrosio
 
-**Auramancer Voices** - Andrew Silbernagel, Christopher Huk, Jacob Lower, Julian Moore, Mia Vandenschrick, Rem D'Ambrosio, Tariq Chatur
+**Title Rap Vocals** - Rem D'Ambrosio
+
+**Auramancer Voices** - Andrew Silbernagel, Christopher Huk, Jacob Lower, Julian Moore, Mia Vandenschrick, Rem D'Ambrosio, Tariq Chatur, Thea Mai, Avalon Barber, Gene Sargent
 
 ### Assets
 
 **Map Tiles** - Tiny Town by Kennay
 
-**Main Menu Beat** - Dumb by David Renda
+**Title Rap Beat** - Dumb by David Renda
