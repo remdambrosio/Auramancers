@@ -21,6 +21,56 @@ export default {
             },
         },
         narration: {
+            select: {
+                Andrew: {
+                    key: 'Andrew',
+                    args: ['assets/audio/narration/select/andrew.mp3']
+                },
+                Avalon: {
+                    key: 'Avalon',
+                    args: ['assets/audio/narration/select/avalon.mp3']
+                },
+                Brianna: {
+                    key: 'Brianna',
+                    args: ['assets/audio/narration/select/brianna.mp3']
+                },
+                Chris: {
+                    key: 'Chris',
+                    args: ['assets/audio/narration/select/chris.mp3']
+                },
+                Gene: {
+                    key: 'Gene',
+                    args: ['assets/audio/narration/select/gene.mp3']
+                },
+                Jacob: {
+                    key: 'Jacob',
+                    args: ['assets/audio/narration/select/jacob.mp3']
+                },
+                Julian: {
+                    key: 'Julian',
+                    args: ['assets/audio/narration/select/julian.mp3']
+                },
+                Max: {
+                    key: 'Max',
+                    args: ['assets/audio/narration/select/max.mp3']
+                },
+                Mia: {
+                    key: 'Mia',
+                    args: ['assets/audio/narration/select/mia.mp3']
+                },
+                Rem: {
+                    key: 'Rem',
+                    args: ['assets/audio/narration/select/rem.mp3']
+                },
+                Tariq: {
+                    key: 'Tariq',
+                    args: ['assets/audio/narration/select/tariq.mp3']
+                },
+                Thea: {
+                    key: 'Thea',
+                    args: ['assets/audio/narration/select/thea.mp3']
+                }
+            },
             auraBlazing: {
                 key: 'auraBlazing',
                 args: ['assets/audio/narration/auraBlazing.mp3']

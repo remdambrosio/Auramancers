@@ -64,6 +64,7 @@ export class Menu extends Phaser.Scene {
                         this.selectedWizards.splice(idx, 1);
                     } else {
                         this.selectedWizards.push(wizardInfo);
+                        // this.sound.play(wizardInfo.name);
                     }
                     btn.setFillStyle(this.selectedWizards.includes(wizardInfo) ? 0xFFFFFF : 0x555555);
                     this.updateStartButtonState();
