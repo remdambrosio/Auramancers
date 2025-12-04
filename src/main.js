@@ -1,6 +1,7 @@
 /* global Phaser */
 import { Boot } from './scenes/Boot.js';
 import { Preloader } from './scenes/Preloader.js';
+import { Splash } from './scenes/Splash.js';
 import { Menu } from './scenes/Menu.js';
 import { Game } from './scenes/Game.js';
 
@@ -26,6 +27,7 @@ const config = {
     scene: [
         Boot,
         Preloader,
+        Splash,
         Menu,
         Game,
     ]

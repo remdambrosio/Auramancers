@@ -12,7 +12,7 @@ export class Menu extends Phaser.Scene {
     create() {
         this.sound.play('auramancerSelect', { volume: 1.2, loop: true });
         const centreX = this.scale.width * 0.5;
-        const centreY = this.scale.height * 0.5 -50;
+        const centreY = this.scale.height * 0.5;
         const buttonSpacing = 100;
         const buttonsPerRow = 4;
         const numRows = 3;
@@ -28,7 +28,7 @@ export class Menu extends Phaser.Scene {
                 fontSize: 16,
                 color: '#ffffff',
                 stroke: '#000000',
-                strokeThickness: 6,
+                strokeThickness: 5,
                 align: 'center',
                 wordWrap: { width: buttonSpacing * buttonsPerRow },
             }
@@ -40,7 +40,7 @@ export class Menu extends Phaser.Scene {
             const row = Math.floor(i / buttonsPerRow);
             const col = i % buttonsPerRow;
             const x = centreX - buttonSpacing * (buttonsPerRow / 2 - 0.5) + buttonSpacing * col;
-            const y = centreY - 50 - buttonSpacing * 0.5 + buttonSpacing * row;
+            const y = centreY - 100 - buttonSpacing * 0.5 + buttonSpacing * row;
 
             const wizardInfo = wizardClasses[i];
             const isEnabled = !!wizardInfo;
@@ -64,7 +64,7 @@ export class Menu extends Phaser.Scene {
                         this.selectedWizards.splice(idx, 1);
                     } else {
                         this.selectedWizards.push(wizardInfo);
-                        // this.sound.play(wizardInfo.name);
+                        this.sound.play(wizardInfo.name, { volume: 4.0 });
                     }
                     btn.setFillStyle(this.selectedWizards.includes(wizardInfo) ? 0xFFFFFF : 0x555555);
                     this.updateStartButtonState();

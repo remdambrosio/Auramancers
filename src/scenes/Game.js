@@ -141,7 +141,7 @@ export class Game extends Phaser.Scene
 
     initTimer ()
     {
-        this.timerValue = 60;
+        this.timerValue = 45;
         this.dieTween = null;
         this.timerEvent = this.time.addEvent({
             delay: this.turnInterval,
@@ -315,7 +315,7 @@ export class Game extends Phaser.Scene
         this.timerText.setText(this.timerValue);
         this.startGameText.setVisible(false);
         this.endGameText.setVisible(false);
-        this.sound.play('riseOfTheManimals', { volume: 0.08, loop: true });
+        this.sound.play('riseOfTheManimals', { volume: 0.08, loop: false });
     }
 
     endGame() {

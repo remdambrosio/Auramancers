@@ -14,22 +14,14 @@ export class Preloader extends Phaser.Scene {
         const barHeight = 32;
         const barMargin = 4;
 
+        this.cameras.main.setBackgroundColor('#000000');
+        
         this.outline = this.add.rectangle(centreX, centreY, barWidth, barHeight).setStrokeStyle(1, 0xffffff);
         this.bar = this.add.rectangle(centreX - (barWidth * 0.5) + barMargin, centreY, barMargin, barHeight - barMargin, 0xffffff);
 
         this.load.on('progress', (progress) => {
             this.bar.width = barMargin + ((barWidth - (barMargin * 2)) * progress);
         });
-
-        // this.startGameText = this.add.text(centreX, centreY, 'AURAMANCERS\nClick to Start', {
-        //     fontFamily: 'Arial Black', fontSize: 42, color: '#ffffff',
-        //     stroke: '#000000', strokeThickness: 8,
-        //     align: 'center',
-        //     resolution: 2
-        // })
-        //     .setOrigin(0.5)
-        //     .setDepth(1000)
-        //     .setVisible(false);
     }
 
 preload() {
@@ -52,11 +44,6 @@ preload() {
     create() {
         this.outline.setVisible(false);
         this.bar.setVisible(false);
-        // this.startGameText.setVisible(true);
-        // this.startGameText.setVisible(true);
-        // this.input.once('pointerdown', () => {
-        //     this.scene.start('Menu');
-        // });
-        this.scene.start('Menu');
+        this.scene.start('Splash');
     }
 }

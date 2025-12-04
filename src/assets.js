@@ -1,6 +1,10 @@
 export default {
     'audio': {
         music: {
+            themeSong: {
+                key: 'themeSong',
+                args: ['assets/audio/music/themeSong.mp3']
+            },
             auramancerSelect: {
                 key: 'auramancerSelect',
                 args: ['assets/audio/music/auramancerSelect.mp3']
