@@ -7,7 +7,7 @@ export class Splash extends Phaser.Scene {
     }
 
     create() {
-        // this.sound.play('themeSong', { volume: 1.2, loop: true });
+        this.sound.play('themeSong', { loop: true });
         const centreX = this.scale.width * 0.5;
         const centreY = this.scale.height * 0.5;
 
@@ -39,6 +39,8 @@ export class Splash extends Phaser.Scene {
                 align: 'center',
             }
         ).setOrigin(0.5);
+
+        this.titlemapImage = this.add.image(centreX, centreY, 'titlemap');
 
         this.input.on('pointerdown', () => {
             this.sound.stopByKey('themeSong');

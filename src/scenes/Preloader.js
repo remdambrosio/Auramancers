@@ -14,7 +14,7 @@ export class Preloader extends Phaser.Scene {
         const barHeight = 32;
         const barMargin = 4;
 
-        this.cameras.main.setBackgroundColor('#000000');
+        this.cameras.main.setBackgroundColor('0x3F2631');
         
         this.outline = this.add.rectangle(centreX, centreY, barWidth, barHeight).setStrokeStyle(1, 0xffffff);
         this.bar = this.add.rectangle(centreX - (barWidth * 0.5) + barMargin, centreY, barMargin, barHeight - barMargin, 0xffffff);

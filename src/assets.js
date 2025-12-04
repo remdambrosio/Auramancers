@@ -304,6 +304,10 @@ export default {
             key: 'icon',
             args: ['assets/image/icon.png']
         },
+        titlemap: {
+            key: 'titlemap',
+            args: ['assets/image/titlemap.png']
+        },
         spark: {
             key: 'spark',
             args: ['assets/image/spark.png']
