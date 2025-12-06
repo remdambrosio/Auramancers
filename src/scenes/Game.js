@@ -34,6 +34,7 @@ export class Game extends Phaser.Scene
     {
         this.gameState = 'start';   // 'start', 'live', 'end'
         this.turnInterval = 1000;
+
         this.liveWizards = [];
         this.deadWizards = [];
 
@@ -58,24 +59,22 @@ export class Game extends Phaser.Scene
 
         this.watcherSideTiles = [];
         this.watcherUpDownTiles = [];
+
         this.wizard1Start = { x: 0, y: 0 };
         this.wizard2Start = { x: 0, y: 0 };
         this.wizard3Start = { x: 0, y: 0 };
         this.wizard4Start = { x: 0, y: 0 };
 
-        // generate random background image
-        this.tiles = [ 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 44 ];
-        this.tileSize = 32;     // width and height of a tile in pixels
-        this.halfTileSize = this.tileSize * 0.5; // width and height of a tile in pixels
+        this.tileSize = 32;
+        this.halfTileSize = this.tileSize * 0.5;
+        this.mapHeight = 15;
+        this.mapWidth = 21;
+        this.mapX = this.centreX - (this.mapWidth * this.tileSize * 0.5);
+        this.mapY = this.centreY - (this.mapHeight * this.tileSize * 0.5);
 
-        this.mapHeight = 15;    // height of the tile map (in tiles)
-        this.mapWidth = 21;     // width of the tile map (in tiles)
-        this.mapX = this.centreX - (this.mapWidth * this.tileSize * 0.5); // x position of the top-left corner of the tile map
-        this.mapY = this.centreY - (this.mapHeight * this.tileSize * 0.5); // y position of the top-left corner of the tile map
-
-        this.map;               // reference to tile map
-        this.groundLayer;       // used to create background layer of tile map
-        this.levelLayer;        // reference to level layer of tile map
+        this.map;
+        this.groundLayer;
+        this.levelLayer;
     }
 
     initGameUi ()
@@ -249,64 +248,41 @@ export class Game extends Phaser.Scene
 
     initMap ()
     {
-        const mapData = [];
-
-        for (let y = 0; y < this.mapHeight; y++)
-        {
-            const row = [];
-
-            for (let x = 0; x < this.mapWidth; x++)
-            {
-                // randomly choose a tile id from this.tiles
-                // weightedPick favours items earlier in the array
-                const tileIndex = Phaser.Math.RND.weightedPick(this.tiles);
-
-                row.push(tileIndex);
-            }
-
-            mapData.push(row);
-        }
         this.map = this.make.tilemap({ key: ASSETS.tilemapTiledJSON.map.key });
         const tileset = this.map.addTilesetImage(ASSETS.spritesheet.tiles.key);
 
         this.groundLayer = this.map.createLayer('ground', tileset, this.mapX, this.mapY);
-
         this.levelLayer = this.map.createLayer('level', tileset, this.mapX, this.mapY);
         
-        // loop through map from bottom to top row
-        for (let y = 0; y < this.mapHeight; y++)
-        {
-            // loop through map from left to right column
-            for (let x = 0; x < this.mapWidth; x++)
-            {
-                const tile = this.levelLayer.getTileAt(x, y);
-                if (!tile) continue
-
-                if (tile.index === this.tileIds.watcherSide) {
+        this.levelLayer.forEachTile(tile => {
+            if (!tile) return;
+            switch (tile.index) {
+                case this.tileIds.watcherSide:
                     tile.index = -1;
-                    this.watcherSideTiles.push({ x: x, y: y });
-                } else if (tile.index === this.tileIds.watcherUpDown) {
+                    this.watcherSideTiles.push({ x: tile.x, y: tile.y });
+                    break;
+                case this.tileIds.watcherUpDown:
                     tile.index = -1;
-                    this.watcherUpDownTiles.push({ x: x, y: y });
-                } else if (tile.index === this.tileIds.wizard1) {
+                    this.watcherUpDownTiles.push({ x: tile.x, y: tile.y });
+                    break;
+                case this.tileIds.wizard1:
                     tile.index = -1;
-                    this.wizard1Start.x = x;
-                    this.wizard1Start.y = y;
-                } else if (tile.index === this.tileIds.wizard2){
+                    this.wizard1Start = { x: tile.x, y: tile.y };
+                    break;
+                case this.tileIds.wizard2:
                     tile.index = -1;
-                    this.wizard2Start.x = x;
-                    this.wizard2Start.y = y;
-                } else if (tile.index === this.tileIds.wizard3){
+                    this.wizard2Start = { x: tile.x, y: tile.y };
+                    break;
+                case this.tileIds.wizard3:
                     tile.index = -1;
-                    this.wizard3Start.x = x;
-                    this.wizard3Start.y = y;
-                } else if (tile.index === this.tileIds.wizard4){
+                    this.wizard3Start = { x: tile.x, y: tile.y };
+                    break;
+                case this.tileIds.wizard4:
                     tile.index = -1;
-                    this.wizard4Start.x = x;
-                    this.wizard4Start.y = y;
-                }
+                    this.wizard4Start = { x: tile.x, y: tile.y };
+                    break;
             }
-        }
+        });
     }
 
     startGame ()

@@ -24,26 +24,44 @@ export class Preloader extends Phaser.Scene {
         });
     }
 
-preload() {
-    function loadAssets(type, obj, loader) {
-        for (let key in obj) {
-            if (obj[key].args && obj[key].key) {
-                let args = obj[key].args.slice();
-                args.unshift(obj[key].key);
-                loader[type].apply(loader, args);
-            } else if (typeof obj[key] === 'object') {
-                loadAssets(type, obj[key], loader);
+    preload() {
+        function loadAssets(type, obj, loader) {
+            for (let key in obj) {
+                if (obj[key].args && obj[key].key) {
+                    let args = obj[key].args.slice();
+                    args.unshift(obj[key].key);
+                    loader[type].apply(loader, args);
+                } else if (typeof obj[key] === 'object') {
+                    loadAssets(type, obj[key], loader);
+                }
             }
         }
+        for (let type in ASSETS) {
+            loadAssets(type, ASSETS[type], this.load);
+        }
+        
+        this.fontLoaded = false;
+        document.fonts.load('1em Tagesschrift').then(() => {
+            this.fontLoaded = true;
+        });
     }
-    for (let type in ASSETS) {
-        loadAssets(type, ASSETS[type], this.load);
-    }
-}
 
     create() {
         this.outline.setVisible(false);
         this.bar.setVisible(false);
-        this.scene.start('Splash');
+
+        if (this.fontLoaded) {
+            this.scene.start('Splash');
+        } else {
+            this.time.addEvent({
+                delay: 50,
+                callback: () => {
+                    if (this.fontLoaded) {
+                        this.scene.start('Splash');
+                    }
+                },
+                repeat: -1,
+            });
+        }
     }
 }
