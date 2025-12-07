@@ -28,51 +28,51 @@ export default {
             select: {
                 Andrew: {
                     key: 'Andrew',
-                    args: ['assets/audio/narration/select/andrew.mp3']
+                    args: ['assets/audio/narration/select/Andrew.mp3']
                 },
                 Avalon: {
                     key: 'Avalon',
-                    args: ['assets/audio/narration/select/avalon.mp3']
+                    args: ['assets/audio/narration/select/Avalon.mp3']
                 },
                 Brianna: {
                     key: 'Brianna',
-                    args: ['assets/audio/narration/select/brianna.mp3']
+                    args: ['assets/audio/narration/select/Brianna.mp3']
                 },
                 Chris: {
                     key: 'Chris',
-                    args: ['assets/audio/narration/select/chris.mp3']
+                    args: ['assets/audio/narration/select/Chris.mp3']
                 },
                 Gene: {
                     key: 'Gene',
-                    args: ['assets/audio/narration/select/gene.mp3']
+                    args: ['assets/audio/narration/select/Gene.mp3']
                 },
                 Jacob: {
                     key: 'Jacob',
-                    args: ['assets/audio/narration/select/jacob.mp3']
+                    args: ['assets/audio/narration/select/Jacob.mp3']
                 },
                 Julian: {
                     key: 'Julian',
-                    args: ['assets/audio/narration/select/julian.mp3']
+                    args: ['assets/audio/narration/select/Julian.mp3']
                 },
                 Max: {
                     key: 'Max',
-                    args: ['assets/audio/narration/select/max.mp3']
+                    args: ['assets/audio/narration/select/Max.mp3']
                 },
                 Mia: {
                     key: 'Mia',
-                    args: ['assets/audio/narration/select/mia.mp3']
+                    args: ['assets/audio/narration/select/Mia.mp3']
                 },
                 Rem: {
                     key: 'Rem',
-                    args: ['assets/audio/narration/select/rem.mp3']
+                    args: ['assets/audio/narration/select/Rem.mp3']
                 },
                 Tariq: {
                     key: 'Tariq',
-                    args: ['assets/audio/narration/select/tariq.mp3']
+                    args: ['assets/audio/narration/select/Tariq.mp3']
                 },
                 Thea: {
                     key: 'Thea',
-                    args: ['assets/audio/narration/select/thea.mp3']
+                    args: ['assets/audio/narration/select/Thea.mp3']
                 }
             },
             auraBlazing: {
