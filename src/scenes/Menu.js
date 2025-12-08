@@ -10,7 +10,6 @@ export class Menu extends Phaser.Scene {
     }
 
     create() {
-        this.sound.play('auramancerSelect', { loop: true });
         const centreX = this.scale.width * 0.5;
         const centreY = this.scale.height * 0.5;
         const buttonSpacing = 100;

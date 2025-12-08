@@ -1,4 +1,5 @@
 /* global Phaser */
+import ASSETS from '../assets.js';
 import wizardClasses from '../wizardClasses.js';
 
 export class Splash extends Phaser.Scene {
@@ -9,7 +10,7 @@ export class Splash extends Phaser.Scene {
     }
 
     create() {
-        this.sound.play('themeSong', { loop: true });
+        this.sound.play('auramancerSelect', { global: true, loop: true });
 
         const centreX = this.scale.width * 0.5;
         const centreY = this.scale.height * 0.5;
@@ -56,8 +57,13 @@ export class Splash extends Phaser.Scene {
         this.titlemapImage = this.add.image(centreX, centreY, 'titlemap');
         this.titlemapImage.setDepth(-500);
 
+        this.wizardSprite = this.add.sprite(centreX, centreY + 115, '')
+            .setOrigin(0.5)
+            .setScale(2)
+            .setVisible(false);
+
         this.wizardText = this.add.text(
-            centreX, centreY + 135,
+            centreX, centreY + 185,
             '',
             {
                 fontFamily: 'Tagesschrift',
@@ -70,10 +76,9 @@ export class Splash extends Phaser.Scene {
         ).setOrigin(0.5);
 
         this.shuffledWizards = Phaser.Utils.Array.Shuffle(wizardClasses);
-        this.nextWizardTime = this.time.now + 1000;
+        this.nextWizardTime = this.time.now + 1156;
 
         this.input.on('pointerdown', () => {
-            this.sound.stopByKey('themeSong');
             this.scene.start('Menu');
         });
     }
@@ -84,8 +89,16 @@ export class Splash extends Phaser.Scene {
 
         if (time >= this.nextWizardTime) {
             this.wizardIndex = (this.wizardIndex + 1) % this.shuffledWizards.length;
-            this.wizardText.setText(this.shuffledWizards[this.wizardIndex].name);
-            this.nextWizardTime = time + 1000;
+            const currentWizard = this.shuffledWizards[this.wizardIndex]
+            const spriteKey = currentWizard.spriteKey;
+
+            this.wizardSprite.setTexture(ASSETS.spritesheet.wizards.key, spriteKey);
+            this.wizardSprite.setVisible(true);
+            this.wizardSprite.texture.setFilter(Phaser.ScaleModes.NEAREST);
+
+            this.wizardText.setText(currentWizard.name);
+
+            this.nextWizardTime = time + 1156;
         }
     }
 
