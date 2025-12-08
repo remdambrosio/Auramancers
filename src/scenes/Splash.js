@@ -75,8 +75,8 @@ export class Splash extends Phaser.Scene {
             }
         ).setOrigin(0.5);
 
-        this.shuffledWizards = Phaser.Utils.Array.Shuffle(wizardClasses);
-        this.nextWizardTime = this.time.now + 1156;
+        this.shuffledWizards = Phaser.Utils.Array.Shuffle([...wizardClasses]);
+        this.nextWizardTime = this.time.now + 289;
 
         this.input.on('pointerdown', () => {
             this.scene.start('Menu');

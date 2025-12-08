@@ -12,15 +12,16 @@ export class Menu extends Phaser.Scene {
     create() {
         const centreX = this.scale.width * 0.5;
         const centreY = this.scale.height * 0.5;
-        const buttonSpacing = 100;
+        const buttonSpacingVertical = 50;
+        const buttonSpacingHorizontal = 100;
         const buttonsPerRow = 4;
-        const numRows = 3;
+        const numRows = 6;
 
         this.backdrop = this.add.graphics();
         this.drawRainbowBackdrop();
 
         this.descriptionText = this.add.text(
-            centreX, buttonSpacing * numRows + 75,
+            centreX, buttonSpacingVertical * numRows + 70,
             '',
             {
                 fontFamily: 'Tagesschrift',
@@ -29,17 +30,17 @@ export class Menu extends Phaser.Scene {
                 stroke: '#000000',
                 strokeThickness: 5,
                 align: 'center',
-                wordWrap: { width: buttonSpacing * buttonsPerRow },
+                wordWrap: { width: buttonSpacingHorizontal * buttonsPerRow },
             }
         ).setOrigin(0.5);
 
         this.buttons = [];
 
-        for (let i = 0; i < 12; i++) {
+        for (let i = 0; i < 24; i++) {
             const row = Math.floor(i / buttonsPerRow);
             const col = i % buttonsPerRow;
-            const x = centreX - buttonSpacing * (buttonsPerRow / 2 - 0.5) + buttonSpacing * col;
-            const y = centreY - 100 - buttonSpacing * 0.5 + buttonSpacing * row;
+            const x = centreX - buttonSpacingHorizontal * (buttonsPerRow / 2 - 0.5) + buttonSpacingHorizontal * col;
+            const y = centreY - 160 - buttonSpacingVertical * 0.5 + buttonSpacingVertical * row;
 
             const wizardInfo = wizardClasses[i];
             const isEnabled = !!wizardInfo;
@@ -48,7 +49,7 @@ export class Menu extends Phaser.Scene {
             const btn = this.add.rectangle(
                 x,
                 y,
-                100, 100,
+                100, 50,
                 isEnabled
                     ? ( (isSelected) ? 0xFFFFFF : 0x3F2631 )
                     : 0x222222
@@ -98,7 +99,7 @@ export class Menu extends Phaser.Scene {
             this.buttons.push(btn);
         }
 
-        this.startBtn = this.add.text(centreX, buttonSpacing * numRows + 130, 'IGNITE AURA', {
+        this.startBtn = this.add.text(centreX, buttonSpacingVertical * numRows + 130, 'IGNITE AURA', {
             fontFamily: 'Tagesschrift',
             fontSize: 24,
             color: '#ffffff',
