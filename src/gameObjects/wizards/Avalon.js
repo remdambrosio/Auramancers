@@ -1,5 +1,6 @@
 import ASSETS from '../../assets.js';
 import Wizard from './Wizard.js';
+import AvalonBook from './AvalonBook.js';
 
 const actions = Object.keys(ASSETS.audio.wizards.avalon);
 const voicelines = {};
@@ -24,21 +25,14 @@ export default class Avalon extends Wizard {
             },
         });
         this.attackEmitter.setDepth(200);
+
+        this.book = new AvalonBook();
     }
 
     attack()
     {
         // target tiles
-        const dir = this.book.attackDirection(this);
-        this.targetAttackTiles = [];
-        let curTile = this.tile;
-        for (let i = 0; i < 5; i++) {
-            curTile = {
-                x: curTile.x + dir.x,
-                y: curTile.y + dir.y
-            };
-            this.targetAttackTiles.push({ ...curTile });
-        }
+        this.targetAttackTiles = this.book.snakeAttackTiles(this, 5);
 
         // aura indicates current health
         this.auraPulse();

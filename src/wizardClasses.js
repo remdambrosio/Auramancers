@@ -20,7 +20,7 @@ const wizardClasses = [
     },
     {
         name: 'Avalon',
-        description: "Her dark patron's tentacles reach across the arena",
+        description: "Her dark patron's tentacles slither chaotically across the arena",
         spriteKey: 32,
         class: Avalon
     },
@@ -32,7 +32,7 @@ const wizardClasses = [
     },
     {
         name: 'Chris',
-        description: "He revives fallen fans as vengeful spirits",
+        description: "His necro-magic revives fallen fans as vengeful spirits",
         spriteKey: 16,
         class: Chris
     },
@@ -44,31 +44,31 @@ const wizardClasses = [
     },
     {
         name: 'Jacob',
-        description: "He brews poisons or cures from toxic or wholesome posts on the WoW subreddit",
+        description: "He brews toxic poisons or healing cures, based on sentiment analysis of WoW reddit posts",
         spriteKey: 28,
         class: Jacob
     },
     {
         name: 'Julian',
-        description: "His curse forces him to rise from the dead and fight again",
+        description: "His undead curse forces him to rise from the dead and fight again",
         spriteKey: 20,
         class: Julian
     },
     {
         name: 'Max',
-        description: "His lightning blasts grow when Rem doesn't update this game's code",
+        description: "His lightning blasts grow more powerful when Rem doesn't update this game's code",
         spriteKey: 44,
         class: Max
     },
     {
         name: 'Mia',
-        description: "Her charmed fans attack with the power of search trends for the word 'fae'",
+        description: "Her charmed fans attack alongside her, with power based on search trends for the word 'fae'",
         spriteKey: 4,
         class: Mia
     },
     {
         name: 'Rem',
-        description: "His volcanic blasts are fueled by his updates to this game's code",
+        description: "His volcanic blasts grow stronger when this game's code on GitHub is updated often",
         spriteKey: 12,
         class: Rem
     },
@@ -80,7 +80,7 @@ const wizardClasses = [
     },
     {
         name: 'Thea',
-        description: "Her shadow clone technique strikes without warning",
+        description: "Her shadow clone technique allows her to attack distant locations without warning",
         spriteKey: 48,
         class: Thea
     }
