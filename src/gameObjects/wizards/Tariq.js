@@ -23,22 +23,51 @@ export default class Tariq extends Wizard {
         });
         this.attackEmitter.setDepth(200);
 
+        this.flowerEmitter = scene.add.particles(0, 0, 'faint_slash', {
+            tint: 0xCAFFC4,
+            lifespan: 250,
+            speed: { min: 5, max: 50 },
+            scale: { start: 1.5, end: 0 },
+            rotate: { min: 0, max: 360 },
+            alpha: 0.3,
+            blendMode: 'NORMAL',
+            emitting: false
+        });
+        this.flowerEmitter.setDepth(100);
+
         this.book = new TariqBook();
     }
 
     attack()
     {
-        this.targetAttackTiles = this.book.snakeAttackTiles(this, 5);
+        // target tiles
+        this.targetAttackTiles = this.book.flowerAttackTiles(this);
 
+        // aura indicates current health
         this.auraPulse();
 
+        // flash indicates areas which will be avoided
+        this.flashFlower();
+
+        // attack tiles
         this.targetAttackTiles.forEach((tile, i) => {
             const pixelX = this.mapOffset.x + (tile.x * this.tileSize);
             const pixelY = this.mapOffset.y + (tile.y * this.tileSize);
             this.scene.time.delayedCall(50 * i, () => {
                 this.hitTile(tile.x, tile.y, 1);
-                this.attackEmitter.emitParticleAt(pixelX, pixelY, 8);
+                this.attackEmitter.emitParticleAt(pixelX, pixelY, 5);
             });
+        });
+    }
+
+    flashFlower() {
+        this.book.flowerDirections.forEach(offset => {
+            const tileX = this.tile.x + offset.x;
+            const tileY = this.tile.y + offset.y;
+            const pixelX = this.mapOffset.x + (tileX * this.tileSize);
+            const pixelY = this.mapOffset.y + (tileY * this.tileSize);
+    
+            this.flowerEmitter.emitParticleAt(pixelX, pixelY, 3);
         });
     }
 }

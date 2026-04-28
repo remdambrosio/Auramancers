@@ -74,7 +74,7 @@ const wizardClasses = [
     },
     {
         name: 'Tariq',
-        description: "His thorny vines snake out into the arena",
+        description: "His vines alert him to nearby enemies, allowing him to retreat and strike from afar",
         spriteKey: 8,
         class: Tariq
     },

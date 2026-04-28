@@ -320,6 +320,10 @@ export default {
             key: 'slash',
             args: ['assets/image/slash.png']
         },
+        faint_slash: {
+            key: 'faint_slash',
+            args: ['assets/image/faint_slash.png']
+        },
         tentacle: {
             key: 'tentacle',
             args: ['assets/image/tentacle.png']
