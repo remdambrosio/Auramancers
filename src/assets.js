@@ -46,6 +46,10 @@ export default {
                     key: 'Jacob',
                     args: ['assets/audio/narration/select/Jacob.mp3']
                 },
+                Jordan: {
+                    key: 'Jordan',
+                    args: ['assets/audio/narration/select/Jordan.mp3']
+                },
                 Julian: {
                     key: 'Julian',
                     args: ['assets/audio/narration/select/Julian.mp3']
@@ -203,6 +207,24 @@ export default {
                 win: {
                     key: 'jacob_win',
                     args: ['assets/audio/wizards/jacob/win.mp3']
+                }
+            },
+            jordan: {
+                hit: {
+                    key: 'jordan_hit',
+                    args: ['assets/audio/wizards/jordan/hit.mp3']
+                },
+                die: {
+                    key: 'jordan_die',
+                    args: ['assets/audio/wizards/jordan/die.mp3']
+                },
+                win: {
+                    key: 'jordan_win',
+                    args: ['assets/audio/wizards/jordan/win.mp3']
+                },
+                bump: {
+                    key: 'jordan_bump',
+                    args: ['assets/audio/wizards/jordan/bump.mp3']
                 }
             },
             julian: {

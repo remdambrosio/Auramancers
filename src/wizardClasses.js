@@ -10,6 +10,7 @@ import Brianna from './gameObjects/wizards/Brianna.js';
 import Gene from './gameObjects/wizards/Gene.js';
 import Max from './gameObjects/wizards/Max.js';
 import Thea from './gameObjects/wizards/Thea.js';
+import Jordan from './gameObjects/wizards/Jordan.js';
 
 const wizardClasses = [
     {
@@ -47,6 +48,12 @@ const wizardClasses = [
         description: "He brews toxic poisons or healing cures, based on sentiment analysis of WoW reddit posts",
         spriteKey: 28,
         class: Jacob
+    },
+    {
+        name: 'Jordan',
+        description: "He races across the arena, leaving a trail which ignites after a delay",
+        spriteKey: 52,
+        class: Jordan
     },
     {
         name: 'Julian',
