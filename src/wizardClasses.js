@@ -51,7 +51,7 @@ const wizardClasses = [
     },
     {
         name: 'Jordan',
-        description: "He races across the arena, leaving a trail which ignites after a delay",
+        description: "He zooms across the arena, leaving behind a shocking trail",
         spriteKey: 52,
         class: Jordan
     },
